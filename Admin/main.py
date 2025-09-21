@@ -14,9 +14,9 @@ CreateZip("mydata","mycmd","node_1",allcommands)
 
 host = GetIP()
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as server:
-    server.bind((host, 5002))
+    server.bind(("0.0.0.0", 5002))
     server.listen(1)
-    print(f"Listening on {host}:5002 ...")
+    print(f"Listening on 0.0.0.0:5002 ...")
     conn, addr = server.accept()
     print(f"Connected by {addr}")
 
