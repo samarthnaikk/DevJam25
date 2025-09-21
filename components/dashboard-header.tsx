@@ -30,16 +30,18 @@ export function DashboardHeader() {
         </div>
 
         <div className="flex items-center space-x-4">
-          {/* Show prominent sign out button for all users */}
-          <Button 
-            variant="outline" 
-            size="sm" 
-            onClick={signOut}
-            className="flex items-center space-x-2"
-          >
-            <LogOut className="h-4 w-4" />
-            <span>Sign Out</span>
-          </Button>
+          {/* Show prominent sign out button for admin users */}
+          {isAdmin && (
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={signOut}
+              className="flex items-center space-x-2"
+            >
+              <LogOut className="h-4 w-4" />
+              <span>Sign Out</span>
+            </Button>
+          )}
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>

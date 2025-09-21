@@ -33,30 +33,18 @@ export async function createUser({
 }
 
 export async function getUserByEmail(email: string) {
-  try {
-    // Use raw SQL to ensure we get all fields including role
-    const users = (await prisma.$queryRaw`
-      SELECT * FROM "User" WHERE "email" = ${email} LIMIT 1
-    `) as any[];
-
-    if (users && users.length > 0) {
-      return users[0];
-    }
-
-    return null;
-  } catch (error) {
-    console.error("Error finding user by email:", error);
-    return null;
-  }
+  return await prisma.user.findUnique({
+    where: { email },
+  });
 }
 
 export async function getUserByUsername(username: string) {
   try {
     // First try to find the user with the username field
     // Using findFirst with raw SQL condition as a workaround for TypeScript issues
-    const userByUsername = (await prisma.$queryRaw`
+    const userByUsername = await prisma.$queryRaw`
       SELECT * FROM "User" WHERE "username" = ${username} LIMIT 1
-    `) as any[];
+    ` as any[];
 
     if (userByUsername && userByUsername.length > 0) {
       return userByUsername[0];
