@@ -12,10 +12,21 @@ def Partition(input_source=None,output_source=None):
 def ModelSplit(input_source=None,output_source=None):
     pass
 
-def DataSplit(input_source="../PreProcess/sample1.txt", output_source="../PostProcess/", Objtype=1, chunks=1):
+def DataSplit(input_source="../PreProcess/", output_source="../PostProcess/", Objtype=1, chunks=1):
     """
     Splits the input file into multiple chunk files.
     """
+
+    all_inp_files = os.listdir(input_source)
+    text = ""
+    for i in all_inp_files:
+        with open(os.path.join(input_source, i), "r", encoding="utf-8") as f:
+            text += f.read() + "\n"
+        
+    with open(input_source+"/sample1.txt", "w", encoding="utf-8") as f:
+        f.write(text)
+    
+    input_source = input_source+"/sample1.txt"
 
     if Objtype == 1:
         if not input_source or not output_source:

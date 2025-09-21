@@ -5,7 +5,7 @@ from helper import *
 def CreateZip(input_source, source_code, node_id, allcommands):
     zip_filename = f"{node_id}.zip"
     os.makedirs("temp_input", exist_ok=True)
-    DataSplit(input_source=input_source+"/sample1.txt", output_source="temp_input", Objtype=1, chunks=5)
+    DataSplit(input_source=input_source, output_source="temp_input", Objtype=1, chunks=5)
     input_source = "temp_input"
 
     with zipfile.ZipFile(zip_filename, "w", zipfile.ZIP_DEFLATED) as zipf:
