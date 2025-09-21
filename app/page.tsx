@@ -64,7 +64,7 @@ export default function HomePage() {
             className="w-10 h-10 object-contain"
           />
         </div>
-        <span className="text-white font-semibold text-xl tracking-wide">Rvidia</span>
+        <span className="text-white font-semibold text-3xl tracking-wide"  style={{ fontFamily: 'Lato, sans-serif', fontWeight: '400' }}>Rvidia</span>
       </div>
 
    {/* Text Overlay to Cover Spline Model Text */}
