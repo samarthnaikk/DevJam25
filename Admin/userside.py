@@ -1,8 +1,12 @@
 import os
 import zipfile
+from helper import *
 
 def CreateZip(input_source, source_code, node_id, allcommands):
     zip_filename = f"{node_id}.zip"
+    os.makedirs("temp_input", exist_ok=True)
+    DataSplit(input_source=input_source+"/sample1.txt", output_source="temp_input", Objtype=1, chunks=5)
+    input_source = "temp_input"
 
     with zipfile.ZipFile(zip_filename, "w", zipfile.ZIP_DEFLATED) as zipf:
         if os.path.exists(input_source):
@@ -26,4 +30,3 @@ def CreateZip(input_source, source_code, node_id, allcommands):
 
         # Add Makefile inside ServerFiles in the zip
         zipf.writestr("ServerFiles/Makefile", makefile_content)
-
