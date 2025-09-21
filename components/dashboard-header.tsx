@@ -2,14 +2,7 @@
 
 import { useAuthContext } from "@/components/auth-provider";
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { LogOut, Settings, User, Home } from "lucide-react";
+import { LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 export function DashboardHeader() {
@@ -22,71 +15,54 @@ export function DashboardHeader() {
   const isAdmin = user.role?.toLowerCase() === "admin";
 
   return (
-    <header className="bg-white border-b border-border px-6 py-4">
-      <div className="flex items-center justify-between">
+    <header className="fixed top-0 left-0 right-0 z-[100] bg-black border-b border-white/10 px-6 py-4">
+      <div className="flex items-center justify-between relative">
+        {/* Left side with Admin Dashboard text */}
         <div className="flex items-center space-x-4">
-          <div className="bg-primary rounded-lg p-2">
-            <User className="h-5 w-5 text-primary-foreground" />
-          </div>
           <div>
-            <h1 className="text-xl font-semibold text-gray-900">
+            <h1 
+              className="text-xl font-semibold text-white"
+              style={{ fontFamily: 'Lato, sans-serif', fontWeight: '400' }}
+            >
               {isAdmin ? "Admin Dashboard" : "My Dashboard"}
             </h1>
-            <p className="text-sm text-muted-foreground">
+            <p 
+              className="text-sm text-white/60"
+              style={{ fontFamily: 'Lato, sans-serif', fontWeight: '300' }}
+            >
               Welcome back, {user.name}
             </p>
           </div>
         </div>
 
-        <div className="flex items-center space-x-4">
-          {/* Home button */}
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => router.push("/")}
-            className="flex items-center space-x-2"
+        {/* Centered Logo and Rvidia */}
+        <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center space-x-3">
+          <div className="w-10 h-10 flex items-center justify-center">
+            <img
+              src="/Screenshot 2025-09-21 at 12.36.07 PM.svg"
+              alt="Rvidia Logo"
+              className="w-10 h-10 object-contain"
+            />
+          </div>
+          <span
+            className="text-white font-semibold text-xl tracking-wide"
+            style={{ fontFamily: "Lato, sans-serif", fontWeight: "400" }}
           >
-            <Home className="h-4 w-4" />
-            <span>Home</span>
-          </Button>
+            Rvidia
+          </span>
+        </div>
 
-          {/* Show prominent sign out button for all users */}
+        {/* Right side with sign out button */}
+        <div className="flex items-center space-x-4">
           <Button
             variant="outline"
             size="sm"
             onClick={signOut}
-            className="flex items-center space-x-2"
+            className="flex items-center space-x-2 bg-white/5 border-white/20 text-white hover:bg-white/10 hover:border-red-400/50 transition-all duration-300"
           >
             <LogOut className="h-4 w-4" />
-            <span>Sign Out</span>
+            <span style={{ fontFamily: 'Lato, sans-serif', fontWeight: '300' }}>Sign Out</span>
           </Button>
-
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                variant="ghost"
-                className="relative h-10 w-10 rounded-full"
-              >
-                <Avatar className="h-10 w-10">
-                  <AvatarImage
-                    src={user.image || "/placeholder.svg"}
-                    alt={user.name}
-                  />
-                  <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
-                </Avatar>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56" align="end">
-              <DropdownMenuItem>
-                <Settings className="mr-2 h-4 w-4" />
-                Settings
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={signOut}>
-                <LogOut className="mr-2 h-4 w-4" />
-                Sign out
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
         </div>
       </div>
     </header>

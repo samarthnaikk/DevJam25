@@ -521,35 +521,35 @@ export default function HomePage() {
 
       {/* Footer Section */}
       <footer className="relative z-10 bg-black border-t border-white/10">
-        <div className="container mx-auto px-4 py-12">
-          <div className="max-w-6xl mx-auto">
+        <div className="container mx-auto px-6 py-16">
+          <div className="max-w-7xl mx-auto">
             {/* Footer Main Content */}
-            <div className="grid md:grid-cols-4 gap-8 mb-8">
+            <div className="grid md:grid-cols-4 gap-12 mb-12">
               {/* Company Info */}
               <div className="md:col-span-2">
-                <div className="flex items-center space-x-3 mb-4">
-                  <div className="w-10 h-10 flex items-center justify-center">
+                <div className="flex items-center space-x-4 mb-6">
+                  <div className="w-12 h-12 flex items-center justify-center">
                     <img
                       src="/Screenshot 2025-09-21 at 12.36.07 PM.svg"
                       alt="Rvidia Logo"
-                      className="w-10 h-10 object-contain"
+                      className="w-12 h-12 object-contain"
                     />
                   </div>
                   <span
-                    className="text-white font-semibold text-2xl tracking-wide"
+                    className="text-white font-semibold text-4xl tracking-wide"
                     style={{ fontFamily: "Lato, sans-serif", fontWeight: "375" }}
                   >
                     Rvidia
                   </span>
                 </div>
                 <p
-                  className="text-white/70 text-sm leading-relaxed mb-4 max-w-md"
+                  className="text-white/70 text-xl leading-relaxed mb-6 max-w-lg"
                   style={{ fontFamily: 'Lato, sans-serif', fontWeight: '300' }}
                 >
                   Democratizing high-performance computing through distributed processing. 
                   Making computation faster, smarter, and accessible to everyone.
                 </p>
-                <div className="flex space-x-2">
+                <div className="flex space-x-3">
                   <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
                   <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
                   <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
@@ -559,16 +559,16 @@ export default function HomePage() {
               {/* Quick Links */}
               <div>
                 <h3
-                  className="text-white font-semibold text-lg mb-4"
+                  className="text-white font-semibold text-2xl mb-6"
                   style={{ fontFamily: 'Lato, sans-serif', fontWeight: '400' }}
                 >
                   Quick Links
                 </h3>
-                <ul className="space-y-2">
+                <ul className="space-y-3">
                   <li>
                     <a
                       href="#vision"
-                      className="text-white/60 hover:text-white transition-colors text-sm"
+                      className="text-white/60 hover:text-white transition-colors text-lg"
                       style={{ fontFamily: 'Lato, sans-serif', fontWeight: '300' }}
                     >
                       Our Vision
@@ -577,7 +577,7 @@ export default function HomePage() {
                   <li>
                     <a
                       href="#about"
-                      className="text-white/60 hover:text-white transition-colors text-sm"
+                      className="text-white/60 hover:text-white transition-colors text-lg"
                       style={{ fontFamily: 'Lato, sans-serif', fontWeight: '300' }}
                     >
                       About Us
@@ -586,7 +586,7 @@ export default function HomePage() {
                   <li>
                     <button
                       onClick={() => router.push("/signin")}
-                      className="text-white/60 hover:text-white transition-colors text-sm text-left"
+                      className="text-white/60 hover:text-white transition-colors text-lg text-left"
                       style={{ fontFamily: 'Lato, sans-serif', fontWeight: '300' }}
                     >
                       Sign In
@@ -595,7 +595,7 @@ export default function HomePage() {
                   <li>
                     <button
                       onClick={() => router.push("/signup")}
-                      className="text-white/60 hover:text-white transition-colors text-sm text-left"
+                      className="text-white/60 hover:text-white transition-colors text-lg text-left"
                       style={{ fontFamily: 'Lato, sans-serif', fontWeight: '300' }}
                     >
                       Get Started
@@ -607,29 +607,29 @@ export default function HomePage() {
               {/* Contact Info */}
               <div>
                 <h3
-                  className="text-white font-semibold text-lg mb-4"
+                  className="text-white font-semibold text-2xl mb-6"
                   style={{ fontFamily: 'Lato, sans-serif', fontWeight: '400' }}
                 >
                   Connect
                 </h3>
-                <div className="space-y-3">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 bg-white/5 rounded-full flex items-center justify-center">
-                      <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
+                <div className="space-y-4">
+                  <div className="flex items-center space-x-4">
+                    <div className="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center">
+                      <div className="w-3 h-3 bg-purple-400 rounded-full"></div>
                     </div>
                     <span
-                      className="text-white/60 text-sm"
+                      className="text-white/60 text-lg"
                       style={{ fontFamily: 'Lato, sans-serif', fontWeight: '300' }}
                     >
                       hello@rvidia.com
                     </span>
                   </div>
-                  <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 bg-white/5 rounded-full flex items-center justify-center">
-                      <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
+                  <div className="flex items-center space-x-4">
+                    <div className="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center">
+                      <div className="w-3 h-3 bg-blue-400 rounded-full"></div>
                     </div>
                     <span
-                      className="text-white/60 text-sm"
+                      className="text-white/60 text-lg"
                       style={{ fontFamily: 'Lato, sans-serif', fontWeight: '300' }}
                     >
                       support@rvidia.com
@@ -640,41 +640,41 @@ export default function HomePage() {
             </div>
 
             {/* Footer Bottom */}
-            <div className="border-t border-white/10 pt-8">
-              <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+            <div className="border-t border-white/10 pt-10">
+              <div className="flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0">
                 <div className="flex items-center space-x-4">
                   <p
-                    className="text-white/50 text-sm"
+                    className="text-white/50 text-lg"
                     style={{ fontFamily: 'Lato, sans-serif', fontWeight: '300' }}
                   >
                     © 2025 Rvidia. All rights reserved.
                   </p>
                 </div>
-                <div className="flex items-center space-x-6">
+                <div className="flex items-center space-x-8">
                   <a
                     href="#"
-                    className="text-white/50 hover:text-white transition-colors text-sm"
+                    className="text-white/50 hover:text-white transition-colors text-lg"
                     style={{ fontFamily: 'Lato, sans-serif', fontWeight: '300' }}
                   >
                     Privacy Policy
                   </a>
                   <a
                     href="#"
-                    className="text-white/50 hover:text-white transition-colors text-sm"
+                    className="text-white/50 hover:text-white transition-colors text-lg"
                     style={{ fontFamily: 'Lato, sans-serif', fontWeight: '300' }}
                   >
                     Terms of Service
                   </a>
-                  <div className="flex items-center space-x-2">
+                  <div className="flex items-center space-x-3">
                     <span
-                      className="text-white/30 text-xs"
+                      className="text-white/30 text-base"
                       style={{ fontFamily: 'Lato, sans-serif', fontWeight: '300' }}
                     >
                       Built with
                     </span>
-                    <div className="w-1 h-1 bg-gradient-to-r from-purple-400 to-blue-400 rounded-full"></div>
+                    <div className="w-2 h-2 bg-gradient-to-r from-purple-400 to-blue-400 rounded-full"></div>
                     <span
-                      className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400 text-xs font-medium"
+                      className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400 text-base font-medium"
                       style={{ fontFamily: 'Lato, sans-serif' }}
                     >
                       distributed computing
