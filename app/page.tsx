@@ -12,13 +12,12 @@ import {
 } from "@/components/ui/card";
 import { Cpu, Zap, BarChart3 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import OptimizedSpline from "@/components/optimized-spline";
 
 export default function HomePage() {
   const { isAuthenticated, user, loading } = useAuthContext();
   const router = useRouter();
-  const [showDropdown, setShowDropdown] = useState(false);
 
   useEffect(() => {
     if (isAuthenticated && user) {
@@ -47,7 +46,7 @@ export default function HomePage() {
   }
 
   return (
-    <div className="relative min-h-screen overflow-hidden" onClick={() => setShowDropdown(false)}>
+    <div className="relative min-h-screen overflow-hidden">
       {/* Spline 3D Background */}
       <div className="absolute inset-0 z-0">
         <OptimizedSpline 
@@ -68,75 +67,21 @@ export default function HomePage() {
   </div>  
 </div>
 
-      {/* Get Started Button - Top Right Corner */}
-<div className="absolute top-4 right-1 z-50">
-  <div className="relative">
-    <div
-      className="relative w-auto max-w-[11rem] bg-black/90 border border-slate-700 shadow-lg rounded-xl overflow-hidden transition-all duration-500 ease-in-out"
-    >
-      {/* Animated gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 opacity-0 hover:opacity-30 transition-opacity duration-300 rounded-xl"></div>
-
-      <div className="relative z-10">
-        {/* Get Started Header */}
+      {/* Sign In / Sign Up Buttons - Top Right Corner */}
+      <div className="absolute top-4 right-4 z-50 flex gap-3">
         <button
-          onClick={(e) => {
-            e.stopPropagation();
-            setShowDropdown(!showDropdown);
-          }}
-          className={`flex items-center gap-1 px-9 py-2 text-sm font-semibold text-white transition-all duration-300 ${!showDropdown && 'hover:scale-105'}`}
+          onClick={() => router.push("/signin")}
+          className="px-4 py-2 text-sm font-medium text-white/80 hover:text-white transition-colors duration-200 hover:bg-white/5 rounded-md"
         >
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 transition-all duration-300">
-            Get Started
-          </span>
-          <svg 
-            className={`w-3 h-3 transform transition-transform duration-300 ${
-              showDropdown ? 'rotate-180' : ''
-            }`} 
-            fill="none" 
-            stroke="currentColor" 
-            viewBox="0 0 24 24"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-          </svg>
+          Sign In
         </button>
-
-        {/* Expanded Options */}
-        <div className={`transition-all duration-500 ease-in-out ${
-          showDropdown ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'
-        } overflow-hidden`}>
-          <div className="border-t border-slate-600 px-2 pb-2">
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                router.push("/signup");
-              }}
-              className="w-full text-left px-4 py-3 rounded-lg hover:bg-white/10 transition-colors duration-200 mt-2"
-            >
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-300 via-purple-300 to-pink-300 font-medium text-sm">
-                Sign Up
-              </span>
-              <p className="text-xs text-slate-400 mt-1">Create new account</p>
-            </button>
-            
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                router.push("/signin");
-              }}
-              className="w-full text-left px-4 py-3 rounded-lg hover:bg-white/10 transition-colors duration-200"
-            >
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-300 via-purple-300 to-pink-300 font-medium text-sm">
-                Sign In
-              </span>
-              <p className="text-xs text-slate-400 mt-1">Access your account</p>
-            </button>
-          </div>
-        </div>
+        <button
+          onClick={() => router.push("/signup")}
+          className="px-4 py-2 text-sm font-medium bg-white text-black rounded-md hover:bg-gray-100 transition-colors duration-200 border border-white/20"
+        >
+          Sign Up
+        </button>
       </div>
-    </div>
-  </div>
-</div>
 
 
      <div className="absolute bottom-4 right-4 z-50 bg-black px-4 py-2 rounded-lg shadow-lg">
