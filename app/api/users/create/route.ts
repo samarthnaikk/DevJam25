@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { Prisma } from "@prisma/client";
+import { hashPassword } from "@/lib/auth-utils";
 
 export async function POST(request: Request) {
   try {
@@ -37,9 +38,9 @@ export async function POST(request: Request) {
     // Check if username already exists
     try {
       // Due to schema issues, use a raw query to check for username
-      const existingUsers = await prisma.$queryRaw`
+      const existingUsers = (await prisma.$queryRaw`
         SELECT * FROM "User" WHERE LOWER(username) = LOWER(${username})
-      ` as any[];
+      `) as any[];
 
       if (Array.isArray(existingUsers) && existingUsers.length > 0) {
         return NextResponse.json(
@@ -52,13 +53,16 @@ export async function POST(request: Request) {
       // Continue with user creation even if username check fails
     }
 
+    // Hash the password before storing
+    const hashedPassword = await hashPassword(password);
+
     // Create the user
     try {
       // Using raw SQL since the Prisma types are not updated
       const userRole = role ? role.toUpperCase() : "USER";
       await prisma.$executeRaw`
         INSERT INTO "User" (email, username, password, name, role, "createdAt")
-        VALUES (${email}, ${username}, ${password}, ${username}, ${userRole}, datetime('now'))
+        VALUES (${email}, ${username}, ${hashedPassword}, ${username}, ${userRole}, datetime('now'))
       `;
 
       // Return success without sending sensitive user data

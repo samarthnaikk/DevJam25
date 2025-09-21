@@ -10,29 +10,39 @@ export function useAuth() {
   const [signingIn, setSigningIn] = useState(false);
 
   useEffect(() => {
-    const auth = GoogleAuth.getInstance();
+    const checkAuth = async () => {
+      try {
+        // Check for JWT session first (new secure method)
+        const sessionUser = await SessionManager.getSession();
+        if (sessionUser) {
+          setUser({
+            id: sessionUser.id?.toString() || "",
+            email: sessionUser.email,
+            name: sessionUser.name || "",
+            image: "/placeholder.svg?height=40&width=40",
+            role:
+              (sessionUser.role?.toUpperCase() as "ADMIN" | "USER") || "USER",
+            username: sessionUser.username,
+          });
+          setLoading(false);
+          return;
+        }
 
-    // Check SessionManager first for regular login
-    const sessionUser = SessionManager.getSession();
-    if (sessionUser) {
-      setUser({
-        id: sessionUser.id?.toString() || "",
-        email: sessionUser.email,
-        name: sessionUser.name || "",
-        image: "/placeholder.svg?height=40&width=40",
-        role: (sessionUser.role?.toUpperCase() as "ADMIN" | "USER") || "USER",
-      });
-      setLoading(false);
-      return;
-    }
+        // Fallback to Google Auth for existing sessions
+        const auth = GoogleAuth.getInstance();
+        const googleUser = auth.getCurrentUser();
+        if (googleUser) {
+          setUser(googleUser);
+        }
 
-    // Then check Google Auth
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      setUser(user);
-      setLoading(false);
-    });
+        setLoading(false);
+      } catch (error) {
+        console.error("Auth check failed:", error);
+        setLoading(false);
+      }
+    };
 
-    return unsubscribe;
+    checkAuth();
   }, []);
 
   const signIn = async () => {
@@ -40,6 +50,18 @@ export function useAuth() {
     try {
       const auth = GoogleAuth.getInstance();
       await auth.signIn();
+      // After Google signin, check for updated session
+      const sessionUser = await SessionManager.getSession();
+      if (sessionUser) {
+        setUser({
+          id: sessionUser.id?.toString() || "",
+          email: sessionUser.email,
+          name: sessionUser.name || "",
+          image: "/placeholder.svg?height=40&width=40",
+          role: (sessionUser.role?.toUpperCase() as "ADMIN" | "USER") || "USER",
+          username: sessionUser.username,
+        });
+      }
     } catch (error) {
       console.error("Sign in failed:", error);
     } finally {
@@ -48,11 +70,19 @@ export function useAuth() {
   };
 
   const signOut = async () => {
-    // Clear both authentication systems
-    SessionManager.clearSession();
-    const auth = GoogleAuth.getInstance();
-    await auth.signOut();
-    setUser(null);
+    try {
+      // Clear JWT session
+      await SessionManager.signOut();
+      // Clear Google auth
+      const auth = GoogleAuth.getInstance();
+      await auth.signOut();
+      setUser(null);
+
+      // Redirect to home page
+      window.location.href = "/";
+    } catch (error) {
+      console.error("Sign out failed:", error);
+    }
   };
 
   return {

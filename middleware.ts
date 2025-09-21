@@ -1,21 +1,84 @@
-import { NextResponse } from "next/server"
-import type { NextRequest } from "next/server"
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import { verifyJWT } from "@/lib/jwt-utils";
 
 export function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl
+  const { pathname } = request.nextUrl;
 
-  // Allow access to public routes
-  if (pathname === "/" || pathname.startsWith("/api/")) {
-    return NextResponse.next()
+  // Public routes that don't require authentication
+  const publicRoutes = [
+    "/",
+    "/signin",
+    "/signup",
+    "/forgot-password",
+    "/reset-password",
+    "/api/auth",
+    "/api/signin",
+    "/api/signup",
+    "/api/send-otp",
+    "/api/verify-otp",
+    "/api/password-reset",
+    "/api/debug-otp",
+  ];
+
+  // Check if the current path is public
+  const isPublicRoute = publicRoutes.some(
+    (route) => pathname === route || pathname.startsWith(route)
+  );
+
+  // Allow access to public routes and static files
+  if (
+    isPublicRoute ||
+    pathname.startsWith("/_next") ||
+    pathname.startsWith("/favicon")
+  ) {
+    return NextResponse.next();
   }
 
-  // For protected routes, let the client-side routing handle authentication
-  // This middleware just ensures proper routing structure
-  if (pathname.startsWith("/admin") || pathname.startsWith("/dashboard")) {
-    return NextResponse.next()
+  // Get auth token from cookies
+  const token = request.cookies.get("auth-token")?.value;
+
+  // If no token, redirect to signin
+  if (!token) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/signin";
+    return NextResponse.redirect(url);
   }
 
-  return NextResponse.next()
+  // Verify the JWT token
+  const decoded = verifyJWT(token);
+
+  if (!decoded) {
+    // Invalid token, redirect to signin
+    const url = request.nextUrl.clone();
+    url.pathname = "/signin";
+    const response = NextResponse.redirect(url);
+
+    // Clear the invalid token
+    response.cookies.set("auth-token", "", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 0,
+      path: "/",
+    });
+
+    return response;
+  }
+
+  // Check role-based access
+  if (pathname.startsWith("/admin")) {
+    const userRole = decoded.role?.toLowerCase();
+    if (userRole !== "admin") {
+      // Non-admin trying to access admin routes, redirect to dashboard
+      const url = request.nextUrl.clone();
+      url.pathname = "/dashboard";
+      return NextResponse.redirect(url);
+    }
+  }
+
+  // Allow access to protected routes
+  return NextResponse.next();
 }
 
 export const config = {
@@ -29,4 +92,4 @@ export const config = {
      */
     "/((?!_next/static|_next/image|favicon.ico|public/).*)",
   ],
-}
+};
