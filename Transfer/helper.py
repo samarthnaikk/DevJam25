@@ -142,3 +142,39 @@ def DataSplit(input_source="../PreProcess/sample1.txt", output_source="../PostPr
             print("Error while Splitting data - type 4")
             with open("../.log", "a", encoding="utf-8") as log:
                 log.write(f"{time.ctime()} - Error while Splitting data - type 4 - {e}\n")
+
+    elif Objtype == 5:
+        if not input_source or not output_source:
+            raise ValueError("Both input_source and output_source must be provided.")
+        if chunks < 1:
+            raise ValueError("Chunks must be at least 1.")
+
+        try:
+            os.makedirs(output_source, exist_ok=True)
+
+            with open(input_source, "r", encoding="utf-8") as f:
+                text = f.read()
+
+            tokens = text.split()
+            total_tokens = len(tokens)
+
+            # Define fixed chunk size and stride
+            chunk_size = max(1, len(tokens) // chunks)   # adjust chunk size based on requested chunks
+            stride = max(1, chunk_size // 2)             # default: 50% overlap
+
+            i = 0
+            start = 0
+            while start < total_tokens:
+                end = min(start + chunk_size, total_tokens)
+                chunk_tokens = tokens[start:end]
+
+                chunk_file = os.path.join(output_source, f"chunk_{i+1}.txt")
+                with open(chunk_file, "w", encoding="utf-8") as cf:
+                    cf.write(" ".join(chunk_tokens))
+
+                i += 1
+                start += stride   # slide forward by stride
+        except Exception as e:
+            print("Error while Splitting data - type 5")
+            with open("../.log", "a", encoding="utf-8") as log:
+                log.write(f"{time.ctime()} - Error while Splitting data - type 5 - {e}\n")
