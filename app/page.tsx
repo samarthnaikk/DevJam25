@@ -3,6 +3,7 @@
 import { useAuthContext } from "@/components/auth-provider";
 import { GoogleSignInButton } from "@/components/google-sign-in-button";
 import { RoleDemoInfo } from "@/components/role-demo-info";
+import { SessionManager } from "@/lib/client/session";
 import {
   Card,
   CardContent,
@@ -19,15 +20,16 @@ export default function HomePage() {
   const { isAuthenticated, user, loading } = useAuthContext();
   const router = useRouter();
 
-  useEffect(() => {
-    if (isAuthenticated && user) {
-      if (user.role === "admin") {
-        router.push("/admin");
-      } else {
-        router.push("/dashboard");
-      }
-    }
-  }, [isAuthenticated, user, router]);
+  // Removed automatic redirect - users can manually navigate to dashboard/admin
+  // useEffect(() => {
+  //   if (isAuthenticated && user) {
+  //     if (user.role === "ADMIN" || user.role === "admin") {
+  //       router.push("/admin");
+  //     } else {
+  //       router.push("/dashboard");
+  //     }
+  //   }
+  // }, [isAuthenticated, user, router]);
 
   if (loading) {
     return (
@@ -37,19 +39,13 @@ export default function HomePage() {
     );
   }
 
-  if (isAuthenticated) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 to-slate-700">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
-      </div>
-    );
-  }
+  // Removed the automatic redirect for authenticated users - now they can see the homepage
 
   return (
     <div className="relative min-h-screen overflow-hidden">
       {/* Spline 3D Background */}
       <div className="absolute inset-0 z-0">
-        <OptimizedSpline 
+        <OptimizedSpline
           scene="https://prod.spline.design/KNeoX42LGSI6oW-F/scene.splinecode"
           className="w-full h-full"
         />
@@ -58,26 +54,34 @@ export default function HomePage() {
       {/* Logo and Brand - Top Left Corner */}
       <div className="absolute top-4 left-4 z-50 flex items-center space-x-3">
         <div className="w-10 h-10 flex items-center justify-center">
-          <img 
-            src="/Screenshot 2025-09-21 at 12.36.07 PM.svg" 
-            alt="Rvidia Logo" 
+          <img
+            src="/Screenshot 2025-09-21 at 12.36.07 PM.svg"
+            alt="Rvidia Logo"
             className="w-10 h-10 object-contain"
           />
         </div>
-        <span className="text-white font-semibold text-3xl tracking-wide"  style={{ fontFamily: 'Lato, sans-serif', fontWeight: '400' }}>Rvidia</span>
+        <span className="text-white font-semibold text-xl tracking-wide">
+          Rvidia
+        </span>
+        <span
+          className="text-white font-semibold text-3xl tracking-wide"
+          style={{ fontFamily: "Lato, sans-serif", fontWeight: "400" }}
+        >
+          Rvidia
+        </span>
       </div>
 
-   {/* Text Overlay to Cover Spline Model Text */}
-<div className="absolute top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 pointer-events-none">
-  <div className="bg-black px-12 py-6 rounded-none shadow-none">
-    <h1
-      className="text-6xl tracking-wider text-center whitespace-nowrap text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400"
-      style={{ fontFamily: 'Lato, sans-serif', fontWeight: '300' }}
-    >
-      Divide. Distribute. Done.
-    </h1>
-  </div>  
-</div>
+      {/* Text Overlay to Cover Spline Model Text */}
+      <div className="absolute top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 pointer-events-none">
+        <div className="bg-black px-12 py-6 rounded-none shadow-none">
+          <h1
+            className="text-6xl tracking-wider text-center whitespace-nowrap text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400"
+            style={{ fontFamily: "Lato, sans-serif", fontWeight: "300" }}
+          >
+            Divide. Distribute. Done.
+          </h1>
+        </div>
+      </div>
 
       {/* Sign In / Sign Up Buttons - Top Right Corner */}
       <div className="absolute top-4 right-4 z-50 flex gap-3">
@@ -95,40 +99,67 @@ export default function HomePage() {
         </button>
       </div>
 
+      <div className="absolute bottom-4 right-4 z-50 bg-black px-4 py-2 rounded-lg shadow-lg">
+        <span
+          className="text-sm font-medium text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400"
+          style={{
+            fontFamily: "'Lato', sans-serif",
+            fontWeight: 300,
+            display: "inline-block",
+            letterSpacing: "0.05em",
+            animation: "wave 2s ease-in-out infinite",
+          }}
+        >
+          {[
+            "C",
+            "o",
+            "m",
+            "p",
+            "u",
+            "t",
+            "e",
+            ".",
+            " ",
+            "S",
+            "h",
+            "a",
+            "r",
+            "e",
+            ".",
+            " ",
+            "C",
+            "o",
+            "n",
+            "q",
+            "u",
+            "e",
+            "r",
+            ".",
+          ].map((char, i) => (
+            <span
+              key={i}
+              style={{
+                display: "inline-block",
+                animationDelay: `${i * 0.05}s`,
+              }}
+            >
+              {char}
+            </span>
+          ))}
+        </span>
 
-     <div className="absolute bottom-4 right-4 z-50 bg-black px-4 py-2 rounded-lg shadow-lg">
-  <span
-    className="text-sm font-medium text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400"
-    style={{
-      fontFamily: "'Lato', sans-serif",
-      fontWeight: 300,
-      display: "inline-block",
-      letterSpacing: "0.05em",
-      animation: "wave 2s ease-in-out infinite",
-    }}
-  >
-    {["C","o","m","p","u","t","e","."," ","S","h","a","r","e","."," ","C","o","n","q","u","e","r","."].map((char, i) => (
-      <span
-        key={i}
-        style={{
-          display: "inline-block",
-          animationDelay: `${i * 0.05}s`,
-        }}
-      >
-        {char}
-      </span>
-    ))}
-  </span>
-
-  <style jsx>{`
-    @keyframes wave {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-3px); }
-    }
-  `}</style>
-</div>
-
-
+        <style jsx>{`
+          @keyframes wave {
+            0%,
+            100% {
+              transform: translateY(0px);
+            }
+            50% {
+              transform: translateY(-3px);
+            }
+          }
+        `}</style>
+      </div>
 
       {/* Content Overlay with Glassmorphism */}
       <div className="relative z-10 min-h-screen flex flex-col items-center justify-center px-4">

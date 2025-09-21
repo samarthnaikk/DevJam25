@@ -1,6 +1,5 @@
-import { ProtectedRoute } from "@/components/protected-route"
-import type { ReactNode } from "react"
+import type { ReactNode } from "react";
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
-  return <ProtectedRoute requiredRole="user">{children}</ProtectedRoute>
+  return <>{children}</>;
 }

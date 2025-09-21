@@ -68,32 +68,43 @@ export default function UserDashboard() {
   const router = useRouter();
 
   useEffect(() => {
-    // Check if user is authenticated using session manager
-    const isLoggedIn = SessionManager.isAuthenticated();
-
-    if (!isLoggedIn) {
-      // Redirect to signin page if not authenticated
+    if (!loading && !isAuthenticated) {
+      console.log("User not authenticated, redirecting to signin");
       router.push("/signin");
+      return;
     }
 
-    // Keep the existing role-based check
-    if (user?.role === "admin") {
+    // If user is admin, redirect to admin dashboard
+    if (user?.role === "ADMIN" || user?.role === "admin") {
+      console.log("Admin user detected, redirecting to admin dashboard");
       router.push("/admin");
+      return;
     }
-  }, [user, router]);
+  }, [isAuthenticated, user, loading, router]);
 
-  // Check authentication client-side
-  const isLoggedIn =
-    typeof window !== "undefined" ? SessionManager.isAuthenticated() : false;
-
-  if (loading || !isLoggedIn) {
+  // Show loading while checking authentication
+  if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading dashboard...</p>
+        </div>
       </div>
     );
   }
 
+  // Show message if not authenticated
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center">
+          <p className="text-gray-600 mb-4">Redirecting to sign in...</p>
+          <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600 mx-auto"></div>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="min-h-screen bg-gray-50">
       <DashboardHeader />
@@ -101,11 +112,11 @@ export default function UserDashboard() {
       <main className="p-6">
         <div className="max-w-7xl mx-auto space-y-6">
           {/* Welcome Section */}
-          <div className="bg-gradient-to-r from-primary to-secondary rounded-lg p-6 text-white">
+          <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg p-6 text-white">
             <h2 className="text-2xl font-bold mb-2">
               Welcome to your Dashboard!
             </h2>
-            <p className="text-primary-foreground/90">
+            <p className="text-blue-100">
               Your GPU computing environment is ready. Monitor your tasks and
               system performance below.
             </p>
