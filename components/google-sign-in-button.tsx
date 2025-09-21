@@ -1,15 +1,31 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { useAuthContext } from "@/components/auth-provider"
-import { Loader2 } from "lucide-react"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Loader2 } from "lucide-react";
 
-export function GoogleSignInButton() {
-  const { signIn, signingIn } = useAuthContext()
+interface GoogleSignInButtonProps {
+  role?: "admin" | "user";
+}
+
+export function GoogleSignInButton({ role = "user" }: GoogleSignInButtonProps) {
+  const [signingIn, setSigningIn] = useState(false);
+
+  const handleGoogleSignIn = async () => {
+    setSigningIn(true);
+    try {
+      console.log("Initiating real Google OAuth flow with role:", role);
+      // Redirect to the real Google OAuth flow with role parameter
+      window.location.href = `/api/auth/google?role=${role}`;
+    } catch (error) {
+      console.error("Google sign-in error:", error);
+      setSigningIn(false);
+    }
+  };
 
   return (
     <Button
-      onClick={signIn}
+      onClick={handleGoogleSignIn}
       disabled={signingIn}
       size="lg"
       className="w-full bg-white/10 backdrop-blur-sm text-white border border-white/20 hover:bg-white/20 focus:ring-2 focus:ring-blue-400 transition-all"
@@ -43,5 +59,5 @@ export function GoogleSignInButton() {
         </>
       )}
     </Button>
-  )
+  );
 }

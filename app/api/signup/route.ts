@@ -4,6 +4,7 @@ import { Prisma } from "@prisma/client";
 import {
   hashPassword,
   generateJWT,
+  setTokenCookie,
   createSecureCookieOptions,
 } from "@/lib/auth-utils";
 
@@ -71,8 +72,13 @@ export async function POST(request: Request) {
       },
     });
 
-    // Set secure HTTP-only cookie
+    // Set secure HTTP-only cookie using our utility function
+    setTokenCookie(response, token);
+
+    // Also set legacy cookie for backward compatibility
     response.cookies.set("auth-token", token, createSecureCookieOptions());
+
+    console.log("API /signup: Set auth cookies for new user:", user.email);
 
     return response;
   } catch (error) {

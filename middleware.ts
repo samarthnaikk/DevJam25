@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { verifyJWT } from "@/lib/jwt-utils";
 
+const AUTH_COOKIE_NAME = "auth_token";
+
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
@@ -12,6 +14,8 @@ export function middleware(request: NextRequest) {
     "/signup",
     "/forgot-password",
     "/reset-password",
+    "/auth-troubleshooter",
+    "/auth-debug",
     "/api/auth",
     "/api/signin",
     "/api/signup",
@@ -19,7 +23,13 @@ export function middleware(request: NextRequest) {
     "/api/verify-otp",
     "/api/password-reset",
     "/api/debug-otp",
+    "/api/clear-auth",
   ];
+
+  // Add Google OAuth routes to public routes
+  if (pathname.startsWith("/api/auth/google")) {
+    return NextResponse.next();
+  }
 
   // Check if the current path is public
   const isPublicRoute = publicRoutes.some(
@@ -35,26 +45,45 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // Get auth token from cookies
-  const token = request.cookies.get("auth-token")?.value;
+  // Get auth token from cookies - check both new and legacy names
+  const token = request.cookies.get(AUTH_COOKIE_NAME)?.value;
+  const legacyToken = request.cookies.get("auth-token")?.value;
+
+  const finalToken = token || legacyToken;
 
   // If no token, redirect to signin
-  if (!token) {
+  if (!finalToken) {
+    console.log("Middleware: No auth token found for path:", pathname);
+    console.log(
+      "Middleware: Cookies:",
+      Object.fromEntries(
+        request.cookies.getAll().map((c) => [c.name, "present"])
+      )
+    );
     const url = request.nextUrl.clone();
     url.pathname = "/signin";
     return NextResponse.redirect(url);
   }
 
   // Verify the JWT token
-  const decoded = verifyJWT(token);
+  const decoded = verifyJWT(finalToken);
 
   if (!decoded) {
     // Invalid token, redirect to signin
+    console.log("Middleware: Invalid token for path:", pathname);
     const url = request.nextUrl.clone();
     url.pathname = "/signin";
     const response = NextResponse.redirect(url);
 
-    // Clear the invalid token
+    // Clear both cookie types
+    response.cookies.set(AUTH_COOKIE_NAME, "", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 0,
+      path: "/",
+    });
+
     response.cookies.set("auth-token", "", {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",

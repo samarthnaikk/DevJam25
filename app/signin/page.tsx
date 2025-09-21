@@ -1,32 +1,32 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { useRouter } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { GoogleSignInButton } from "@/components/google-sign-in-button"
-import { SessionManager } from "@/lib/client/session"
-import Link from "next/link"
-import { Loader2 } from "lucide-react"
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { GoogleSignInButton } from "@/components/google-sign-in-button";
+import { SessionManager } from "@/lib/client/session";
+import Link from "next/link";
+import { Loader2 } from "lucide-react";
 
 export default function SignInPage() {
-  const router = useRouter()
+  const router = useRouter();
   const [form, setForm] = useState({
     identifier: "",
     password: "",
-  })
-  const [error, setError] = useState("")
-  const [isLoading, setIsLoading] = useState(false)
+  });
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForm({ ...form, [e.target.name]: e.target.value })
-    if (error) setError("")
-  }
+    setForm({ ...form, [e.target.name]: e.target.value });
+    if (error) setError("");
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsLoading(true)
-    setError("")
+    e.preventDefault();
+    setIsLoading(true);
+    setError("");
 
     try {
       const res = await fetch("/api/signin", {
@@ -38,36 +38,54 @@ export default function SignInPage() {
           identifier: form.identifier,
           password: form.password,
         }),
-      })
+      });
 
-      const data = await res.json()
+      const data = await res.json();
 
       if (res.ok) {
-        // Store user session with the role from the database
-        const userWithRole = {
-          ...data.user,
-          role: data.user.role || "USER", // Use the role from API, default to USER
-        }
-        SessionManager.storeSession(userWithRole)
+        console.log("Login successful, response data:", data);
 
-        console.log("Login successful, user role:", userWithRole.role)
-        
-        // Redirect based on user role
-        if (userWithRole.role?.toLowerCase() === "admin") {
-          window.location.href = `${window.location.origin}/admin`
+        // Debug cookies immediately after successful login
+        console.log("Post-login cookies:", document.cookie);
+
+        // Wait a bit for cookies to be set properly
+        await new Promise((resolve) => setTimeout(resolve, 100));
+
+        // Try to refresh the session to ensure cookies are working
+        console.log("Attempting to refresh session...");
+        const sessionUser = await SessionManager.refreshSession();
+
+        if (sessionUser) {
+          console.log("Session refreshed successfully:", sessionUser);
+
+          // Redirect based on user role
+          if (sessionUser.role?.toLowerCase() === "admin") {
+            window.location.href = `${window.location.origin}/admin`;
+          } else {
+            window.location.href = `${window.location.origin}/dashboard`;
+          }
         } else {
-          window.location.href = `${window.location.origin}/dashboard`
+          console.warn(
+            "Session refresh failed, but login was successful. Redirecting anyway..."
+          );
+          // Still redirect even if session refresh fails
+          const userRole = data.user?.role?.toLowerCase();
+          if (userRole === "admin") {
+            window.location.href = `${window.location.origin}/admin`;
+          } else {
+            window.location.href = `${window.location.origin}/dashboard`;
+          }
         }
       } else {
-        setError(data.error || "Failed to sign in")
+        setError(data.error || "Failed to sign in");
       }
     } catch (err) {
-      console.error("Login error:", err)
-      setError("An error occurred. Please try again.")
+      console.error("Login error:", err);
+      setError("An error occurred. Please try again.");
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
     <div className="min-h-screen bg-black flex items-start justify-center p-4 pt-16 relative overflow-hidden">
@@ -76,9 +94,9 @@ export default function SignInPage() {
         <div className="flex flex-col items-center space-y-4 mb-8">
           <div className="flex items-center justify-center">
             <div className="w-12 h-12 flex items-center justify-center">
-              <img 
-                src="/Screenshot 2025-09-21 at 12.36.07 PM.svg" 
-                alt="Rvidia Logo" 
+              <img
+                src="/Screenshot 2025-09-21 at 12.36.07 PM.svg"
+                alt="Rvidia Logo"
                 className="w-12 h-12 object-contain"
               />
             </div>
@@ -104,7 +122,7 @@ export default function SignInPage() {
             className="w-full h-12 px-3 py-3 bg-white/5 backdrop-blur-sm text-white border border-white/10 placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 rounded-lg transition-all"
             placeholder="Email or username"
           />
-          
+
           <input
             id="password"
             name="password"
@@ -117,12 +135,18 @@ export default function SignInPage() {
             placeholder="Password"
           />
 
-          <div className="flex items-center justify-center">
-            <Link 
-              href="/forgot-password" 
+          <div className="flex items-center justify-between w-full">
+            <Link
+              href="/forgot-password"
               className="text-sm text-blue-400 hover:text-blue-300 transition-colors"
             >
               Forgot password?
+            </Link>
+            <Link
+              href="/auth-troubleshooter"
+              className="text-sm text-blue-400 hover:text-blue-300 transition-colors"
+            >
+              Login issues?
             </Link>
           </div>
 
@@ -157,8 +181,8 @@ export default function SignInPage() {
         <div className="text-center">
           <p className="text-white/60 text-sm">
             Don't have an account?{" "}
-            <Link 
-              href="/signup" 
+            <Link
+              href="/signup"
               className="text-blue-400 hover:text-blue-300 font-medium transition-colors"
             >
               Create account
@@ -167,5 +191,5 @@ export default function SignInPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }

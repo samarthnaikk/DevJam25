@@ -674,7 +674,7 @@ export default function SignUpPage() {
               </div>
             </div>
 
-            <GoogleSignInButton />
+            <GoogleSignInButton role={selectedRole} />
 
             <div className="text-center mt-6">
               <p className="text-white/60 text-sm">

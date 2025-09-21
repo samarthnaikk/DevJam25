@@ -49,9 +49,11 @@ export function useAuth() {
     setSigningIn(true);
     try {
       const auth = GoogleAuth.getInstance();
+      console.log("Initiating Google sign-in");
       await auth.signIn();
       // After Google signin, check for updated session
       const sessionUser = await SessionManager.getSession();
+      console.log("Google sign-in successful");
       if (sessionUser) {
         setUser({
           id: sessionUser.id?.toString() || "",

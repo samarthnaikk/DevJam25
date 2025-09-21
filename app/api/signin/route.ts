@@ -4,7 +4,10 @@ import {
   verifyPassword,
   generateJWT,
   createSecureCookieOptions,
+  setTokenCookie,
 } from "@/lib/auth-utils";
+
+const AUTH_COOKIE_NAME = "auth_token";
 
 export async function POST(request: Request) {
   try {
@@ -61,8 +64,19 @@ export async function POST(request: Request) {
       },
     });
 
-    // Set secure HTTP-only cookie
-    response.cookies.set("auth-token", token, createSecureCookieOptions());
+    // Set secure HTTP-only cookie using our utility function
+    console.log("API /signin: Setting auth_token cookie...");
+    setTokenCookie(response, token);
+
+    // Also set legacy cookie for backward compatibility
+    console.log("API /signin: Setting auth-token cookie...");
+    const cookieOptions = createSecureCookieOptions();
+    console.log("API /signin: Cookie options:", cookieOptions);
+    response.cookies.set("auth-token", token, cookieOptions);
+
+    console.log("API /signin: Set auth cookies for user:", user.email);
+    console.log("API /signin: Token length:", token.length);
+    console.log("API /signin: Token preview:", token.substring(0, 20) + "...");
 
     return response;
   } catch (error) {

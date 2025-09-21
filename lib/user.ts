@@ -75,6 +75,20 @@ export async function getUserByUsername(username: string) {
   }
 }
 
+export async function getUserById(id: string | number) {
+  try {
+    // Convert string id to number if necessary
+    const userId = typeof id === "string" ? parseInt(id, 10) : id;
+
+    return await prisma.user.findUnique({
+      where: { id: userId },
+    });
+  } catch (error) {
+    console.error("Error finding user by ID:", error);
+    return null;
+  }
+}
+
 export async function getUserByIdentifier(identifier: string) {
   // Try to find user by email first
   const userByEmail = await getUserByEmail(identifier);
