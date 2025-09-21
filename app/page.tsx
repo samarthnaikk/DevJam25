@@ -55,6 +55,18 @@ export default function HomePage() {
         />
       </div>
 
+      {/* Logo and Brand - Top Left Corner */}
+      <div className="absolute top-4 left-4 z-50 flex items-center space-x-3">
+        <div className="w-10 h-10 flex items-center justify-center">
+          <img 
+            src="/Screenshot 2025-09-21 at 12.36.07 PM.svg" 
+            alt="Rvidia Logo" 
+            className="w-10 h-10 object-contain"
+          />
+        </div>
+        <span className="text-white font-semibold text-xl tracking-wide">Rvidia</span>
+      </div>
+
    {/* Text Overlay to Cover Spline Model Text */}
 <div className="absolute top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 pointer-events-none">
   <div className="bg-black px-12 py-6 rounded-none shadow-none">
