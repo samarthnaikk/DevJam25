@@ -178,3 +178,46 @@ def DataSplit(input_source="../PreProcess/sample1.txt", output_source="../PostPr
             print("Error while Splitting data - type 5")
             with open("../.log", "a", encoding="utf-8") as log:
                 log.write(f"{time.ctime()} - Error while Splitting data - type 5 - {e}\n")
+
+    elif Objtype == 6:
+        if not input_source or not output_source:
+            raise ValueError("Both input_source and output_source must be provided.")
+        if chunks < 2:
+            raise ValueError("Chunks must be at least 2 for hierarchical splitting.")
+
+        try:
+            os.makedirs(output_source, exist_ok=True)
+
+            with open(input_source, "r", encoding="utf-8") as f:
+                text = f.read()
+
+            tokens = text.split()
+            total_tokens = len(tokens)
+
+            # First split: large chunks
+            num_large_chunks = chunks // 2 if chunks > 2 else 2
+            large_chunk_size = (total_tokens + num_large_chunks - 1) // num_large_chunks
+
+            file_index = 1
+            for i in range(num_large_chunks):
+                start = i * large_chunk_size
+                end = min(start + large_chunk_size, total_tokens)
+                if start >= total_tokens:
+                    break
+                large_chunk_tokens = tokens[start:end]
+
+                # Second split: sub-chunks within each large chunk
+                sub_chunk_size = max(1, len(large_chunk_tokens) // 2)  # 2 sub-chunks per large chunk
+                for j in range(0, len(large_chunk_tokens), sub_chunk_size):
+                    sub_chunk_tokens = large_chunk_tokens[j:j + sub_chunk_size]
+
+                    chunk_file = os.path.join(output_source, f"chunk_{file_index}.txt")
+                    with open(chunk_file, "w", encoding="utf-8") as cf:
+                        cf.write(" ".join(sub_chunk_tokens))
+
+                    file_index += 1
+
+        except Exception as e:
+            print("Error while Splitting data - type 6")
+            with open("../.log", "a", encoding="utf-8") as log:
+                log.write(f"{time.ctime()} - Error while Splitting data - type 6 - {e}\n")
