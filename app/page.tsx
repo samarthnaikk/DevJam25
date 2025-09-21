@@ -77,7 +77,7 @@ export default function HomePage() {
         </button>
         <button
           onClick={() => router.push("/signup")}
-          className="px-4 py-2 text-sm font-medium bg-white text-black rounded-md hover:bg-gray-100 transition-colors duration-200 border border-white/20"
+          className="px-4 py-2 text-sm font-medium bg-transparent text-white rounded-md hover:bg-white hover:text-black transition-colors duration-200 border border-white"
         >
           Sign Up
         </button>
