@@ -4,6 +4,7 @@ cross network
 """
 
 import os
+import time
 
 def Partition(input_source=None,output_source=None):
     pass
@@ -41,7 +42,9 @@ def DataSplit(input_source="../PreProcess/sample1.txt", output_source="../PostPr
                 chunk_file = os.path.join(output_source, f"chunk_{i+1}.txt")
                 with open(chunk_file, "w", encoding="utf-8") as cf:
                     cf.writelines(chunk_lines)
-        except:
+        except Exception as e:
             print("Error while Splitting data - type 1")
+            with open("../.log", "a", encoding="utf-8") as log:
+                log.write(f"{time.ctime()} - Error while Splitting data - type 1 - {e}\n")
 
     
