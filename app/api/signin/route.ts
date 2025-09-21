@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getUserByEmail } from "@/lib/user";
+import { getUserByIdentifier } from "@/lib/user";
 
 export async function POST(request: Request) {
   try {
@@ -13,13 +13,13 @@ export async function POST(request: Request) {
       );
     }
 
-    // Treat identifier as email for simplicity
-    const user = await getUserByEmail(identifier);
+    // Try to find the user by email or username
+    const user = await getUserByIdentifier(identifier);
 
     // User not found
     if (!user) {
       return NextResponse.json(
-        { error: "Invalid email or password" },
+        { error: "Invalid username/email or password" },
         { status: 401 }
       );
     }
@@ -27,7 +27,7 @@ export async function POST(request: Request) {
     // Password check (in a real app, you'd compare hashed passwords)
     if (user.password !== password) {
       return NextResponse.json(
-        { error: "Invalid email or password" },
+        { error: "Invalid username/email or password" },
         { status: 401 }
       );
     }

@@ -18,6 +18,7 @@ export default function SignUpPage() {
   const [showOtpVerification, setShowOtpVerification] = useState(false);
   const [isOtpSent, setIsOtpSent] = useState(false);
   const [userData, setUserData] = useState<any>(null);
+  const [checkingUsername, setCheckingUsername] = useState(false);
 
   // Rate limiting and cooldown state
   const [canResendOtp, setCanResendOtp] = useState(true);
@@ -38,6 +39,7 @@ export default function SignUpPage() {
   }, [showOtpVerification, form.email]);
 
   const [errors, setErrors] = useState({
+    username: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -76,14 +78,88 @@ export default function SignUpPage() {
     return "";
   };
 
+  const validateUsername = (username: string) => {
+    // Username should be at least 3 characters long and should only contain
+    // alphanumeric characters, underscores, and hyphens
+    const usernamePattern = /^[a-zA-Z0-9_-]{3,20}$/;
+    if (!usernamePattern.test(username)) {
+      return "Username must be 3-20 characters and can only contain letters, numbers, underscores, and hyphens";
+    }
+    return "";
+  };
+
+  // Debounce function to limit API calls
+  const debounce = (func: Function, delay: number) => {
+    let timer: NodeJS.Timeout;
+    return (...args: any[]) => {
+      clearTimeout(timer);
+      timer = setTimeout(() => func(...args), delay);
+    };
+  };
+
+  // Debounced function to check username availability
+  const debouncedUsernameCheck = debounce(async (username: string) => {
+    // Only check if username passes basic validation
+    if (username && !validateUsername(username)) {
+      const result = await checkUsernameAvailability(username);
+      if (!result.isAvailable) {
+        setErrors((prev) => ({
+          ...prev,
+          username: result.error || "Username already taken",
+        }));
+      }
+    }
+  }, 500); // 500ms delay
+
+  // Debounced function to check email availability
+  const debouncedEmailCheck = debounce(async (email: string) => {
+    // Only check if email passes basic validation
+    if (email && !validateEmail(email)) {
+      try {
+        const res = await fetch("/api/check-email", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email }),
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          setErrors((prev) => ({
+            ...prev,
+            email: data.error || "Email already registered",
+          }));
+        }
+      } catch (error) {
+        console.error("Email check error:", error);
+      }
+    }
+  }, 500); // 500ms delay
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
+
+    // Validate username
+    if (name === "username") {
+      const usernameError = validateUsername(value);
+      setErrors((prev) => ({ ...prev, username: usernameError }));
+
+      // If username passes basic validation, check availability
+      if (!usernameError && value.length >= 3) {
+        debouncedUsernameCheck(value);
+      }
+    }
 
     // Validate email
     if (name === "email") {
       const emailError = validateEmail(value);
       setErrors((prev) => ({ ...prev, email: emailError }));
+
+      // If email passes basic validation, check availability
+      if (!emailError && value.includes("@")) {
+        debouncedEmailCheck(value);
+      }
     }
 
     // Validate password
@@ -120,11 +196,44 @@ export default function SignUpPage() {
     setErrors((prev) => ({ ...prev, otp: "" }));
   };
 
+  // Function to check if username is already taken
+  const checkUsernameAvailability = async (username: string) => {
+    setCheckingUsername(true);
+    try {
+      const res = await fetch("/api/check-username", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username }),
+      });
+
+      const data = await res.json();
+      setCheckingUsername(false);
+      return { isAvailable: res.ok, error: data.error };
+    } catch (error) {
+      console.error("Username check error:", error);
+      setCheckingUsername(false);
+      return {
+        isAvailable: false,
+        error: "Error checking username availability",
+      };
+    }
+  };
+
   const sendOtp = async () => {
     // Validate email before sending OTP
     const emailError = validateEmail(form.email);
     if (emailError) {
       setErrors((prev) => ({ ...prev, email: emailError }));
+      return;
+    }
+
+    // Check if username is already taken
+    const usernameCheck = await checkUsernameAvailability(form.username);
+    if (!usernameCheck.isAvailable) {
+      setErrors((prev) => ({
+        ...prev,
+        username: usernameCheck.error || "Username already taken",
+      }));
       return;
     }
 
@@ -236,8 +345,14 @@ export default function SignUpPage() {
     }
 
     // Final validation before submission
+    const usernameError = validateUsername(form.username);
     const emailError = validateEmail(form.email);
     const passwordError = validatePassword(form.password);
+
+    if (usernameError) {
+      setErrors((prev) => ({ ...prev, username: usernameError }));
+      return;
+    }
 
     if (emailError) {
       setErrors((prev) => ({ ...prev, email: emailError }));
@@ -269,15 +384,36 @@ export default function SignUpPage() {
           onSubmit={handleSubmit}
         >
           <h2 className="text-2xl font-bold text-center">Sign Up</h2>
-          <input
-            type="text"
-            name="username"
-            placeholder="Username"
-            value={form.username}
-            onChange={handleChange}
-            className="w-full px-4 py-2 border rounded"
-            required
-          />
+          <div className="space-y-1">
+            <div className="relative">
+              <input
+                type="text"
+                name="username"
+                placeholder="Username"
+                value={form.username}
+                onChange={handleChange}
+                className={`w-full px-4 py-2 border rounded ${
+                  errors.username ? "border-red-500" : ""
+                }`}
+                required
+              />
+              {checkingUsername && (
+                <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                  <div className="animate-spin h-4 w-4 border-2 border-primary rounded-full border-t-transparent"></div>
+                </div>
+              )}
+            </div>
+            {errors.username && (
+              <p className="text-red-500 text-xs font-medium">
+                {errors.username}
+              </p>
+            )}
+            {!errors.username && form.username && !checkingUsername && (
+              <p className="text-green-500 text-xs font-medium">
+                Username available
+              </p>
+            )}
+          </div>
           <div className="space-y-1">
             <input
               type="email"
@@ -330,7 +466,10 @@ export default function SignUpPage() {
             type="submit"
             className="w-full bg-primary text-white py-2 rounded font-semibold hover:bg-primary/90 transition"
             disabled={
-              !!errors.email || !!errors.password || !!errors.confirmPassword
+              !!errors.username ||
+              !!errors.email ||
+              !!errors.password ||
+              !!errors.confirmPassword
             }
           >
             Sign Up
