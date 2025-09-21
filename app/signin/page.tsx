@@ -1,30 +1,32 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import { GoogleSignInButton } from "@/components/google-sign-in-button";
-import { SessionManager } from "@/lib/client/session";
-import { useRouter } from "next/navigation";
-import { navigateToAdmin } from "@/lib/client/routing";
+import { useState } from "react"
+import { useRouter } from "next/navigation"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { GoogleSignInButton } from "@/components/google-sign-in-button"
+import { SessionManager } from "@/lib/client/session"
+import Link from "next/link"
+import { Loader2 } from "lucide-react"
 
 export default function SignInPage() {
-  const router = useRouter();
+  const router = useRouter()
   const [form, setForm] = useState({
     identifier: "",
     password: "",
-  });
-  const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  })
+  const [error, setError] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-    // Clear error when user types
-    if (error) setError("");
-  };
+    setForm({ ...form, [e.target.name]: e.target.value })
+    if (error) setError("")
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    setError("");
+    e.preventDefault()
+    setIsLoading(true)
+    setError("")
 
     try {
       const res = await fetch("/api/signin", {
@@ -36,144 +38,128 @@ export default function SignInPage() {
           identifier: form.identifier,
           password: form.password,
         }),
-      });
+      })
 
-      const data = await res.json();
+      const data = await res.json()
 
       if (res.ok) {
         // Store user session with role for testing
         const userWithRole = {
           ...data.user,
           role: "admin", // For testing, add admin role
-        };
-        SessionManager.storeSession(userWithRole);
+        }
+        SessionManager.storeSession(userWithRole)
 
-        // Successful login - redirect to admin
-        console.log("Login successful, redirecting to admin...");
-        console.log("User data with role:", userWithRole);
-
-        // Use dynamic origin for proper deployment in any environment
-        window.location.href = `${window.location.origin}/admin`;
+        console.log("Login successful, redirecting to admin...")
+        window.location.href = `${window.location.origin}/admin`
       } else {
-        // Handle error
-        setError(data.error || "Failed to sign in");
+        setError(data.error || "Failed to sign in")
       }
     } catch (err) {
-      console.error("Login error:", err);
-      setError("An error occurred. Please try again.");
+      console.error("Login error:", err)
+      setError("An error occurred. Please try again.")
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  };
+  }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 to-slate-700 p-4">
-      <div className="w-full max-w-sm">
-        <form
-          className="bg-white/10 backdrop-blur-sm rounded-lg border border-white/20 shadow-2xl p-8 space-y-6"
-          onSubmit={handleSubmit}
-        >
-          <div className="text-center">
-            <h2 className="text-2xl font-bold text-white mb-2">Sign In</h2>
-            <p className="text-white/70 text-sm">Access your GPU task management dashboard</p>
-          </div>
-
-          {error && (
-            <div
-              className="bg-red-500/20 border border-red-500/50 text-red-200 px-4 py-3 rounded-lg relative backdrop-blur-sm"
-              role="alert"
-            >
-              <span className="block sm:inline text-sm">{error}</span>
-            </div>
-          )}
-
-          <div className="space-y-4">
-            <div>
-              <input
-                type="text"
-                name="identifier"
-                placeholder="Username or Email"
-                value={form.identifier}
-                onChange={handleChange}
-                className="w-full px-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all"
-                disabled={isLoading}
-                required
+    <div className="min-h-screen bg-black flex items-start justify-center p-4 pt-16 relative overflow-hidden">
+      <div className="w-full max-w-sm relative z-10 space-y-6">
+        {/* Logo and Brand */}
+        <div className="flex flex-col items-center space-y-4 mb-8">
+          <div className="flex items-center justify-center">
+            <div className="w-12 h-12 flex items-center justify-center">
+              <img 
+                src="/Screenshot 2025-09-21 at 12.36.07 PM.svg" 
+                alt="Rvidia Logo" 
+                className="w-12 h-12 object-contain"
               />
             </div>
+          </div>
+          <p className="text-white/70 text-lg">Sign in to Rvidia</p>
+        </div>
 
-            <div>
-              <input
-                type="password"
-                name="password"
-                placeholder="Password"
-                value={form.password}
-                onChange={handleChange}
-                className="w-full px-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all"
-                disabled={isLoading}
-                required
-              />
-            </div>
+        <GoogleSignInButton />
+        
+        <div className="relative">
+          <div className="absolute inset-0 flex items-center">
+            <span className="w-full border-t border-white/10" />
+          </div>
+          <div className="relative flex justify-center text-xs uppercase">
+            <span className="bg-black px-3 text-white/50 font-medium">Or continue with email</span>
+          </div>
+        </div>
 
-            <button
-              type="submit"
-              className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 rounded-lg font-semibold hover:from-blue-600 hover:to-purple-700 transition-all duration-200 flex items-center justify-center shadow-lg"
-              disabled={isLoading}
+        {error && (
+          <div className="bg-red-500/20 border border-red-500/50 text-red-200 px-4 py-3 rounded-lg backdrop-blur-sm">
+            <span className="text-sm">{error}</span>
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <Input
+            id="identifier"
+            name="identifier"
+            type="text"
+            value={form.identifier}
+            onChange={handleChange}
+            required
+            disabled={isLoading}
+            className="h-12 bg-white/5 backdrop-blur-sm text-white border-white/10 placeholder:text-white/40 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 rounded-lg transition-all"
+            placeholder="Email or username"
+          />
+          
+          <Input
+            id="password"
+            name="password"
+            type="password"
+            value={form.password}
+            onChange={handleChange}
+            required
+            disabled={isLoading}
+            className="h-12 bg-white/5 backdrop-blur-sm text-white border-white/10 placeholder:text-white/40 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 rounded-lg transition-all"
+            placeholder="Password"
+          />
+
+          <div className="flex items-center justify-center">
+            <Link 
+              href="/forgot-password" 
+              className="text-sm text-blue-400 hover:text-blue-300 transition-colors"
             >
-              {isLoading ? (
-                <>
-                  <svg
-                    className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <circle
-                      className="opacity-25"
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                    ></circle>
-                    <path
-                      className="opacity-75"
-                      fill="currentColor"
-                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                    ></path>
-                  </svg>
-                  Signing in...
-                </>
-              ) : (
-                "Sign In"
-              )}
-            </button>
+              Forgot password?
+            </Link>
           </div>
 
-          <div className="relative">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-white/20"></div>
-            </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="bg-gradient-to-br from-slate-900 to-slate-700 px-4 text-white/70">or</span>
-            </div>
-          </div>
-
-          <GoogleSignInButton />
-
-          <div className="text-center">
-            <p className="text-white/70 text-sm">
-              Don't have an account?{" "}
-              <button
-                type="button"
-                onClick={() => router.push("/signup")}
-                className="text-blue-400 hover:text-blue-300 transition-colors font-medium"
-              >
-                Sign up
-              </button>
-            </p>
-          </div>
+          <Button
+            type="submit"
+            size="lg"
+            disabled={isLoading}
+            className="w-full h-12 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 focus:ring-2 focus:ring-blue-500/50 transition-all font-medium text-white border-0 rounded-lg shadow-lg"
+          >
+            {isLoading ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Signing in...
+              </>
+            ) : (
+              "Sign In"
+            )}
+          </Button>
         </form>
+
+        <div className="text-center">
+          <p className="text-white/60 text-sm">
+            Don't have an account?{" "}
+            <Link 
+              href="/signup" 
+              className="text-blue-400 hover:text-blue-300 font-medium transition-colors"
+            >
+              Create account
+            </Link>
+          </p>
+        </div>
       </div>
     </div>
-  );
+  )
 }
