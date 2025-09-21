@@ -3,7 +3,8 @@ export interface User {
   name: string
   email: string
   image: string
-  role: "admin" | "user"
+  role: "admin" | "user" | "ADMIN" | "USER" // Support both uppercase and lowercase
+  username?: string
 }
 
 // Hardcoded role mapping for demo purposes

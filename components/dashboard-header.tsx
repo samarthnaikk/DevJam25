@@ -11,6 +11,9 @@ export function DashboardHeader() {
 
   if (!user) return null
 
+  // Check if user is admin (handle both cases)
+  const isAdmin = user.role?.toLowerCase() === "admin"
+
   return (
     <header className="bg-white border-b border-border px-6 py-4">
       <div className="flex items-center justify-between">
@@ -20,32 +23,47 @@ export function DashboardHeader() {
           </div>
           <div>
             <h1 className="text-xl font-semibold text-gray-900">
-              {user.role === "admin" ? "Admin Dashboard" : "My Dashboard"}
+              {isAdmin ? "Admin Dashboard" : "My Dashboard"}
             </h1>
             <p className="text-sm text-muted-foreground">Welcome back, {user.name}</p>
           </div>
         </div>
 
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="relative h-10 w-10 rounded-full">
-              <Avatar className="h-10 w-10">
-                <AvatarImage src={user.image || "/placeholder.svg"} alt={user.name} />
-                <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
-              </Avatar>
+        <div className="flex items-center space-x-4">
+          {/* Show prominent sign out button for admin users */}
+          {isAdmin && (
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={signOut}
+              className="flex items-center space-x-2"
+            >
+              <LogOut className="h-4 w-4" />
+              <span>Sign Out</span>
             </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-56" align="end">
-            <DropdownMenuItem>
-              <Settings className="mr-2 h-4 w-4" />
-              Settings
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={signOut}>
-              <LogOut className="mr-2 h-4 w-4" />
-              Sign out
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+          )}
+
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="relative h-10 w-10 rounded-full">
+                <Avatar className="h-10 w-10">
+                  <AvatarImage src={user.image || "/placeholder.svg"} alt={user.name} />
+                  <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
+                </Avatar>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56" align="end">
+              <DropdownMenuItem>
+                <Settings className="mr-2 h-4 w-4" />
+                Settings
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={signOut}>
+                <LogOut className="mr-2 h-4 w-4" />
+                Sign out
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </div>
     </header>
   )

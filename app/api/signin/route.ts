@@ -39,6 +39,8 @@ export async function POST(request: Request) {
         id: user.id,
         email: user.email,
         name: user.name,
+        role: user.role, // Include the user's role
+        username: user.username, // Include username if needed
         // Don't include password in the response
       },
     });

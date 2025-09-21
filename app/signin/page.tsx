@@ -43,15 +43,21 @@ export default function SignInPage() {
       const data = await res.json()
 
       if (res.ok) {
-        // Store user session with role for testing
+        // Store user session with the role from the database
         const userWithRole = {
           ...data.user,
-          role: "admin", // For testing, add admin role
+          role: data.user.role || "USER", // Use the role from API, default to USER
         }
         SessionManager.storeSession(userWithRole)
 
-        console.log("Login successful, redirecting to admin...")
-        window.location.href = `${window.location.origin}/admin`
+        console.log("Login successful, user role:", userWithRole.role)
+        
+        // Redirect based on user role
+        if (userWithRole.role?.toLowerCase() === "admin") {
+          window.location.href = `${window.location.origin}/admin`
+        } else {
+          window.location.href = `${window.location.origin}/dashboard`
+        }
       } else {
         setError(data.error || "Failed to sign in")
       }

@@ -112,7 +112,7 @@ const mockTaskAssignments = [
 ];
 
 export default function AdminDashboard() {
-  const { user, loading } = useAuthContext();
+  const { user, loading, isAdmin } = useAuthContext();
   const router = useRouter();
 
   useEffect(() => {
@@ -120,26 +120,25 @@ export default function AdminDashboard() {
       try {
         const session = SessionManager.getSession();
         console.log("Admin page - Session check:", session);
+        console.log("User from context:", user);
+        console.log("Is admin:", isAdmin);
 
-        // For debugging only - always allow access for now
-        return;
-
-        /*
-        if (!session) {
-          console.log("No session found, redirecting to login page");
-          router.push("/");
+        // Wait a moment for auth to stabilize
+        if (!user) {
+          console.log("No user found, redirecting to signin");
+          router.push("/signin");
           return;
         }
-  
-        // Check role from session if available, otherwise fall back to AuthContext
-        const userRole = session.role || user?.role;
-        console.log("User role:", userRole);
-        
-        if (userRole !== "admin") {
+
+        // Check if user is admin
+        const userRole = user.role?.toLowerCase();
+        if (!isAdmin && userRole !== "admin") {
           console.log("User is not an admin, redirecting to dashboard");
           router.push("/dashboard");
+          return;
         }
-        */
+
+        console.log("Admin access granted for user:", user.name);
       } catch (error) {
         console.error("Session check error:", error);
       }
@@ -148,7 +147,8 @@ export default function AdminDashboard() {
     if (!loading) {
       checkAuth();
     }
-  }, [loading, router, user]); // During transition, we'll use both methods
+  }, [loading, router, user, isAdmin]);
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -157,11 +157,34 @@ export default function AdminDashboard() {
     );
   }
 
-  // Temporarily disable auth check for debugging
-  const isAuthenticated = true; // SessionManager.isAuthenticated();
-  const isAdmin = true; // session?.role === "admin" || user?.role === "admin";
+  // Show loading if no user yet
+  if (!user) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+      </div>
+    );
+  }
 
-  // For debugging, simply return content
+  // Check admin access
+  const hasAdminAccess = isAdmin || user.role?.toLowerCase() === "admin";
+  
+  if (!hasAdminAccess) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold mb-4">Access Denied</h1>
+          <p className="text-gray-600 mb-4">You don't have admin permissions to access this page.</p>
+          <button 
+            onClick={() => router.push("/dashboard")}
+            className="bg-primary text-white px-4 py-2 rounded hover:bg-primary/90"
+          >
+            Go to Dashboard
+          </button>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="min-h-screen bg-gray-50">
       <DashboardHeader />

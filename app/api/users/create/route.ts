@@ -4,12 +4,20 @@ import { Prisma } from "@prisma/client";
 
 export async function POST(request: Request) {
   try {
-    const { username, email, password } = await request.json();
+    const { username, email, password, role = "USER" } = await request.json();
 
     // Validate required fields
     if (!username || !email || !password) {
       return NextResponse.json(
         { error: "Username, email, and password are required" },
+        { status: 400 }
+      );
+    }
+
+    // Validate role
+    if (role && !["USER", "ADMIN"].includes(role.toUpperCase())) {
+      return NextResponse.json(
+        { error: "Invalid role. Must be USER or ADMIN" },
         { status: 400 }
       );
     }
@@ -47,9 +55,10 @@ export async function POST(request: Request) {
     // Create the user
     try {
       // Using raw SQL since the Prisma types are not updated
+      const userRole = role ? role.toUpperCase() : "USER";
       await prisma.$executeRaw`
-        INSERT INTO "User" (email, username, password, name, "createdAt")
-        VALUES (${email}, ${username}, ${password}, ${username}, datetime('now'))
+        INSERT INTO "User" (email, username, password, name, role, "createdAt")
+        VALUES (${email}, ${username}, ${password}, ${username}, ${userRole}, datetime('now'))
       `;
 
       // Return success without sending sensitive user data

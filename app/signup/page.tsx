@@ -9,6 +9,7 @@ import { CountdownTimer } from "@/components/countdown-timer";
 
 export default function SignUpPage() {
   const router = useRouter();
+  const [selectedRole, setSelectedRole] = useState<"admin" | "user" | null>(null);
   const [form, setForm] = useState({
     username: "",
     email: "",
@@ -194,6 +195,7 @@ export default function SignUpPage() {
         username: form.username,
         email: form.email,
         password: form.password,
+        role: selectedRole?.toUpperCase(), // Include the selected role in uppercase
       };
 
       // Make a request to create the user
@@ -265,7 +267,79 @@ export default function SignUpPage() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-start bg-black text-white pt-16">
-      {!showOtpVerification ? (
+      {!selectedRole ? (
+        // Role Selection Screen
+        <div className="w-full max-w-2xl space-y-8">
+          {/* Logo Section */}
+          <div className="text-center">
+            <img 
+              src="/Screenshot 2025-09-21 at 12.36.07 PM.svg" 
+              alt="Rvidia Logo" 
+              className="w-16 h-16 mx-auto mb-4"
+            />
+            <h1 className="text-2xl font-medium text-gray-300 mb-2">Join Rvidia</h1>
+            <p className="text-gray-400 text-sm">Choose how you want to sign up</p>
+          </div>
+
+          {/* Role Selection Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Admin Signup Card */}
+            <div 
+              onClick={() => setSelectedRole("admin")}
+              className="group cursor-pointer p-8 bg-gradient-to-br from-purple-900/20 to-blue-900/20 hover:from-purple-800/30 hover:to-blue-800/30 border border-purple-500/30 hover:border-purple-400/50 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl"
+            >
+              <div className="text-center space-y-4">
+                <div className="w-16 h-16 mx-auto bg-gradient-to-r from-purple-600 to-blue-600 rounded-full flex items-center justify-center group-hover:from-purple-500 group-hover:to-blue-500 transition-all">
+                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.031 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                  </svg>
+                </div>
+                <h2 className="text-xl font-semibold text-white">Sign Up as Admin</h2>
+                <p className="text-gray-400 text-sm leading-relaxed">
+                  Get administrative access to manage users, system settings, and oversee platform operations.
+                </p>
+                <div className="mt-4 text-purple-400 group-hover:text-purple-300 transition-colors">
+                  <span className="text-sm font-medium">Continue as Administrator →</span>
+                </div>
+              </div>
+            </div>
+
+            {/* User Signup Card */}
+            <div 
+              onClick={() => setSelectedRole("user")}
+              className="group cursor-pointer p-8 bg-gradient-to-br from-green-900/20 to-teal-900/20 hover:from-green-800/30 hover:to-teal-800/30 border border-green-500/30 hover:border-green-400/50 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl"
+            >
+              <div className="text-center space-y-4">
+                <div className="w-16 h-16 mx-auto bg-gradient-to-r from-green-600 to-teal-600 rounded-full flex items-center justify-center group-hover:from-green-500 group-hover:to-teal-500 transition-all">
+                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  </svg>
+                </div>
+                <h2 className="text-xl font-semibold text-white">Sign Up as User</h2>
+                <p className="text-gray-400 text-sm leading-relaxed">
+                  Join as a regular user to access platform features, manage your profile, and connect with the community.
+                </p>
+                <div className="mt-4 text-green-400 group-hover:text-green-300 transition-colors">
+                  <span className="text-sm font-medium">Continue as User →</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="text-center mt-8">
+            <p className="text-white/60 text-sm">
+              Already have an account?{" "}
+              <button
+                type="button"
+                onClick={() => router.push("/signin")}
+                className="text-blue-400 hover:text-blue-300 font-medium transition-colors"
+              >
+                Sign in
+              </button>
+            </p>
+          </div>
+        </div>
+      ) : !showOtpVerification ? (
         <div className="w-full max-w-sm space-y-8">
           {/* Logo Section */}
           <div className="text-center">
@@ -274,7 +348,15 @@ export default function SignUpPage() {
               alt="Rvidia Logo" 
               className="w-16 h-16 mx-auto mb-4"
             />
-            <h1 className="text-xl font-medium text-gray-300 mb-8">Sign up to Rvidia</h1>
+            <h1 className="text-xl font-medium text-gray-300 mb-2">
+              Sign up as {selectedRole === "admin" ? "Administrator" : "User"}
+            </h1>
+            <button
+              onClick={() => setSelectedRole(null)}
+              className="text-blue-400 hover:text-blue-300 text-sm transition-colors"
+            >
+              ← Back to role selection
+            </button>
           </div>
 
           <form
