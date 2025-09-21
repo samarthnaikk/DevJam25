@@ -155,18 +155,6 @@ export default function HomePage() {
               </span>
             ))}
           </span>
-
-          <style jsx>{`
-            @keyframes wave {
-              0%,
-              100% {
-                transform: translateY(0px);
-              }
-              50% {
-                transform: translateY(-3px);
-              }
-            }
-          `}</style>
         </div>
 
         {/* Scroll Indicator */}
@@ -527,28 +515,177 @@ export default function HomePage() {
                 </div>
               </div>
             </div>
-
-            {/* Add CSS animations */}
-            <style jsx>{`
-              @keyframes slideInUp {
-                0% {
-                  opacity: 0;
-                  transform: translateY(50px);
-                }
-                100% {
-                  opacity: 1;
-                  transform: translateY(0);
-                }
-              }
-            `}</style>
           </div>
         </div>
       </div>
 
-      {/* Content Overlay with Glassmorphism */}
-      <div className="relative z-10 min-h-screen flex flex-col items-center justify-center px-4">
-        {/* This page now only shows the 3D model and Get Started button */}
-      </div>
+      {/* Footer Section */}
+      <footer className="relative z-10 bg-black border-t border-white/10">
+        <div className="container mx-auto px-4 py-12">
+          <div className="max-w-6xl mx-auto">
+            {/* Footer Main Content */}
+            <div className="grid md:grid-cols-4 gap-8 mb-8">
+              {/* Company Info */}
+              <div className="md:col-span-2">
+                <div className="flex items-center space-x-3 mb-4">
+                  <div className="w-10 h-10 flex items-center justify-center">
+                    <img
+                      src="/Screenshot 2025-09-21 at 12.36.07 PM.svg"
+                      alt="Rvidia Logo"
+                      className="w-10 h-10 object-contain"
+                    />
+                  </div>
+                  <span
+                    className="text-white font-semibold text-2xl tracking-wide"
+                    style={{ fontFamily: "Lato, sans-serif", fontWeight: "375" }}
+                  >
+                    Rvidia
+                  </span>
+                </div>
+                <p
+                  className="text-white/70 text-sm leading-relaxed mb-4 max-w-md"
+                  style={{ fontFamily: 'Lato, sans-serif', fontWeight: '300' }}
+                >
+                  Democratizing high-performance computing through distributed processing. 
+                  Making computation faster, smarter, and accessible to everyone.
+                </p>
+                <div className="flex space-x-2">
+                  <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
+                  <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+                  <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
+                </div>
+              </div>
+
+              {/* Quick Links */}
+              <div>
+                <h3
+                  className="text-white font-semibold text-lg mb-4"
+                  style={{ fontFamily: 'Lato, sans-serif', fontWeight: '400' }}
+                >
+                  Quick Links
+                </h3>
+                <ul className="space-y-2">
+                  <li>
+                    <a
+                      href="#vision"
+                      className="text-white/60 hover:text-white transition-colors text-sm"
+                      style={{ fontFamily: 'Lato, sans-serif', fontWeight: '300' }}
+                    >
+                      Our Vision
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="#about"
+                      className="text-white/60 hover:text-white transition-colors text-sm"
+                      style={{ fontFamily: 'Lato, sans-serif', fontWeight: '300' }}
+                    >
+                      About Us
+                    </a>
+                  </li>
+                  <li>
+                    <button
+                      onClick={() => router.push("/signin")}
+                      className="text-white/60 hover:text-white transition-colors text-sm text-left"
+                      style={{ fontFamily: 'Lato, sans-serif', fontWeight: '300' }}
+                    >
+                      Sign In
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      onClick={() => router.push("/signup")}
+                      className="text-white/60 hover:text-white transition-colors text-sm text-left"
+                      style={{ fontFamily: 'Lato, sans-serif', fontWeight: '300' }}
+                    >
+                      Get Started
+                    </button>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Contact Info */}
+              <div>
+                <h3
+                  className="text-white font-semibold text-lg mb-4"
+                  style={{ fontFamily: 'Lato, sans-serif', fontWeight: '400' }}
+                >
+                  Connect
+                </h3>
+                <div className="space-y-3">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-8 h-8 bg-white/5 rounded-full flex items-center justify-center">
+                      <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
+                    </div>
+                    <span
+                      className="text-white/60 text-sm"
+                      style={{ fontFamily: 'Lato, sans-serif', fontWeight: '300' }}
+                    >
+                      hello@rvidia.com
+                    </span>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <div className="w-8 h-8 bg-white/5 rounded-full flex items-center justify-center">
+                      <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
+                    </div>
+                    <span
+                      className="text-white/60 text-sm"
+                      style={{ fontFamily: 'Lato, sans-serif', fontWeight: '300' }}
+                    >
+                      support@rvidia.com
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Footer Bottom */}
+            <div className="border-t border-white/10 pt-8">
+              <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+                <div className="flex items-center space-x-4">
+                  <p
+                    className="text-white/50 text-sm"
+                    style={{ fontFamily: 'Lato, sans-serif', fontWeight: '300' }}
+                  >
+                    © 2025 Rvidia. All rights reserved.
+                  </p>
+                </div>
+                <div className="flex items-center space-x-6">
+                  <a
+                    href="#"
+                    className="text-white/50 hover:text-white transition-colors text-sm"
+                    style={{ fontFamily: 'Lato, sans-serif', fontWeight: '300' }}
+                  >
+                    Privacy Policy
+                  </a>
+                  <a
+                    href="#"
+                    className="text-white/50 hover:text-white transition-colors text-sm"
+                    style={{ fontFamily: 'Lato, sans-serif', fontWeight: '300' }}
+                  >
+                    Terms of Service
+                  </a>
+                  <div className="flex items-center space-x-2">
+                    <span
+                      className="text-white/30 text-xs"
+                      style={{ fontFamily: 'Lato, sans-serif', fontWeight: '300' }}
+                    >
+                      Built with
+                    </span>
+                    <div className="w-1 h-1 bg-gradient-to-r from-purple-400 to-blue-400 rounded-full"></div>
+                    <span
+                      className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400 text-xs font-medium"
+                      style={{ fontFamily: 'Lato, sans-serif' }}
+                    >
+                      distributed computing
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
