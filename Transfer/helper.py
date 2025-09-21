@@ -6,5 +6,12 @@ cross network
 def Partition(input_source=None,output_source=None,slices):
     pass
 
-def AIPartition(input_source=None,output_source=None,slices):
+def ModelSplit(input_source=None,output_source=None,slices):
+    pass
+
+def DataSplit(input_source=None,output_source=None,slices):
+    """
+    This function assumes that each system can run the LLM smoothly. 
+    Only the data splits
+    """
     pass
