@@ -2,13 +2,20 @@ import prisma from "../lib/prisma";
 import { writeFileSync } from "fs";
 
 async function exportUsersToCSV() {
-  const users = await prisma.user.findMany();
-  const csvRows = ["id,email,password,googleId,name,createdAt"];
+  // Use raw SQL to get all fields including the new ones
+  const users = (await prisma.$queryRaw`
+    SELECT id, email, username, password, googleId, name, role, createdAt 
+    FROM "User"
+  `) as any[];
+
+  const csvRows = ["id,email,username,password,googleId,name,role,createdAt"];
   for (const user of users) {
     csvRows.push(
-      `"${user.id}","${user.email}","${user.password}","${
-        user.googleId ?? ""
-      }","${user.name ?? ""}","${user.createdAt.toISOString()}"`
+      `"${user.id}","${user.email}","${user.username ?? ""}","${
+        user.password
+      }","${user.googleId ?? ""}","${user.name ?? ""}","${
+        user.role ?? "USER"
+      }","${user.createdAt}"`
     );
   }
   writeFileSync("users.csv", csvRows.join("\n"));

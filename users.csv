@@ -1,2 +1,3 @@
-id,email,password,googleId,name,createdAt
-"14","ishhankheria06@gmail.com","Ishhan1109@","","IshhanKheria","2025-09-21T11:29:23.000Z"
+id,email,username,password,googleId,name,role,createdAt
+"15","ishhankheria06@gmail.com","Ishhan_Kheria","Ishhan1109@","","Ishhan_Kheria","ADMIN","Sun Sep 21 2025 17:24:38 GMT+0530 (India Standard Time)"
+"16","suyash.singh2024@vitstudent.ac.in","Suyash_Singh","Suyash2007@","","Suyash_Singh","USER","Sun Sep 21 2025 17:56:26 GMT+0530 (India Standard Time)"
