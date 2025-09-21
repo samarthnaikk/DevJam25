@@ -65,7 +65,7 @@ export default function HomePage() {
         
           <span
             className="text-white font-semibold text-3xl tracking-wide"
-            style={{ fontFamily: "DM Sans, sans-serif", fontWeight: "600" }}
+            style={{ fontFamily: "Open Sans", fontWeight: "300" }}
           >
             Rvidia
           </span>
