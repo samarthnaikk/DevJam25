@@ -17,8 +17,23 @@ datasource db {
 model User {
   id        Int     @id @default(autoincrement())
   email     String  @unique
+  username  String  @unique // Unique username for login purposes
   password  String
   googleId  String? // Optional, for Google auth
-  name      String?
+  name      String? // Optional display name for UI purposes
   createdAt DateTime @default(now())
+  
+  // Relations
+  passwordResetTokens PasswordResetToken[]
+}
+
+model PasswordResetToken {
+  id        Int      @id @default(autoincrement())
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  
+  // Relations
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
 }

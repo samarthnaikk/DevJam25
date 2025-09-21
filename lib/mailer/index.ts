@@ -68,7 +68,11 @@ export const getMailTransport = async () => {
 };
 
 // Send email with OTP
-export const sendOtpEmail = async (to: string, otp: string) => {
+export const sendOtpEmail = async (
+  to: string,
+  otp: string,
+  subject?: string
+) => {
   const transport = await getMailTransport();
 
   const mailOptions = {
@@ -76,7 +80,7 @@ export const sendOtpEmail = async (to: string, otp: string) => {
       process.env.EMAIL_FROM ||
       '"GPU Task Manager" <no-reply@gputaskmanager.com>',
     to,
-    subject: "Your Verification Code",
+    subject: subject || "Your Verification Code",
     text: `Your verification code is: ${otp}. This code will expire in 15 minutes.`,
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
