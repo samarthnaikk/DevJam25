@@ -221,3 +221,50 @@ def DataSplit(input_source="../PreProcess/sample1.txt", output_source="../PostPr
             print("Error while Splitting data - type 6")
             with open("../.log", "a", encoding="utf-8") as log:
                 log.write(f"{time.ctime()} - Error while Splitting data - type 6 - {e}\n")
+
+    elif Objtype == 7:
+        if not input_source or not output_source or not task_type:
+            raise ValueError("input_source, output_source, and task_type must be provided.")
+        
+        try:
+            os.makedirs(output_source, exist_ok=True)
+
+            with open(input_source, "r", encoding="utf-8") as f:
+                text = f.read()
+
+            chunks_list = []
+
+            if task_type == "qa":  
+                # Split into paragraphs, since QA usually depends on localized context
+                chunks_list = [p.strip() for p in text.split("\n\n") if p.strip()]
+
+            elif task_type == "summarization":
+                # Split into larger sections (by headings or long paragraphs)
+                sections = [s.strip() for s in text.split("\n\n") if s.strip()]
+                # Group multiple paragraphs into one section
+                group_size = 3
+                chunks_list = [
+                    "\n\n".join(sections[i:i+group_size]) 
+                    for i in range(0, len(sections), group_size)
+                ]
+
+            elif task_type == "classification":
+                # Split into individual sentences for fine-grained analysis
+                import re
+                sentences = re.split(r'(?<=[.!?])\s+', text)
+                chunks_list = [s.strip() for s in sentences if s.strip()]
+
+            else:
+                # Default fallback: paragraph-based splitting
+                chunks_list = [p.strip() for p in text.split("\n\n") if p.strip()]
+
+            # Write out the chunks
+            for i, chunk in enumerate(chunks_list, start=1):
+                chunk_file = os.path.join(output_source, f"chunk_{i}.txt")
+                with open(chunk_file, "w", encoding="utf-8") as cf:
+                    cf.write(chunk)
+
+        except Exception as e:
+            print("Error while Splitting data - type 7")
+            with open("../.log", "a", encoding="utf-8") as log:
+                log.write(f"{time.ctime()} - Error while Splitting data - type 7 - {e}\n")
