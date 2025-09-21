@@ -55,3 +55,5 @@ def GetIP():
     # If we reached here, nothing found. Either return loopback or raise.
     # Raising makes caller explicitly handle failure.
     raise RuntimeError("Could not determine local IPv4 address (all attempts failed).")
+
+print(GetIP())
