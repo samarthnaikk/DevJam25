@@ -9,7 +9,9 @@ import { CountdownTimer } from "@/components/countdown-timer";
 
 export default function SignUpPage() {
   const router = useRouter();
-  const [selectedRole, setSelectedRole] = useState<"admin" | "user" | null>(null);
+  const [selectedRole, setSelectedRole] = useState<"admin" | "user" | null>(
+    null
+  );
   const [form, setForm] = useState({
     username: "",
     email: "",
@@ -41,10 +43,22 @@ export default function SignUpPage() {
   }, [showOtpVerification, form.email]);
 
   const [errors, setErrors] = useState({
+    username: "",
     email: "",
     password: "",
     confirmPassword: "",
     otp: "",
+  });
+
+  // Username validation state
+  const [usernameStatus, setUsernameStatus] = useState<{
+    checking: boolean;
+    available: boolean | null;
+    message: string;
+  }>({
+    checking: false,
+    available: null,
+    message: "",
   });
 
   const validatePassword = (password: string) => {
@@ -79,9 +93,90 @@ export default function SignUpPage() {
     return "";
   };
 
+  // Debounced username validation
+  const checkUsernameAvailability = async (username: string) => {
+    if (!username || username.length < 3) {
+      setUsernameStatus({
+        checking: false,
+        available: null,
+        message: "",
+      });
+      return;
+    }
+
+    setUsernameStatus({
+      checking: true,
+      available: null,
+      message: "Checking availability...",
+    });
+
+    try {
+      const response = await fetch("/api/username/check", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setUsernameStatus({
+          checking: false,
+          available: data.available,
+          message: data.message || data.error || "",
+        });
+
+        // Update errors state
+        if (!data.available) {
+          setErrors((prev) => ({
+            ...prev,
+            username: data.error || "Username is already taken",
+          }));
+        } else {
+          setErrors((prev) => ({ ...prev, username: "" }));
+        }
+      } else {
+        setUsernameStatus({
+          checking: false,
+          available: null,
+          message: "Could not check availability",
+        });
+      }
+    } catch (error) {
+      console.error("Username check error:", error);
+      setUsernameStatus({
+        checking: false,
+        available: null,
+        message: "Error checking username",
+      });
+    }
+  };
+
+  // Debounce username checks
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      if (form.username) {
+        checkUsernameAvailability(form.username);
+      }
+    }, 500); // Wait 500ms after user stops typing
+
+    return () => clearTimeout(timeoutId);
+  }, [form.username]);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
+
+    // Validate username
+    if (name === "username") {
+      // Reset username status when user types
+      setUsernameStatus({
+        checking: false,
+        available: null,
+        message: "",
+      });
+      setErrors((prev) => ({ ...prev, username: "" }));
+    }
 
     // Validate email
     if (name === "email") {
@@ -243,6 +338,32 @@ export default function SignUpPage() {
     const emailError = validateEmail(form.email);
     const passwordError = validatePassword(form.password);
 
+    // Check username validation
+    if (!form.username || form.username.trim().length < 3) {
+      setErrors((prev) => ({
+        ...prev,
+        username: "Username must be at least 3 characters long",
+      }));
+      return;
+    }
+
+    if (usernameStatus.available === false || errors.username) {
+      setErrors((prev) => ({
+        ...prev,
+        username: errors.username || "Please choose a different username",
+      }));
+      return;
+    }
+
+    // If username is still being checked, wait for it
+    if (usernameStatus.checking) {
+      setErrors((prev) => ({
+        ...prev,
+        username: "Please wait while we check username availability",
+      }));
+      return;
+    }
+
     if (emailError) {
       setErrors((prev) => ({ ...prev, email: emailError }));
       return;
@@ -272,55 +393,89 @@ export default function SignUpPage() {
         <div className="w-full max-w-2xl space-y-8">
           {/* Logo Section */}
           <div className="text-center">
-            <img 
-              src="/Screenshot 2025-09-21 at 12.36.07 PM.svg" 
-              alt="Rvidia Logo" 
+            <img
+              src="/Screenshot 2025-09-21 at 12.36.07 PM.svg"
+              alt="Rvidia Logo"
               className="w-16 h-16 mx-auto mb-4"
             />
-            <h1 className="text-2xl font-medium text-gray-300 mb-2">Join Rvidia</h1>
-            <p className="text-gray-400 text-sm">Choose how you want to sign up</p>
+            <h1 className="text-2xl font-medium text-gray-300 mb-2">
+              Join Rvidia
+            </h1>
+            <p className="text-gray-400 text-sm">
+              Choose how you want to sign up
+            </p>
           </div>
 
           {/* Role Selection Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Admin Signup Card */}
-            <div 
+            <div
               onClick={() => setSelectedRole("admin")}
               className="group cursor-pointer p-8 bg-gradient-to-br from-purple-900/20 to-blue-900/20 hover:from-purple-800/30 hover:to-blue-800/30 border border-purple-500/30 hover:border-purple-400/50 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl"
             >
               <div className="text-center space-y-4">
                 <div className="w-16 h-16 mx-auto bg-gradient-to-r from-purple-600 to-blue-600 rounded-full flex items-center justify-center group-hover:from-purple-500 group-hover:to-blue-500 transition-all">
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.031 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                  <svg
+                    className="w-8 h-8 text-white"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.031 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+                    />
                   </svg>
                 </div>
-                <h2 className="text-xl font-semibold text-white">Sign Up as Admin</h2>
+                <h2 className="text-xl font-semibold text-white">
+                  Sign Up as Admin
+                </h2>
                 <p className="text-gray-400 text-sm leading-relaxed">
-                  Get administrative access to manage users, system settings, and oversee platform operations.
+                  Get administrative access to manage users, system settings,
+                  and oversee platform operations.
                 </p>
                 <div className="mt-4 text-purple-400 group-hover:text-purple-300 transition-colors">
-                  <span className="text-sm font-medium">Continue as Administrator →</span>
+                  <span className="text-sm font-medium">
+                    Continue as Administrator →
+                  </span>
                 </div>
               </div>
             </div>
 
             {/* User Signup Card */}
-            <div 
+            <div
               onClick={() => setSelectedRole("user")}
               className="group cursor-pointer p-8 bg-gradient-to-br from-green-900/20 to-teal-900/20 hover:from-green-800/30 hover:to-teal-800/30 border border-green-500/30 hover:border-green-400/50 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl"
             >
               <div className="text-center space-y-4">
                 <div className="w-16 h-16 mx-auto bg-gradient-to-r from-green-600 to-teal-600 rounded-full flex items-center justify-center group-hover:from-green-500 group-hover:to-teal-500 transition-all">
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  <svg
+                    className="w-8 h-8 text-white"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                    />
                   </svg>
                 </div>
-                <h2 className="text-xl font-semibold text-white">Sign Up as User</h2>
+                <h2 className="text-xl font-semibold text-white">
+                  Sign Up as User
+                </h2>
                 <p className="text-gray-400 text-sm leading-relaxed">
-                  Join as a regular user to access platform features, manage your profile, and connect with the community.
+                  Join as a regular user to access platform features, manage
+                  your profile, and connect with the community.
                 </p>
                 <div className="mt-4 text-green-400 group-hover:text-green-300 transition-colors">
-                  <span className="text-sm font-medium">Continue as User →</span>
+                  <span className="text-sm font-medium">
+                    Continue as User →
+                  </span>
                 </div>
               </div>
             </div>
@@ -343,9 +498,9 @@ export default function SignUpPage() {
         <div className="w-full max-w-sm space-y-8">
           {/* Logo Section */}
           <div className="text-center">
-            <img 
-              src="/Screenshot 2025-09-21 at 12.36.07 PM.svg" 
-              alt="Rvidia Logo" 
+            <img
+              src="/Screenshot 2025-09-21 at 12.36.07 PM.svg"
+              alt="Rvidia Logo"
               className="w-16 h-16 mx-auto mb-4"
             />
             <h1 className="text-xl font-medium text-gray-300 mb-2">
@@ -359,22 +514,78 @@ export default function SignUpPage() {
             </button>
           </div>
 
-          <form
-            className="space-y-4"
-            onSubmit={handleSubmit}
-          >
-
+          <form className="space-y-4" onSubmit={handleSubmit}>
             <div className="space-y-4">
-              <div>
-                <input
-                  type="text"
-                  name="username"
-                  placeholder="Username"
-                  value={form.username}
-                  onChange={handleChange}
-                  className="w-full h-12 px-3 py-3 bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all"
-                  required
-                />
+              <div className="space-y-1">
+                <div className="relative">
+                  <input
+                    type="text"
+                    name="username"
+                    placeholder="Username"
+                    value={form.username}
+                    onChange={handleChange}
+                    className={`w-full h-12 px-3 py-3 pr-10 bg-white/5 backdrop-blur-sm border rounded-lg text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all ${
+                      errors.username
+                        ? "border-red-500/50 ring-2 ring-red-500/50"
+                        : usernameStatus.available === true
+                        ? "border-green-500/50 ring-2 ring-green-500/50"
+                        : usernameStatus.available === false
+                        ? "border-red-500/50 ring-2 ring-red-500/50"
+                        : "border-white/10"
+                    }`}
+                    required
+                  />
+                  {/* Status indicator */}
+                  <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                    {usernameStatus.checking ? (
+                      <div className="w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                    ) : usernameStatus.available === true ? (
+                      <svg
+                        className="w-5 h-5 text-green-400"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M5 13l4 4L19 7"
+                        />
+                      </svg>
+                    ) : usernameStatus.available === false ? (
+                      <svg
+                        className="w-5 h-5 text-red-400"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                    ) : null}
+                  </div>
+                </div>
+                {/* Username validation message */}
+                {(errors.username || usernameStatus.message) && (
+                  <p
+                    className={`text-xs mt-1 ${
+                      errors.username
+                        ? "text-red-300"
+                        : usernameStatus.available === true
+                        ? "text-green-300"
+                        : usernameStatus.available === false
+                        ? "text-red-300"
+                        : "text-blue-300"
+                    }`}
+                  >
+                    {errors.username || usernameStatus.message}
+                  </p>
+                )}
               </div>
 
               <div className="space-y-1">
@@ -385,7 +596,9 @@ export default function SignUpPage() {
                   value={form.email}
                   onChange={handleChange}
                   className={`w-full h-12 px-3 py-3 bg-white/5 backdrop-blur-sm border rounded-lg text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all ${
-                    errors.email ? "border-red-500/50 ring-2 ring-red-500/50" : "border-white/10"
+                    errors.email
+                      ? "border-red-500/50 ring-2 ring-red-500/50"
+                      : "border-white/10"
                   }`}
                   required
                 />
@@ -402,7 +615,9 @@ export default function SignUpPage() {
                   value={form.password}
                   onChange={handleChange}
                   className={`w-full h-12 px-3 py-3 bg-white/5 backdrop-blur-sm border rounded-lg text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all ${
-                    errors.password ? "border-red-500/50 ring-2 ring-red-500/50" : "border-white/10"
+                    errors.password
+                      ? "border-red-500/50 ring-2 ring-red-500/50"
+                      : "border-white/10"
                   }`}
                   required
                 />
@@ -419,20 +634,29 @@ export default function SignUpPage() {
                   value={form.confirmPassword}
                   onChange={handleChange}
                   className={`w-full h-12 px-3 py-3 bg-white/5 backdrop-blur-sm border rounded-lg text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all ${
-                    errors.confirmPassword ? "border-red-500/50 ring-2 ring-red-500/50" : "border-white/10"
+                    errors.confirmPassword
+                      ? "border-red-500/50 ring-2 ring-red-500/50"
+                      : "border-white/10"
                   }`}
                   required
                 />
                 {errors.confirmPassword && (
-                  <p className="text-red-300 text-xs mt-1">{errors.confirmPassword}</p>
+                  <p className="text-red-300 text-xs mt-1">
+                    {errors.confirmPassword}
+                  </p>
                 )}
               </div>
 
               <button
                 type="submit"
-                className="w-full h-12 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 focus:ring-2 focus:ring-blue-500/50 transition-all font-medium text-white border-0 rounded-lg shadow-lg mt-6"
+                className="w-full h-12 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 focus:ring-2 focus:ring-blue-500/50 transition-all font-medium text-white border-0 rounded-lg shadow-lg mt-6 disabled:opacity-50 disabled:cursor-not-allowed"
                 disabled={
-                  !!errors.email || !!errors.password || !!errors.confirmPassword
+                  !!errors.username ||
+                  !!errors.email ||
+                  !!errors.password ||
+                  !!errors.confirmPassword ||
+                  usernameStatus.checking ||
+                  usernameStatus.available === false
                 }
               >
                 Sign up
@@ -444,7 +668,9 @@ export default function SignUpPage() {
                 <div className="w-full border-t border-white/10"></div>
               </div>
               <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-black px-3 text-white/50 font-medium">or</span>
+                <span className="bg-black px-3 text-white/50 font-medium">
+                  or
+                </span>
               </div>
             </div>
 
@@ -468,12 +694,14 @@ export default function SignUpPage() {
         <div className="w-full max-w-sm space-y-8">
           {/* Logo Section */}
           <div className="text-center">
-            <img 
-              src="/Screenshot 2025-09-21 at 12.36.07 PM.svg" 
-              alt="Rvidia Logo" 
+            <img
+              src="/Screenshot 2025-09-21 at 12.36.07 PM.svg"
+              alt="Rvidia Logo"
               className="w-16 h-16 mx-auto mb-4"
             />
-            <h1 className="text-xl font-medium text-gray-300 mb-2">Email Verification</h1>
+            <h1 className="text-xl font-medium text-gray-300 mb-2">
+              Email Verification
+            </h1>
             <p className="text-gray-400 text-sm">
               We sent a verification code to{" "}
               <span className="font-semibold text-white">{form.email}</span>
@@ -488,7 +716,9 @@ export default function SignUpPage() {
                 value={otp}
                 onChange={handleOtpChange}
                 className={`w-full h-12 px-3 py-3 bg-white/5 backdrop-blur-sm border rounded-lg text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all text-center text-2xl tracking-wider ${
-                  errors.otp ? "border-red-500/50 ring-2 ring-red-500/50" : "border-white/10"
+                  errors.otp
+                    ? "border-red-500/50 ring-2 ring-red-500/50"
+                    : "border-white/10"
                 }`}
                 autoComplete="off"
                 autoFocus
@@ -496,7 +726,13 @@ export default function SignUpPage() {
                 required
               />
               {errors.otp && (
-                <p className={`text-xs text-center ${errors.otp.includes('sent') ? 'text-green-300' : 'text-red-300'}`}>
+                <p
+                  className={`text-xs text-center ${
+                    errors.otp.includes("sent")
+                      ? "text-green-300"
+                      : "text-red-300"
+                  }`}
+                >
                   {errors.otp}
                 </p>
               )}
