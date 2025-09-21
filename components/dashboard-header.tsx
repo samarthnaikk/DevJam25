@@ -9,10 +9,12 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { LogOut, Settings, User } from "lucide-react";
+import { LogOut, Settings, User, Home } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export function DashboardHeader() {
   const { user, signOut } = useAuthContext();
+  const router = useRouter();
 
   if (!user) return null;
 
@@ -37,6 +39,17 @@ export function DashboardHeader() {
         </div>
 
         <div className="flex items-center space-x-4">
+          {/* Home button */}
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => router.push("/")}
+            className="flex items-center space-x-2"
+          >
+            <Home className="h-4 w-4" />
+            <span>Home</span>
+          </Button>
+
           {/* Show prominent sign out button for all users */}
           <Button
             variant="outline"

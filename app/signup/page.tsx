@@ -6,6 +6,8 @@ import { GoogleSignInButton } from "@/components/google-sign-in-button";
 import { otpManager } from "@/lib/otp/client";
 import { OtpRateLimiter } from "@/lib/otp/rate-limiter";
 import { CountdownTimer } from "@/components/countdown-timer";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 
 export default function SignUpPage() {
   const router = useRouter();
@@ -388,6 +390,15 @@ export default function SignUpPage() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-start bg-black text-white pt-16">
+      {/* Back Button */}
+      <Link
+        href="/"
+        className="fixed top-4 left-4 z-20 flex items-center gap-2 text-white/70 hover:text-white transition-colors group"
+      >
+        <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+        <span className="text-sm font-medium" style={{ fontFamily: 'Lato, sans-serif' }}>Back to Home</span>
+      </Link>
+
       {!selectedRole ? (
         // Role Selection Screen
         <div className="w-full max-w-2xl space-y-8">

@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { GoogleSignInButton } from "@/components/google-sign-in-button";
 import { SessionManager } from "@/lib/client/session";
 import Link from "next/link";
-import { Loader2 } from "lucide-react";
+import { Loader2, ArrowLeft } from "lucide-react";
 
 export default function SignInPage() {
   const router = useRouter();
@@ -89,6 +89,15 @@ export default function SignInPage() {
 
   return (
     <div className="min-h-screen bg-black flex items-start justify-center p-4 pt-16 relative overflow-hidden">
+      {/* Back Button */}
+      <Link
+        href="/"
+        className="fixed top-4 left-4 z-20 flex items-center gap-2 text-white/70 hover:text-white transition-colors group"
+      >
+        <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+        <span className="text-sm font-medium" style={{ fontFamily: 'Lato, sans-serif' }}>Back to Home</span>
+      </Link>
+
       <div className="w-full max-w-sm relative z-10 space-y-6">
         {/* Logo and Brand */}
         <div className="flex flex-col items-center space-y-4 mb-8">

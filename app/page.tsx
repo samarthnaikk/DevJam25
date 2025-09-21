@@ -43,6 +43,48 @@ export default function HomePage() {
 
   return (
     <div className="relative overflow-x-hidden">
+      {/* Fixed Header - Only show when not authenticated */}
+      {!isAuthenticated && (
+        <header className="fixed top-0 left-0 right-0 z-[100] bg-black border-b border-white/10">
+          <div className="w-full px-6 py-4 flex items-start justify-between">
+            {/* Logo and Brand - Top Left Corner */}
+            <div className="flex items-center space-x-3">
+              <div className="w-12 h-12 flex items-center justify-center">
+                <img
+                  src="/Screenshot 2025-09-21 at 12.36.07 PM.svg"
+                  alt="Rvidia Logo"
+                  className="w-12 h-12 object-contain"
+                />
+              </div>
+              <span
+                className="text-white font-semibold text-4xl tracking-wide"
+                style={{ fontFamily: "Lato, sans-serif", fontWeight: "375" }}
+              >
+                Rvidia
+              </span>
+            </div>
+
+            {/* Navigation Buttons - Top Right Corner */}
+            <div className="flex gap-2">
+              <button
+                onClick={() => router.push("/signin")}
+                className="px-3 py-1.5 text-xl text-white hover:text-white/80 transition-colors duration-200 hover:bg-white/5 rounded-md"
+                style={{ fontFamily: "Lato, sans-serif", fontWeight: "300" }}
+              >
+                Sign In
+              </button>
+              <button
+                onClick={() => router.push("/signup")}
+                className="px-3 py-1.5 text-xl bg-[#0B42F4] text-white rounded-md transition-colors duration-200"
+                style={{ fontFamily: "Lato, sans-serif", fontWeight: "300" }}
+              >
+                Sign Up
+              </button>
+            </div>
+          </div>
+        </header>
+      )}
+
       {/* Home Section */}
       <div className="relative min-h-screen">
         {/* Spline 3D Background - Only for Hero Section */}
@@ -51,24 +93,6 @@ export default function HomePage() {
             scene="https://prod.spline.design/KNeoX42LGSI6oW-F/scene.splinecode"
             className="w-full h-full"
           />
-        </div>
-
-        {/* Logo and Brand - Top Left Corner */}
-        <div className="absolute top-4 left-4 z-50 flex items-center space-x-3">
-          <div className="w-10 h-10 flex items-center justify-center">
-            <img
-              src="/Screenshot 2025-09-21 at 12.36.07 PM.svg"
-              alt="Rvidia Logo"
-              className="w-10 h-10 object-contain"
-            />
-          </div>
-        
-          <span
-            className="text-white font-semibold text-3xl tracking-wide"
-            style={{ fontFamily: "Open Sans", fontWeight: "300" }}
-          >
-            Rvidia
-          </span>
         </div>
 
         {/* Text Overlay to Cover Spline Model Text */}
@@ -81,22 +105,6 @@ export default function HomePage() {
               Divide. Distribute. Done.
             </h1>
           </div>
-        </div>
-
-        {/* Sign In / Sign Up Buttons - Top Right Corner */}
-        <div className="absolute top-4 right-4 z-50 flex gap-3">
-          <button
-            onClick={() => router.push("/signin")}
-            className="px-4 py-2 text-sm font-medium text-white/80 hover:text-white transition-colors duration-200 hover:bg-white/5 rounded-md"
-          >
-            Sign In
-          </button>
-          <button
-            onClick={() => router.push("/signup")}
-            className="px-4 py-2 text-sm font-medium bg-transparent text-white rounded-md hover:bg-white hover:text-black transition-colors duration-200 border border-white"
-          >
-            Sign Up
-          </button>
         </div>
 
         <div className="absolute bottom-4 right-4 z-50 bg-black px-4 py-2 rounded-lg shadow-lg">
@@ -174,6 +182,24 @@ export default function HomePage() {
         </div>
       </div>
 
+      {/* Spacer to give the 3D model more room */}
+      <div className="bg-black h-32"></div>
+
+      {/* Section Divider 1 - Hero to Vision */}
+      <div className="relative z-10 bg-black">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-center py-16">
+            <div className="flex items-center space-x-4">
+              <div className="w-16 h-px bg-gradient-to-r from-transparent via-purple-400 to-transparent"></div>
+              <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
+              <div className="w-32 h-px bg-gradient-to-r from-purple-400 via-blue-400 to-purple-400"></div>
+              <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+              <div className="w-16 h-px bg-gradient-to-r from-transparent via-blue-400 to-transparent"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Our Vision Section */}
       <div className="relative min-h-screen z-10 bg-black">
         {/* SVG Background Elements - Only 07.svg */}
@@ -216,6 +242,21 @@ export default function HomePage() {
               >
                To democratize high-performance computing by dividing one task across many computers, making computation faster, smarter, and accessible to everyone.
               </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Section Divider 2 - Vision to About Us */}
+      <div className="relative z-10 bg-black">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-center py-8">
+            <div className="flex items-center space-x-4">
+              <div className="w-16 h-px bg-gradient-to-r from-transparent via-blue-400 to-transparent"></div>
+              <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+              <div className="w-32 h-px bg-gradient-to-r from-blue-400 via-purple-400 to-blue-400"></div>
+              <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
+              <div className="w-16 h-px bg-gradient-to-r from-transparent via-purple-400 to-transparent"></div>
             </div>
           </div>
         </div>

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import { ArrowLeft } from "lucide-react";
 
 export default function ResetPasswordPage() {
   const searchParams = useSearchParams();
@@ -119,6 +120,15 @@ export default function ResetPasswordPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-emerald-100 p-4">
+      {/* Back Button */}
+      <Link
+        href="/"
+        className="fixed top-2 left-4 z-20 flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors group"
+      >
+        <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+        <span className="text-sm font-medium" style={{ fontFamily: 'Lato, sans-serif' }}>Back to Home</span>
+      </Link>
+
       <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-8 space-y-6">
         <h2 className="text-2xl font-bold text-center">Reset Your Password</h2>
 

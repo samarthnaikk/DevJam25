@@ -10,6 +10,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { SessionManager } from "@/lib/client/session";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 
 export default function AuthDebugPage() {
   const [session, setSession] = useState<any>(null);
@@ -69,6 +71,15 @@ export default function AuthDebugPage() {
 
   return (
     <div className="container max-w-4xl py-8">
+      {/* Back Button */}
+      <Link
+        href="/"
+        className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors group mb-6 fixed top-2 left-4 z-20"
+      >
+        <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+        <span className="text-sm font-medium" style={{ fontFamily: 'Lato, sans-serif' }}>Back to Home</span>
+      </Link>
+
       <h1 className="text-2xl font-bold mb-6">Authentication Debug Tool</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
