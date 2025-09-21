@@ -1,0 +1,44 @@
+// Create a modified version of the sendOtp function for the resend action
+const resendOtp = async () => {
+  try {
+    const res = await fetch("/api/send-otp", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: form.email }),
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      // Show success message but don't auto-fill
+      if (data.otp) {
+        // Store the new OTP but don't set it in the UI
+        otpManager.storeOtp(form.email, data.otp);
+        console.log(`New OTP stored in client: ${data.otp}`);
+      }
+      // Clear the input field
+      setOtp("");
+      // Show a success message
+      setErrors((prev) => ({ 
+        ...prev, 
+        otp: "New verification code sent!" 
+      }));
+      
+      // Remove the success message after 3 seconds
+      setTimeout(() => {
+        setErrors((prev) => ({ ...prev, otp: "" }));
+      }, 3000);
+    } else {
+      setErrors((prev) => ({
+        ...prev,
+        otp: data.error || "Failed to send verification code",
+      }));
+    }
+  } catch (error) {
+    console.error("OTP resend error:", error);
+    setErrors((prev) => ({
+      ...prev,
+      otp: "Error sending verification code. Please try again.",
+    }));
+  }
+};
