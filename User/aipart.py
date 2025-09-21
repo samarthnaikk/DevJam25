@@ -38,23 +38,30 @@ class SimpleTextQA:
 		return [self.text_chunks[i] for i in I[0]]
 
 if __name__ == "__main__":
-	import argparse
-	parser = argparse.ArgumentParser(description="Train and query a simple text QA model.")
-	parser.add_argument('--train_files', nargs='*', type=str, help='Paths to plain text files to train on (multiple allowed)')
-	parser.add_argument('--ask', type=str, help='Question to ask')
-	args = parser.parse_args()
+	import time
+	chunk_files = [
+		os.path.join(os.path.dirname(__file__), f'../Admin/temp_input/chunk_{i}.txt') for i in range(1, 6)
+	]
+	sample_file = os.path.join(os.path.dirname(__file__), 'sample1.txt')
 
-	qa = SimpleTextQA()
-	if args.train_files:
-		for file in args.train_files:
-			with open(file, 'r', encoding='utf-8') as f:
-				text = f.read()
-			qa.add_text_chunk(text)
-			print(f"Added {file} for training.")
-		qa.finalize_index()
-		print("Merged all chunks and built index.")
-	if args.ask:
-		if qa.index is None:
-			raise RuntimeError("You must train the model first with --train_files.")
-		answers = qa.answer(args.ask, top_k=1)
-		print("Answer:", answers[0])
+	# Train on chunk_1.txt and chunk_2.txt
+	qa1 = SimpleTextQA()
+	t1 = time.time()
+	for file in chunk_files:
+		with open(file, 'r', encoding='utf-8') as f:
+			text = f.read()
+		qa1.add_text_chunk(text)
+		print(f"Added {file} for training.")
+	qa1.finalize_index()
+	t2 = time.time()
+	print(f"[Chunks 1+2] Training and merging took {t2-t1:.2f} seconds.")
+
+	# Train on sample1.txt only
+	qa2 = SimpleTextQA()
+	t3 = time.time()
+	with open(sample_file, 'r', encoding='utf-8') as f:
+		text = f.read()
+	qa2.add_text_chunk(text)
+	qa2.finalize_index()
+	t4 = time.time()
+	print(f"[Sample1] Training took {t4-t3:.2f} seconds.")
