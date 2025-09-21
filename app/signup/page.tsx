@@ -1,12 +1,14 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { GoogleSignInButton } from "@/components/google-sign-in-button";
 import { otpManager } from "@/lib/otp/client";
 import { OtpRateLimiter } from "@/lib/otp/rate-limiter";
 import { CountdownTimer } from "@/components/countdown-timer";
 
 export default function SignUpPage() {
+  const router = useRouter();
   const [form, setForm] = useState({
     username: "",
     email: "",
@@ -262,202 +264,245 @@ export default function SignUpPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-emerald-100 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 to-slate-700 p-4">
       {!showOtpVerification ? (
-        <form
-          className="w-full max-w-md bg-white rounded-lg shadow-lg p-8 space-y-6"
-          onSubmit={handleSubmit}
-        >
-          <h2 className="text-2xl font-bold text-center">Sign Up</h2>
-          <input
-            type="text"
-            name="username"
-            placeholder="Username"
-            value={form.username}
-            onChange={handleChange}
-            className="w-full px-4 py-2 border rounded"
-            required
-          />
-          <div className="space-y-1">
-            <input
-              type="email"
-              name="email"
-              placeholder="Email ID"
-              value={form.email}
-              onChange={handleChange}
-              className={`w-full px-4 py-2 border rounded ${
-                errors.email ? "border-red-500" : ""
-              }`}
-              required
-            />
-            {errors.email && (
-              <p className="text-red-500 text-xs">{errors.email}</p>
-            )}
-          </div>
-          <div className="space-y-1">
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              value={form.password}
-              onChange={handleChange}
-              className={`w-full px-4 py-2 border rounded ${
-                errors.password ? "border-red-500" : ""
-              }`}
-              required
-            />
-            {errors.password && (
-              <p className="text-red-500 text-xs">{errors.password}</p>
-            )}
-          </div>
-          <div className="space-y-1">
-            <input
-              type="password"
-              name="confirmPassword"
-              placeholder="Confirm Password"
-              value={form.confirmPassword}
-              onChange={handleChange}
-              className={`w-full px-4 py-2 border rounded ${
-                errors.confirmPassword ? "border-red-500" : ""
-              }`}
-              required
-            />
-            {errors.confirmPassword && (
-              <p className="text-red-500 text-xs">{errors.confirmPassword}</p>
-            )}
-          </div>
-          <button
-            type="submit"
-            className="w-full bg-primary text-white py-2 rounded font-semibold hover:bg-primary/90 transition"
-            disabled={
-              !!errors.email || !!errors.password || !!errors.confirmPassword
-            }
+        <div className="w-full max-w-sm">
+          <form
+            className="bg-white/10 backdrop-blur-sm rounded-lg border border-white/20 shadow-2xl p-8 space-y-6"
+            onSubmit={handleSubmit}
           >
-            Sign Up
-          </button>
-          <div className="flex flex-col items-center gap-2">
-            <span className="text-gray-500">or</span>
-            <GoogleSignInButton />
-          </div>
-        </form>
-      ) : (
-        <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-8 space-y-6">
-          <h2 className="text-2xl font-bold text-center">Email Verification</h2>
-          <p className="text-center text-gray-600">
-            We sent a verification code to{" "}
-            <span className="font-semibold">{form.email}</span>
-          </p>
-          <div className="space-y-1">
-            <input
-              type="text"
-              placeholder="Enter OTP"
-              value={otp}
-              onChange={handleOtpChange}
-              className={`w-full px-4 py-2 border rounded text-center text-2xl tracking-wider ${
-                errors.otp ? "border-red-500" : ""
-              }`}
-              autoComplete="off"
-              autoFocus
-              maxLength={6}
-              required
-            />
-            {errors.otp && (
-              <p className="text-red-500 text-xs text-center">{errors.otp}</p>
-            )}
-          </div>
-          <button
-            onClick={verifyOtp}
-            className="w-full bg-primary text-white py-2 rounded font-semibold hover:bg-primary/90 transition"
-          >
-            Verify & Complete Signup
-          </button>
-          <p className="text-center text-xs text-gray-500">
-            Didn't receive the code?{" "}
-            {resendCooldown > 0 ? (
-              <span>
-                Resend available in{" "}
-                <CountdownTimer
-                  seconds={resendCooldown}
-                  onComplete={() => setCanResendOtp(true)}
-                  className="font-medium"
+            <div className="text-center">
+              <h2 className="text-2xl font-bold text-white mb-2">Sign Up</h2>
+              <p className="text-white/70 text-sm">Create your account to get started</p>
+            </div>
+
+            <div className="space-y-4">
+              <div>
+                <input
+                  type="text"
+                  name="username"
+                  placeholder="Username"
+                  value={form.username}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all"
+                  required
                 />
-              </span>
-            ) : attemptsLeft <= 0 ? (
-              <span className="text-amber-600">
-                Maximum resend attempts reached
-              </span>
-            ) : (
+              </div>
+
+              <div className="space-y-1">
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  value={form.email}
+                  onChange={handleChange}
+                  className={`w-full px-4 py-3 bg-white/10 backdrop-blur-sm border rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all ${
+                    errors.email ? "border-red-500/50 ring-2 ring-red-500/50" : "border-white/20"
+                  }`}
+                  required
+                />
+                {errors.email && (
+                  <p className="text-red-300 text-xs ml-1">{errors.email}</p>
+                )}
+              </div>
+
+              <div className="space-y-1">
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  value={form.password}
+                  onChange={handleChange}
+                  className={`w-full px-4 py-3 bg-white/10 backdrop-blur-sm border rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all ${
+                    errors.password ? "border-red-500/50 ring-2 ring-red-500/50" : "border-white/20"
+                  }`}
+                  required
+                />
+                {errors.password && (
+                  <p className="text-red-300 text-xs ml-1">{errors.password}</p>
+                )}
+              </div>
+
+              <div className="space-y-1">
+                <input
+                  type="password"
+                  name="confirmPassword"
+                  placeholder="Confirm Password"
+                  value={form.confirmPassword}
+                  onChange={handleChange}
+                  className={`w-full px-4 py-3 bg-white/10 backdrop-blur-sm border rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all ${
+                    errors.confirmPassword ? "border-red-500/50 ring-2 ring-red-500/50" : "border-white/20"
+                  }`}
+                  required
+                />
+                {errors.confirmPassword && (
+                  <p className="text-red-300 text-xs ml-1">{errors.confirmPassword}</p>
+                )}
+              </div>
+
               <button
-                type="button"
-                disabled={!canResendOtp}
-                onClick={async () => {
-                  try {
-                    // Apply rate limiting
-                    const rateLimitResult = OtpRateLimiter.storeRateLimit(
-                      form.email
-                    );
-
-                    if (!rateLimitResult.canResend) {
-                      setErrors((prev) => ({
-                        ...prev,
-                        otp: "Maximum resend attempts reached",
-                      }));
-                      setCanResendOtp(false);
-                      setAttemptsLeft(0);
-                      return;
-                    }
-
-                    // Update resend state
-                    setCanResendOtp(false);
-                    setResendCooldown(rateLimitResult.cooldownSeconds);
-                    setAttemptsLeft(rateLimitResult.attemptsLeft);
-
-                    // Make the API request
-                    const res = await fetch("/api/send-otp", {
-                      method: "POST",
-                      headers: { "Content-Type": "application/json" },
-                      body: JSON.stringify({ email: form.email }),
-                    });
-
-                    const data = await res.json();
-
-                    if (res.ok) {
-                      // Store the new OTP but don't set it in the UI
-                      if (data.otp) {
-                        otpManager.storeOtp(form.email, data.otp);
-                      }
-                      // Clear the input field
-                      setOtp("");
-                      // Show a success message
-                      setErrors((prev) => ({
-                        ...prev,
-                        otp: `New verification code sent! (${rateLimitResult.attemptsLeft} attempts left)`,
-                      }));
-
-                      // Remove the success message after 3 seconds
-                      setTimeout(() => {
-                        setErrors((prev) => ({ ...prev, otp: "" }));
-                      }, 3000);
-                    } else {
-                      setErrors((prev) => ({
-                        ...prev,
-                        otp: data.error || "Failed to send verification code",
-                      }));
-                    }
-                  } catch (error) {
-                    console.error("OTP resend error:", error);
-                    setErrors((prev) => ({
-                      ...prev,
-                      otp: "Error sending verification code. Please try again.",
-                    }));
-                  }
-                }}
-                className="text-primary hover:underline disabled:opacity-50 disabled:hover:no-underline"
+                type="submit"
+                className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 rounded-lg font-semibold hover:from-blue-600 hover:to-purple-700 transition-all duration-200 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={
+                  !!errors.email || !!errors.password || !!errors.confirmPassword
+                }
               >
-                Resend OTP ({attemptsLeft} left)
+                Sign Up
               </button>
-            )}
-          </p>
+            </div>
+
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-white/20"></div>
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="bg-gradient-to-br from-slate-900 to-slate-700 px-4 text-white/70">or</span>
+              </div>
+            </div>
+
+            <GoogleSignInButton />
+
+            <div className="text-center">
+              <p className="text-white/70 text-sm">
+                Already have an account?{" "}
+                <button
+                  type="button"
+                  onClick={() => router.push("/signin")}
+                  className="text-blue-400 hover:text-blue-300 transition-colors font-medium"
+                >
+                  Sign in
+                </button>
+              </p>
+            </div>
+          </form>
+        </div>
+      ) : (
+        <div className="w-full max-w-sm">
+          <div className="bg-white/10 backdrop-blur-sm rounded-lg border border-white/20 shadow-2xl p-8 space-y-6">
+            <div className="text-center">
+              <h2 className="text-2xl font-bold text-white mb-2">Email Verification</h2>
+              <p className="text-white/70 text-sm">
+                We sent a verification code to{" "}
+                <span className="font-semibold text-white">{form.email}</span>
+              </p>
+            </div>
+
+            <div className="space-y-1">
+              <input
+                type="text"
+                placeholder="Enter OTP"
+                value={otp}
+                onChange={handleOtpChange}
+                className={`w-full px-4 py-3 bg-white/10 backdrop-blur-sm border rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all text-center text-2xl tracking-wider ${
+                  errors.otp ? "border-red-500/50 ring-2 ring-red-500/50" : "border-white/20"
+                }`}
+                autoComplete="off"
+                autoFocus
+                maxLength={6}
+                required
+              />
+              {errors.otp && (
+                <p className={`text-xs text-center ml-1 ${errors.otp.includes('sent') ? 'text-green-300' : 'text-red-300'}`}>
+                  {errors.otp}
+                </p>
+              )}
+            </div>
+
+            <button
+              onClick={verifyOtp}
+              className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 rounded-lg font-semibold hover:from-blue-600 hover:to-purple-700 transition-all duration-200 shadow-lg"
+            >
+              Verify & Complete Signup
+            </button>
+
+            <p className="text-center text-xs text-white/60">
+              Didn't receive the code?{" "}
+              {resendCooldown > 0 ? (
+                <span>
+                  Resend available in{" "}
+                  <CountdownTimer
+                    seconds={resendCooldown}
+                    onComplete={() => setCanResendOtp(true)}
+                    className="font-medium text-white/80"
+                  />
+                </span>
+              ) : attemptsLeft <= 0 ? (
+                <span className="text-amber-300">
+                  Maximum resend attempts reached
+                </span>
+              ) : (
+                <button
+                  type="button"
+                  disabled={!canResendOtp}
+                  onClick={async () => {
+                    try {
+                      // Apply rate limiting
+                      const rateLimitResult = OtpRateLimiter.storeRateLimit(
+                        form.email
+                      );
+
+                      if (!rateLimitResult.canResend) {
+                        setErrors((prev) => ({
+                          ...prev,
+                          otp: "Maximum resend attempts reached",
+                        }));
+                        setCanResendOtp(false);
+                        setAttemptsLeft(0);
+                        return;
+                      }
+
+                      // Update resend state
+                      setCanResendOtp(false);
+                      setResendCooldown(rateLimitResult.cooldownSeconds);
+                      setAttemptsLeft(rateLimitResult.attemptsLeft);
+
+                      // Make the API request
+                      const res = await fetch("/api/send-otp", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ email: form.email }),
+                      });
+
+                      const data = await res.json();
+
+                      if (res.ok) {
+                        // Store the new OTP but don't set it in the UI
+                        if (data.otp) {
+                          otpManager.storeOtp(form.email, data.otp);
+                        }
+                        // Clear the input field
+                        setOtp("");
+                        // Show a success message
+                        setErrors((prev) => ({
+                          ...prev,
+                          otp: `New verification code sent! (${rateLimitResult.attemptsLeft} attempts left)`,
+                        }));
+
+                        // Remove the success message after 3 seconds
+                        setTimeout(() => {
+                          setErrors((prev) => ({ ...prev, otp: "" }));
+                        }, 3000);
+                      } else {
+                        setErrors((prev) => ({
+                          ...prev,
+                          otp: data.error || "Failed to send verification code",
+                        }));
+                      }
+                    } catch (error) {
+                      console.error("OTP resend error:", error);
+                      setErrors((prev) => ({
+                        ...prev,
+                        otp: "Error sending verification code. Please try again.",
+                      }));
+                    }
+                  }}
+                  className="text-blue-400 hover:text-blue-300 transition-colors hover:underline disabled:opacity-50 disabled:hover:no-underline"
+                >
+                  Resend OTP ({attemptsLeft} left)
+                </button>
+              )}
+            </p>
+          </div>
         </div>
       )}
     </div>
