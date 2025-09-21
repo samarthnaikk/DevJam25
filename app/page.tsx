@@ -208,23 +208,13 @@ export default function HomePage() {
 
             {/* Vision Content */}
             <div className="text-center">
-              <p
-                className="text-xl md:text-2xl text-white/90 leading-relaxed max-w-4xl mx-auto mb-12"
-                style={{ fontFamily: 'Lato, sans-serif', fontWeight: '300' }}
-              >
-                We envision a future where computational power knows no boundaries. 
-                By democratizing access to high-performance computing resources, 
-                we're empowering innovators, researchers, and businesses to push 
-                the limits of what's possible in our digital age.
-              </p>
+             
               
               <p
-                className="text-lg text-white/80 leading-relaxed max-w-3xl mx-auto"
+                className="text-4xl text-white/80 leading-relaxed max-w-3xl mx-auto"
                 style={{ fontFamily: 'Lato, sans-serif', fontWeight: '300' }}
               >
-                At Rvidia, we're revolutionizing distributed computing by making it accessible, 
-                efficient, and profitable for everyone. Our platform connects computational resources 
-                worldwide, creating a seamless ecosystem where power is shared and innovation thrives.
+               To democratize high-performance computing by dividing one task across many computers, making computation faster, smarter, and accessible to everyone.
               </p>
             </div>
           </div>
@@ -283,45 +273,52 @@ export default function HomePage() {
                   animation: "slideInUp 0.6s ease-out 0.1s both"
                 }}
               >
-                <Card 
-                  className="bg-white/5 backdrop-blur-sm border-white/10 hover:bg-white/15 hover:border-purple-400/50 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/20 relative overflow-hidden"
+                <div 
+                  className="bg-white/5 backdrop-blur-sm border border-white/10 hover:border-purple-400/50 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/20 relative overflow-hidden rounded-lg"
                   style={{
                     clipPath: "polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px))"
                   }}
                 >
-                  <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-purple-400/20 to-transparent"></div>
-                  <div className="absolute bottom-0 left-0 w-20 h-20 bg-gradient-to-tr from-blue-400/20 to-transparent"></div>
+                  <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-purple-400/20 to-transparent z-10"></div>
+                  <div className="absolute bottom-0 left-0 w-20 h-20 bg-gradient-to-tr from-blue-400/20 to-transparent z-10"></div>
                   
-                  <CardHeader className="relative z-10">
-                    <div className="w-20 h-20 rounded-full overflow-hidden mb-4 mx-auto border-2 border-purple-400 group-hover:border-purple-300 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-purple-400/50">
-                      <img 
-                        src="/team/suyash-singh.jpg" 
-                        alt="Suyash Singh" 
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                        onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
-                          const target = e.target as HTMLImageElement;
-                          target.style.display = 'none';
-                          const fallback = target.nextElementSibling as HTMLElement;
-                          if (fallback) fallback.style.display = 'flex';
-                        }}
-                      />
-                      <div className="w-full h-full bg-gradient-to-r from-purple-400 to-blue-400 flex items-center justify-center" style={{display: 'none'}}>
-                        <span className="text-white font-bold text-2xl">SS</span>
+                  {/* Image Section */}
+                  <div className="relative h-64 overflow-hidden">
+                    <img 
+                      src="/team/suyash-singh.jpg" 
+                      alt="Suyash Singh" 
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
+                        const target = e.target as HTMLImageElement;
+                        target.style.display = 'none';
+                        const fallback = target.nextElementSibling as HTMLElement;
+                        if (fallback) fallback.style.display = 'flex';
+                      }}
+                    />
+                    <div className="w-full h-full bg-gradient-to-r from-purple-400 to-blue-400 flex items-center justify-center text-white font-bold text-4xl" style={{display: 'none'}}>
+                      SS
+                    </div>
+                    
+                    {/* Hover Overlay with Details */}
+                    <div className="absolute inset-0 bg-black/80 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-6">
+                      <div className="text-center">
+                        <p className="text-purple-300 text-sm font-medium mb-4" style={{ fontFamily: 'Lato, sans-serif' }}>
+                          Frontend UI
+                        </p>
+                        <p className="text-white/80 text-xs leading-relaxed" style={{ fontFamily: 'Lato, sans-serif' }}>
+                          Crafting beautiful and intuitive user interfaces that make complex distributed computing accessible to everyone.
+                        </p>
                       </div>
                     </div>
-                    <CardTitle className="text-white text-xl text-center group-hover:text-purple-300 transition-colors duration-300" style={{ fontFamily: 'Lato, sans-serif' }}>
+                  </div>
+                  
+                  {/* Name and Role Section */}
+                  <div className="p-4 relative z-10">
+                    <h3 className="text-white text-lg font-semibold text-center group-hover:text-purple-300 transition-colors duration-300" style={{ fontFamily: 'Lato, sans-serif' }}>
                       Suyash Singh
-                    </CardTitle>
-                    <p className="text-purple-300 text-sm text-center font-medium group-hover:text-purple-200 transition-colors duration-300" style={{ fontFamily: 'Lato, sans-serif' }}>
-                      Frontend UI
-                    </p>
-                  </CardHeader>
-                  <CardContent className="relative z-10">
-                    <CardDescription className="text-white/70 text-center group-hover:text-white/90 transition-colors duration-300" style={{ fontFamily: 'Lato, sans-serif' }}>
-                      Crafting beautiful and intuitive user interfaces that make complex distributed computing accessible to everyone.
-                    </CardDescription>
-                  </CardContent>
-                </Card>
+                    </h3>
+                  </div>
+                </div>
               </div>
 
               {/* Team Member 2 - Ishhan Kheria */}
@@ -331,45 +328,52 @@ export default function HomePage() {
                   animation: "slideInUp 0.6s ease-out 0.2s both"
                 }}
               >
-                <Card 
-                  className="bg-white/5 backdrop-blur-sm border-white/10 hover:bg-white/15 hover:border-purple-400/50 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/20 relative overflow-hidden"
+                <div 
+                  className="bg-white/5 backdrop-blur-sm border border-white/10 hover:border-purple-400/50 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/20 relative overflow-hidden rounded-lg"
                   style={{
                     clipPath: "polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px))"
                   }}
                 >
-                  <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-purple-400/20 to-transparent"></div>
-                  <div className="absolute bottom-0 left-0 w-20 h-20 bg-gradient-to-tr from-blue-400/20 to-transparent"></div>
+                  <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-purple-400/20 to-transparent z-10"></div>
+                  <div className="absolute bottom-0 left-0 w-20 h-20 bg-gradient-to-tr from-blue-400/20 to-transparent z-10"></div>
                   
-                  <CardHeader className="relative z-10">
-                    <div className="w-20 h-20 rounded-full overflow-hidden mb-4 mx-auto border-2 border-purple-400 group-hover:border-purple-300 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-purple-400/50">
-                      <img 
-                        src="/team/ishhan-kheria.jpg" 
-                        alt="Ishhan Kheria" 
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                        onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
-                          const target = e.target as HTMLImageElement;
-                          target.style.display = 'none';
-                          const fallback = target.nextElementSibling as HTMLElement;
-                          if (fallback) fallback.style.display = 'flex';
-                        }}
-                      />
-                      <div className="w-full h-full bg-gradient-to-r from-purple-400 to-blue-400 flex items-center justify-center" style={{display: 'none'}}>
-                        <span className="text-white font-bold text-2xl">IK</span>
+                  {/* Image Section */}
+                  <div className="relative h-64 overflow-hidden">
+                    <img 
+                      src="/team/ishhan-kheria.jpg" 
+                      alt="Ishhan Kheria" 
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
+                        const target = e.target as HTMLImageElement;
+                        target.style.display = 'none';
+                        const fallback = target.nextElementSibling as HTMLElement;
+                        if (fallback) fallback.style.display = 'flex';
+                      }}
+                    />
+                    <div className="w-full h-full bg-gradient-to-r from-purple-400 to-blue-400 flex items-center justify-center text-white font-bold text-4xl" style={{display: 'none'}}>
+                      IK
+                    </div>
+                    
+                    {/* Hover Overlay */}
+                    <div className="absolute inset-0 bg-black/80 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-6">
+                      <div className="text-center">
+                        <p className="text-purple-300 text-sm font-medium mb-4" style={{ fontFamily: 'Lato, sans-serif' }}>
+                          Frontend API
+                        </p>
+                        <p className="text-white/80 text-xs leading-relaxed" style={{ fontFamily: 'Lato, sans-serif' }}>
+                          Building seamless connections between user interfaces and backend services for optimal performance.
+                        </p>
                       </div>
                     </div>
-                    <CardTitle className="text-white text-xl text-center group-hover:text-purple-300 transition-colors duration-300" style={{ fontFamily: 'Lato, sans-serif' }}>
+                  </div>
+                  
+                  {/* Name and Role Section */}
+                  <div className="p-4 relative z-10">
+                    <h3 className="text-white text-lg font-semibold text-center group-hover:text-purple-300 transition-colors duration-300" style={{ fontFamily: 'Lato, sans-serif' }}>
                       Ishhan Kheria
-                    </CardTitle>
-                    <p className="text-purple-300 text-sm text-center font-medium group-hover:text-purple-200 transition-colors duration-300" style={{ fontFamily: 'Lato, sans-serif' }}>
-                      Frontend API
-                    </p>
-                  </CardHeader>
-                  <CardContent className="relative z-10">
-                    <CardDescription className="text-white/70 text-center group-hover:text-white/90 transition-colors duration-300" style={{ fontFamily: 'Lato, sans-serif' }}>
-                      Building seamless connections between user interfaces and backend services for optimal performance.
-                    </CardDescription>
-                  </CardContent>
-                </Card>
+                    </h3>
+                  </div>
+                </div>
               </div>
 
               {/* Team Member 3 - Samarth Naik */}
@@ -379,45 +383,52 @@ export default function HomePage() {
                   animation: "slideInUp 0.6s ease-out 0.3s both"
                 }}
               >
-                <Card 
-                  className="bg-white/5 backdrop-blur-sm border-white/10 hover:bg-white/15 hover:border-purple-400/50 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/20 relative overflow-hidden"
+                <div 
+                  className="bg-white/5 backdrop-blur-sm border border-white/10 hover:border-purple-400/50 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/20 relative overflow-hidden rounded-lg"
                   style={{
                     clipPath: "polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px))"
                   }}
                 >
-                  <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-purple-400/20 to-transparent"></div>
-                  <div className="absolute bottom-0 left-0 w-20 h-20 bg-gradient-to-tr from-blue-400/20 to-transparent"></div>
+                  <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-purple-400/20 to-transparent z-10"></div>
+                  <div className="absolute bottom-0 left-0 w-20 h-20 bg-gradient-to-tr from-blue-400/20 to-transparent z-10"></div>
                   
-                  <CardHeader className="relative z-10">
-                    <div className="w-20 h-20 rounded-full overflow-hidden mb-4 mx-auto border-2 border-purple-400 group-hover:border-purple-300 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-purple-400/50">
-                      <img 
-                        src="/team/samarth-naik.jpg" 
-                        alt="Samarth Naik" 
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                        onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
-                          const target = e.target as HTMLImageElement;
-                          target.style.display = 'none';
-                          const fallback = target.nextElementSibling as HTMLElement;
-                          if (fallback) fallback.style.display = 'flex';
-                        }}
-                      />
-                      <div className="w-full h-full bg-gradient-to-r from-purple-400 to-blue-400 flex items-center justify-center" style={{display: 'none'}}>
-                        <span className="text-white font-bold text-2xl">SN</span>
+                  {/* Image Section */}
+                  <div className="relative h-64 overflow-hidden">
+                    <img 
+                      src="/team/samarth-naik.jpg" 
+                      alt="Samarth Naik" 
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
+                        const target = e.target as HTMLImageElement;
+                        target.style.display = 'none';
+                        const fallback = target.nextElementSibling as HTMLElement;
+                        if (fallback) fallback.style.display = 'flex';
+                      }}
+                    />
+                    <div className="w-full h-full bg-gradient-to-r from-purple-400 to-blue-400 flex items-center justify-center text-white font-bold text-4xl" style={{display: 'none'}}>
+                      SN
+                    </div>
+                    
+                    {/* Hover Overlay */}
+                    <div className="absolute inset-0 bg-black/80 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-6">
+                      <div className="text-center">
+                        <p className="text-purple-300 text-sm font-medium mb-4" style={{ fontFamily: 'Lato, sans-serif' }}>
+                          Backend
+                        </p>
+                        <p className="text-white/80 text-xs leading-relaxed" style={{ fontFamily: 'Lato, sans-serif' }}>
+                          Developing robust server infrastructure and distributed computing algorithms that power our platform.
+                        </p>
                       </div>
                     </div>
-                    <CardTitle className="text-white text-xl text-center group-hover:text-purple-300 transition-colors duration-300" style={{ fontFamily: 'Lato, sans-serif' }}>
+                  </div>
+                  
+                  {/* Name and Role Section */}
+                  <div className="p-4 relative z-10">
+                    <h3 className="text-white text-lg font-semibold text-center group-hover:text-purple-300 transition-colors duration-300" style={{ fontFamily: 'Lato, sans-serif' }}>
                       Samarth Naik
-                    </CardTitle>
-                    <p className="text-purple-300 text-sm text-center font-medium group-hover:text-purple-200 transition-colors duration-300" style={{ fontFamily: 'Lato, sans-serif' }}>
-                      Backend
-                    </p>
-                  </CardHeader>
-                  <CardContent className="relative z-10">
-                    <CardDescription className="text-white/70 text-center group-hover:text-white/90 transition-colors duration-300" style={{ fontFamily: 'Lato, sans-serif' }}>
-                      Developing robust server infrastructure and distributed computing algorithms that power our platform.
-                    </CardDescription>
-                  </CardContent>
-                </Card>
+                    </h3>
+                  </div>
+                </div>
               </div>
 
               {/* Team Member 4 - Inesh Ingid */}
@@ -427,45 +438,52 @@ export default function HomePage() {
                   animation: "slideInUp 0.6s ease-out 0.4s both"
                 }}
               >
-                <Card 
-                  className="bg-white/5 backdrop-blur-sm border-white/10 hover:bg-white/15 hover:border-purple-400/50 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/20 relative overflow-hidden"
+                <div 
+                  className="bg-white/5 backdrop-blur-sm border border-white/10 hover:border-purple-400/50 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/20 relative overflow-hidden rounded-lg"
                   style={{
                     clipPath: "polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px))"
                   }}
                 >
-                  <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-purple-400/20 to-transparent"></div>
-                  <div className="absolute bottom-0 left-0 w-20 h-20 bg-gradient-to-tr from-blue-400/20 to-transparent"></div>
+                  <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-purple-400/20 to-transparent z-10"></div>
+                  <div className="absolute bottom-0 left-0 w-20 h-20 bg-gradient-to-tr from-blue-400/20 to-transparent z-10"></div>
                   
-                  <CardHeader className="relative z-10">
-                    <div className="w-20 h-20 rounded-full overflow-hidden mb-4 mx-auto border-2 border-purple-400 group-hover:border-purple-300 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-purple-400/50">
-                      <img 
-                        src="/team/inesh-ingid.jpg" 
-                        alt="Inesh Ingid" 
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                        onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
-                          const target = e.target as HTMLImageElement;
-                          target.style.display = 'none';
-                          const fallback = target.nextElementSibling as HTMLElement;
-                          if (fallback) fallback.style.display = 'flex';
-                        }}
-                      />
-                      <div className="w-full h-full bg-gradient-to-r from-purple-400 to-blue-400 flex items-center justify-center" style={{display: 'none'}}>
-                        <span className="text-white font-bold text-2xl">II</span>
+                  {/* Image Section */}
+                  <div className="relative h-64 overflow-hidden">
+                    <img 
+                      src="/team/inesh-ingid.jpg" 
+                      alt="Inesh Ingid" 
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
+                        const target = e.target as HTMLImageElement;
+                        target.style.display = 'none';
+                        const fallback = target.nextElementSibling as HTMLElement;
+                        if (fallback) fallback.style.display = 'flex';
+                      }}
+                    />
+                    <div className="w-full h-full bg-gradient-to-r from-purple-400 to-blue-400 flex items-center justify-center text-white font-bold text-4xl" style={{display: 'none'}}>
+                      II
+                    </div>
+                    
+                    {/* Hover Overlay */}
+                    <div className="absolute inset-0 bg-black/80 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-6">
+                      <div className="text-center">
+                        <p className="text-purple-300 text-sm font-medium mb-4" style={{ fontFamily: 'Lato, sans-serif' }}>
+                          Design & Research
+                        </p>
+                        <p className="text-white/80 text-xs leading-relaxed" style={{ fontFamily: 'Lato, sans-serif' }}>
+                          Leading user experience design and conducting research to drive innovation in distributed computing.
+                        </p>
                       </div>
                     </div>
-                    <CardTitle className="text-white text-xl text-center group-hover:text-purple-300 transition-colors duration-300" style={{ fontFamily: 'Lato, sans-serif' }}>
+                  </div>
+                  
+                  {/* Name and Role Section */}
+                  <div className="p-4 relative z-10">
+                    <h3 className="text-white text-lg font-semibold text-center group-hover:text-purple-300 transition-colors duration-300" style={{ fontFamily: 'Lato, sans-serif' }}>
                       Inesh Ingid
-                    </CardTitle>
-                    <p className="text-purple-300 text-sm text-center font-medium group-hover:text-purple-200 transition-colors duration-300" style={{ fontFamily: 'Lato, sans-serif' }}>
-                      Design & Research
-                    </p>
-                  </CardHeader>
-                  <CardContent className="relative z-10">
-                    <CardDescription className="text-white/70 text-center group-hover:text-white/90 transition-colors duration-300" style={{ fontFamily: 'Lato, sans-serif' }}>
-                      Leading user experience design and conducting research to drive innovation in distributed computing.
-                    </CardDescription>
-                  </CardContent>
-                </Card>
+                    </h3>
+                  </div>
+                </div>
               </div>
             </div>
 
