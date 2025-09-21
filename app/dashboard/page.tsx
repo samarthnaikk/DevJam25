@@ -15,16 +15,12 @@ const mockGPUs = [
   {
     gpuName: "NVIDIA RTX 4090",
     utilization: 78,
-    temperature: 72,
     memory: { used: 18, total: 24 },
-    power: 320,
   },
   {
     gpuName: "NVIDIA RTX 4080",
     utilization: 45,
-    temperature: 65,
     memory: { used: 8, total: 16 },
-    power: 280,
   },
 ];
 
@@ -112,75 +108,101 @@ export default function UserDashboard() {
       <main className="pt-24 p-6">
         <div className="max-w-7xl mx-auto space-y-6">
           {/* Welcome Section */}
-          <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg p-6 text-white">
-            <h2 className="text-2xl font-bold mb-2">
+          <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg p-6 text-white">
+            <h2 
+              className="text-2xl font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400"
+              style={{ fontFamily: 'Lato, sans-serif', fontWeight: '400' }}
+            >
               Welcome to your Dashboard!
             </h2>
-            <p className="text-blue-100">
+            <p 
+              className="text-white/70"
+              style={{ fontFamily: 'Lato, sans-serif', fontWeight: '300' }}
+            >
               Your GPU computing environment is ready. Monitor your tasks and
               system performance below.
             </p>
           </div>
 
-          {/* Stats Overview */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
+          {/* Stats Overview - Removed Power Usage */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="bg-white/5 backdrop-blur-sm border border-white/10 hover:border-purple-400/50 transition-all duration-300 rounded-lg p-6">
+              <div className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <h3 
+                  className="text-sm font-medium text-white/80"
+                  style={{ fontFamily: 'Lato, sans-serif' }}
+                >
                   Active Tasks
-                </CardTitle>
-                <Activity className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">3</div>
-                <p className="text-xs text-muted-foreground">
+                </h3>
+                <Activity className="h-4 w-4 text-purple-400" />
+              </div>
+              <div>
+                <div 
+                  className="text-2xl font-bold text-white"
+                  style={{ fontFamily: 'Lato, sans-serif' }}
+                >
+                  3
+                </div>
+                <p 
+                  className="text-xs text-white/60"
+                  style={{ fontFamily: 'Lato, sans-serif', fontWeight: '300' }}
+                >
                   +2 from yesterday
                 </p>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
 
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
+            <div className="bg-white/5 backdrop-blur-sm border border-white/10 hover:border-purple-400/50 transition-all duration-300 rounded-lg p-6">
+              <div className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <h3 
+                  className="text-sm font-medium text-white/80"
+                  style={{ fontFamily: 'Lato, sans-serif' }}
+                >
                   Completed Today
-                </CardTitle>
-                <CheckCircle className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">12</div>
-                <p className="text-xs text-muted-foreground">
+                </h3>
+                <CheckCircle className="h-4 w-4 text-blue-400" />
+              </div>
+              <div>
+                <div 
+                  className="text-2xl font-bold text-white"
+                  style={{ fontFamily: 'Lato, sans-serif' }}
+                >
+                  12
+                </div>
+                <p 
+                  className="text-xs text-white/60"
+                  style={{ fontFamily: 'Lato, sans-serif', fontWeight: '300' }}
+                >
                   +4 from yesterday
                 </p>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
 
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
+            <div className="bg-white/5 backdrop-blur-sm border border-white/10 hover:border-purple-400/50 transition-all duration-300 rounded-lg p-6">
+              <div className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <h3 
+                  className="text-sm font-medium text-white/80"
+                  style={{ fontFamily: 'Lato, sans-serif' }}
+                >
                   Avg. Runtime
-                </CardTitle>
-                <Clock className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">1.2h</div>
-                <p className="text-xs text-muted-foreground">
+                </h3>
+                <Clock className="h-4 w-4 text-purple-400" />
+              </div>
+              <div>
+                <div 
+                  className="text-2xl font-bold text-white"
+                  style={{ fontFamily: 'Lato, sans-serif' }}
+                >
+                  1.2h
+                </div>
+                <p 
+                  className="text-xs text-white/60"
+                  style={{ fontFamily: 'Lato, sans-serif', fontWeight: '300' }}
+                >
                   -0.3h from yesterday
                 </p>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  Power Usage
-                </CardTitle>
-                <Zap className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">600W</div>
-                <p className="text-xs text-muted-foreground">Across 2 GPUs</p>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </div>
 
           {/* GPU Stats */}

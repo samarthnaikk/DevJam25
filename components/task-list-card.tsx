@@ -23,35 +23,55 @@ const statusIcons = {
 }
 
 const statusColors = {
-  running: "bg-blue-100 text-blue-800",
-  completed: "bg-green-100 text-green-800",
-  pending: "bg-yellow-100 text-yellow-800",
-  failed: "bg-red-100 text-red-800",
+  running: "bg-blue-400/20 text-blue-400 border-blue-400/30",
+  completed: "bg-green-400/20 text-green-400 border-green-400/30",
+  pending: "bg-yellow-400/20 text-yellow-400 border-yellow-400/30",
+  failed: "bg-red-400/20 text-red-400 border-red-400/30",
 }
 
 export function TaskListCard({ tasks }: TaskListCardProps) {
   return (
-    <Card>
+    <Card className="bg-white/5 backdrop-blur-sm border-white/10">
       <CardHeader>
-        <CardTitle className="text-lg">Recent Tasks</CardTitle>
+        <CardTitle 
+          className="text-lg text-white"
+          style={{ fontFamily: 'Lato, sans-serif' }}
+        >
+          Recent Tasks
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
           {tasks.map((task) => (
-            <div key={task.id} className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
+            <div key={task.id} className="flex items-center justify-between p-3 bg-white/5 border border-white/5 hover:border-purple-400/30 transition-all duration-300 rounded-lg">
               <div className="flex items-center gap-3">
                 <div className="flex items-center gap-2">
                   {statusIcons[task.status]}
                   <div>
-                    <p className="font-medium text-sm">{task.name}</p>
-                    <p className="text-xs text-muted-foreground">
+                    <p 
+                      className="font-medium text-sm text-white"
+                      style={{ fontFamily: 'Lato, sans-serif' }}
+                    >
+                      {task.name}
+                    </p>
+                    <p 
+                      className="text-xs text-white/60"
+                      style={{ fontFamily: 'Lato, sans-serif', fontWeight: '300' }}
+                    >
                       GPU {task.gpuId} • {task.duration}
                     </p>
                   </div>
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                {task.status === "running" && <span className="text-xs text-muted-foreground">{task.progress}%</span>}
+                {task.status === "running" && (
+                  <span 
+                    className="text-xs text-white/60"
+                    style={{ fontFamily: 'Lato, sans-serif', fontWeight: '300' }}
+                  >
+                    {task.progress}%
+                  </span>
+                )}
                 <Badge variant="secondary" className={statusColors[task.status]}>
                   {task.status}
                 </Badge>
