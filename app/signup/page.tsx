@@ -264,17 +264,23 @@ export default function SignUpPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 to-slate-700 p-4">
+    <div className="min-h-screen flex flex-col items-center justify-start bg-black text-white pt-16">
       {!showOtpVerification ? (
-        <div className="w-full max-w-sm">
+        <div className="w-full max-w-sm space-y-8">
+          {/* Logo Section */}
+          <div className="text-center">
+            <img 
+              src="/Screenshot 2025-09-21 at 12.36.07 PM.svg" 
+              alt="Rvidia Logo" 
+              className="w-16 h-16 mx-auto mb-4"
+            />
+            <h1 className="text-xl font-medium text-gray-300 mb-8">Sign up to Rvidia</h1>
+          </div>
+
           <form
-            className="bg-white/10 backdrop-blur-sm rounded-lg border border-white/20 shadow-2xl p-8 space-y-6"
+            className="space-y-4"
             onSubmit={handleSubmit}
           >
-            <div className="text-center">
-              <h2 className="text-2xl font-bold text-white mb-2">Sign Up</h2>
-              <p className="text-white/70 text-sm">Create your account to get started</p>
-            </div>
 
             <div className="space-y-4">
               <div>
@@ -284,7 +290,7 @@ export default function SignUpPage() {
                   placeholder="Username"
                   value={form.username}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all"
+                  className="w-full h-12 px-3 py-3 bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all"
                   required
                 />
               </div>
@@ -296,13 +302,13 @@ export default function SignUpPage() {
                   placeholder="Email"
                   value={form.email}
                   onChange={handleChange}
-                  className={`w-full px-4 py-3 bg-white/10 backdrop-blur-sm border rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all ${
-                    errors.email ? "border-red-500/50 ring-2 ring-red-500/50" : "border-white/20"
+                  className={`w-full h-12 px-3 py-3 bg-white/5 backdrop-blur-sm border rounded-lg text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all ${
+                    errors.email ? "border-red-500/50 ring-2 ring-red-500/50" : "border-white/10"
                   }`}
                   required
                 />
                 {errors.email && (
-                  <p className="text-red-300 text-xs ml-1">{errors.email}</p>
+                  <p className="text-red-300 text-xs mt-1">{errors.email}</p>
                 )}
               </div>
 
@@ -313,13 +319,13 @@ export default function SignUpPage() {
                   placeholder="Password"
                   value={form.password}
                   onChange={handleChange}
-                  className={`w-full px-4 py-3 bg-white/10 backdrop-blur-sm border rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all ${
-                    errors.password ? "border-red-500/50 ring-2 ring-red-500/50" : "border-white/20"
+                  className={`w-full h-12 px-3 py-3 bg-white/5 backdrop-blur-sm border rounded-lg text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all ${
+                    errors.password ? "border-red-500/50 ring-2 ring-red-500/50" : "border-white/10"
                   }`}
                   required
                 />
                 {errors.password && (
-                  <p className="text-red-300 text-xs ml-1">{errors.password}</p>
+                  <p className="text-red-300 text-xs mt-1">{errors.password}</p>
                 )}
               </div>
 
@@ -330,45 +336,45 @@ export default function SignUpPage() {
                   placeholder="Confirm Password"
                   value={form.confirmPassword}
                   onChange={handleChange}
-                  className={`w-full px-4 py-3 bg-white/10 backdrop-blur-sm border rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all ${
-                    errors.confirmPassword ? "border-red-500/50 ring-2 ring-red-500/50" : "border-white/20"
+                  className={`w-full h-12 px-3 py-3 bg-white/5 backdrop-blur-sm border rounded-lg text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all ${
+                    errors.confirmPassword ? "border-red-500/50 ring-2 ring-red-500/50" : "border-white/10"
                   }`}
                   required
                 />
                 {errors.confirmPassword && (
-                  <p className="text-red-300 text-xs ml-1">{errors.confirmPassword}</p>
+                  <p className="text-red-300 text-xs mt-1">{errors.confirmPassword}</p>
                 )}
               </div>
 
               <button
                 type="submit"
-                className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 rounded-lg font-semibold hover:from-blue-600 hover:to-purple-700 transition-all duration-200 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full h-12 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 focus:ring-2 focus:ring-blue-500/50 transition-all font-medium text-white border-0 rounded-lg shadow-lg mt-6"
                 disabled={
                   !!errors.email || !!errors.password || !!errors.confirmPassword
                 }
               >
-                Sign Up
+                Sign up
               </button>
             </div>
 
-            <div className="relative">
+            <div className="relative my-6">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-white/20"></div>
+                <div className="w-full border-t border-white/10"></div>
               </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="bg-gradient-to-br from-slate-900 to-slate-700 px-4 text-white/70">or</span>
+              <div className="relative flex justify-center text-xs uppercase">
+                <span className="bg-black px-3 text-white/50 font-medium">or</span>
               </div>
             </div>
 
             <GoogleSignInButton />
 
-            <div className="text-center">
-              <p className="text-white/70 text-sm">
+            <div className="text-center mt-6">
+              <p className="text-white/60 text-sm">
                 Already have an account?{" "}
                 <button
                   type="button"
                   onClick={() => router.push("/signin")}
-                  className="text-blue-400 hover:text-blue-300 transition-colors font-medium"
+                  className="text-blue-400 hover:text-blue-300 font-medium transition-colors"
                 >
                   Sign in
                 </button>
@@ -377,24 +383,30 @@ export default function SignUpPage() {
           </form>
         </div>
       ) : (
-        <div className="w-full max-w-sm">
-          <div className="bg-white/10 backdrop-blur-sm rounded-lg border border-white/20 shadow-2xl p-8 space-y-6">
-            <div className="text-center">
-              <h2 className="text-2xl font-bold text-white mb-2">Email Verification</h2>
-              <p className="text-white/70 text-sm">
-                We sent a verification code to{" "}
-                <span className="font-semibold text-white">{form.email}</span>
-              </p>
-            </div>
+        <div className="w-full max-w-sm space-y-8">
+          {/* Logo Section */}
+          <div className="text-center">
+            <img 
+              src="/Screenshot 2025-09-21 at 12.36.07 PM.svg" 
+              alt="Rvidia Logo" 
+              className="w-16 h-16 mx-auto mb-4"
+            />
+            <h1 className="text-xl font-medium text-gray-300 mb-2">Email Verification</h1>
+            <p className="text-gray-400 text-sm">
+              We sent a verification code to{" "}
+              <span className="font-semibold text-white">{form.email}</span>
+            </p>
+          </div>
 
-            <div className="space-y-1">
+          <div className="space-y-6">
+            <div className="space-y-2">
               <input
                 type="text"
                 placeholder="Enter OTP"
                 value={otp}
                 onChange={handleOtpChange}
-                className={`w-full px-4 py-3 bg-white/10 backdrop-blur-sm border rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all text-center text-2xl tracking-wider ${
-                  errors.otp ? "border-red-500/50 ring-2 ring-red-500/50" : "border-white/20"
+                className={`w-full h-12 px-3 py-3 bg-white/5 backdrop-blur-sm border rounded-lg text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all text-center text-2xl tracking-wider ${
+                  errors.otp ? "border-red-500/50 ring-2 ring-red-500/50" : "border-white/10"
                 }`}
                 autoComplete="off"
                 autoFocus
@@ -402,7 +414,7 @@ export default function SignUpPage() {
                 required
               />
               {errors.otp && (
-                <p className={`text-xs text-center ml-1 ${errors.otp.includes('sent') ? 'text-green-300' : 'text-red-300'}`}>
+                <p className={`text-xs text-center ${errors.otp.includes('sent') ? 'text-green-300' : 'text-red-300'}`}>
                   {errors.otp}
                 </p>
               )}
@@ -410,7 +422,7 @@ export default function SignUpPage() {
 
             <button
               onClick={verifyOtp}
-              className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 rounded-lg font-semibold hover:from-blue-600 hover:to-purple-700 transition-all duration-200 shadow-lg"
+              className="w-full h-12 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 focus:ring-2 focus:ring-blue-500/50 transition-all font-medium text-white border-0 rounded-lg shadow-lg"
             >
               Verify & Complete Signup
             </button>

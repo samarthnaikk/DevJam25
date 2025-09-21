@@ -80,17 +80,6 @@ export default function SignInPage() {
           <p className="text-white/70 text-lg">Sign in to Rvidia</p>
         </div>
 
-        <GoogleSignInButton />
-        
-        <div className="relative">
-          <div className="absolute inset-0 flex items-center">
-            <span className="w-full border-t border-white/10" />
-          </div>
-          <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-black px-3 text-white/50 font-medium">Or continue with email</span>
-          </div>
-        </div>
-
         {error && (
           <div className="bg-red-500/20 border border-red-500/50 text-red-200 px-4 py-3 rounded-lg backdrop-blur-sm">
             <span className="text-sm">{error}</span>
@@ -98,7 +87,7 @@ export default function SignInPage() {
         )}
 
         <form onSubmit={handleSubmit} className="space-y-5">
-          <Input
+          <input
             id="identifier"
             name="identifier"
             type="text"
@@ -106,11 +95,11 @@ export default function SignInPage() {
             onChange={handleChange}
             required
             disabled={isLoading}
-            className="h-12 bg-white/5 backdrop-blur-sm text-white border-white/10 placeholder:text-white/40 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 rounded-lg transition-all"
+            className="w-full h-12 px-3 py-3 bg-white/5 backdrop-blur-sm text-white border border-white/10 placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 rounded-lg transition-all"
             placeholder="Email or username"
           />
           
-          <Input
+          <input
             id="password"
             name="password"
             type="password"
@@ -118,7 +107,7 @@ export default function SignInPage() {
             onChange={handleChange}
             required
             disabled={isLoading}
-            className="h-12 bg-white/5 backdrop-blur-sm text-white border-white/10 placeholder:text-white/40 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 rounded-lg transition-all"
+            className="w-full h-12 px-3 py-3 bg-white/5 backdrop-blur-sm text-white border border-white/10 placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 rounded-lg transition-all"
             placeholder="Password"
           />
 
@@ -147,6 +136,17 @@ export default function SignInPage() {
             )}
           </Button>
         </form>
+
+        <div className="relative">
+          <div className="absolute inset-0 flex items-center">
+            <span className="w-full border-t border-white/10" />
+          </div>
+          <div className="relative flex justify-center text-xs uppercase">
+            <span className="bg-black px-3 text-white/50 font-medium">or</span>
+          </div>
+        </div>
+
+        <GoogleSignInButton />
 
         <div className="text-center">
           <p className="text-white/60 text-sm">
