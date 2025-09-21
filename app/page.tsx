@@ -276,134 +276,212 @@ export default function HomePage() {
 
             {/* Team Members */}
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
-              <Card className="bg-white/5 backdrop-blur-sm border-white/10 hover:bg-white/10 transition-all duration-300">
-                <CardHeader>
-                  <div className="w-20 h-20 rounded-full overflow-hidden mb-4 mx-auto border-2 border-purple-400">
-                    <img 
-                      src="/team/suyash-singh.jpg" 
-                      alt="Suyash Singh" 
-                      className="w-full h-full object-cover"
-                      onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
-                        const target = e.target as HTMLImageElement;
-                        target.style.display = 'none';
-                        const fallback = target.nextElementSibling as HTMLElement;
-                        if (fallback) fallback.style.display = 'flex';
-                      }}
-                    />
-                    <div className="w-full h-full bg-gradient-to-r from-purple-400 to-blue-400 flex items-center justify-center" style={{display: 'none'}}>
-                      <span className="text-white font-bold text-2xl">SS</span>
+              {/* Team Member 1 - Suyash Singh */}
+              <div 
+                className="group relative"
+                style={{
+                  animation: "slideInUp 0.6s ease-out 0.1s both"
+                }}
+              >
+                <Card 
+                  className="bg-white/5 backdrop-blur-sm border-white/10 hover:bg-white/15 hover:border-purple-400/50 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/20 relative overflow-hidden"
+                  style={{
+                    clipPath: "polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px))"
+                  }}
+                >
+                  <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-purple-400/20 to-transparent"></div>
+                  <div className="absolute bottom-0 left-0 w-20 h-20 bg-gradient-to-tr from-blue-400/20 to-transparent"></div>
+                  
+                  <CardHeader className="relative z-10">
+                    <div className="w-20 h-20 rounded-full overflow-hidden mb-4 mx-auto border-2 border-purple-400 group-hover:border-purple-300 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-purple-400/50">
+                      <img 
+                        src="/team/suyash-singh.jpg" 
+                        alt="Suyash Singh" 
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                        onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
+                          const target = e.target as HTMLImageElement;
+                          target.style.display = 'none';
+                          const fallback = target.nextElementSibling as HTMLElement;
+                          if (fallback) fallback.style.display = 'flex';
+                        }}
+                      />
+                      <div className="w-full h-full bg-gradient-to-r from-purple-400 to-blue-400 flex items-center justify-center" style={{display: 'none'}}>
+                        <span className="text-white font-bold text-2xl">SS</span>
+                      </div>
                     </div>
-                  </div>
-                  <CardTitle className="text-white text-xl text-center" style={{ fontFamily: 'Lato, sans-serif' }}>
-                    Suyash Singh
-                  </CardTitle>
-                  <p className="text-purple-300 text-sm text-center font-medium" style={{ fontFamily: 'Lato, sans-serif' }}>
-                    Frontend UI
-                  </p>
-                </CardHeader>
-                <CardContent>
-                  <CardDescription className="text-white/70 text-center" style={{ fontFamily: 'Lato, sans-serif' }}>
-                    Crafting beautiful and intuitive user interfaces that make complex distributed computing accessible to everyone.
-                  </CardDescription>
-                </CardContent>
-              </Card>
+                    <CardTitle className="text-white text-xl text-center group-hover:text-purple-300 transition-colors duration-300" style={{ fontFamily: 'Lato, sans-serif' }}>
+                      Suyash Singh
+                    </CardTitle>
+                    <p className="text-purple-300 text-sm text-center font-medium group-hover:text-purple-200 transition-colors duration-300" style={{ fontFamily: 'Lato, sans-serif' }}>
+                      Frontend UI
+                    </p>
+                  </CardHeader>
+                  <CardContent className="relative z-10">
+                    <CardDescription className="text-white/70 text-center group-hover:text-white/90 transition-colors duration-300" style={{ fontFamily: 'Lato, sans-serif' }}>
+                      Crafting beautiful and intuitive user interfaces that make complex distributed computing accessible to everyone.
+                    </CardDescription>
+                  </CardContent>
+                </Card>
+              </div>
 
-              <Card className="bg-white/5 backdrop-blur-sm border-white/10 hover:bg-white/10 transition-all duration-300">
-                <CardHeader>
-                  <div className="w-20 h-20 rounded-full overflow-hidden mb-4 mx-auto border-2 border-purple-400">
-                    <img 
-                      src="/team/ishhan-kheria.jpg" 
-                      alt="Ishhan Kheria" 
-                      className="w-full h-full object-cover"
-                      onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
-                        const target = e.target as HTMLImageElement;
-                        target.style.display = 'none';
-                        const fallback = target.nextElementSibling as HTMLElement;
-                        if (fallback) fallback.style.display = 'flex';
-                      }}
-                    />
-                    <div className="w-full h-full bg-gradient-to-r from-purple-400 to-blue-400 flex items-center justify-center" style={{display: 'none'}}>
-                      <span className="text-white font-bold text-2xl">IK</span>
+              {/* Team Member 2 - Ishhan Kheria */}
+              <div 
+                className="group relative"
+                style={{
+                  animation: "slideInUp 0.6s ease-out 0.2s both"
+                }}
+              >
+                <Card 
+                  className="bg-white/5 backdrop-blur-sm border-white/10 hover:bg-white/15 hover:border-purple-400/50 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/20 relative overflow-hidden"
+                  style={{
+                    clipPath: "polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px))"
+                  }}
+                >
+                  <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-purple-400/20 to-transparent"></div>
+                  <div className="absolute bottom-0 left-0 w-20 h-20 bg-gradient-to-tr from-blue-400/20 to-transparent"></div>
+                  
+                  <CardHeader className="relative z-10">
+                    <div className="w-20 h-20 rounded-full overflow-hidden mb-4 mx-auto border-2 border-purple-400 group-hover:border-purple-300 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-purple-400/50">
+                      <img 
+                        src="/team/ishhan-kheria.jpg" 
+                        alt="Ishhan Kheria" 
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                        onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
+                          const target = e.target as HTMLImageElement;
+                          target.style.display = 'none';
+                          const fallback = target.nextElementSibling as HTMLElement;
+                          if (fallback) fallback.style.display = 'flex';
+                        }}
+                      />
+                      <div className="w-full h-full bg-gradient-to-r from-purple-400 to-blue-400 flex items-center justify-center" style={{display: 'none'}}>
+                        <span className="text-white font-bold text-2xl">IK</span>
+                      </div>
                     </div>
-                  </div>
-                  <CardTitle className="text-white text-xl text-center" style={{ fontFamily: 'Lato, sans-serif' }}>
-                    Ishhan Kheria
-                  </CardTitle>
-                  <p className="text-purple-300 text-sm text-center font-medium" style={{ fontFamily: 'Lato, sans-serif' }}>
-                    Frontend API
-                  </p>
-                </CardHeader>
-                <CardContent>
-                  <CardDescription className="text-white/70 text-center" style={{ fontFamily: 'Lato, sans-serif' }}>
-                    Building seamless connections between user interfaces and backend services for optimal performance.
-                  </CardDescription>
-                </CardContent>
-              </Card>
+                    <CardTitle className="text-white text-xl text-center group-hover:text-purple-300 transition-colors duration-300" style={{ fontFamily: 'Lato, sans-serif' }}>
+                      Ishhan Kheria
+                    </CardTitle>
+                    <p className="text-purple-300 text-sm text-center font-medium group-hover:text-purple-200 transition-colors duration-300" style={{ fontFamily: 'Lato, sans-serif' }}>
+                      Frontend API
+                    </p>
+                  </CardHeader>
+                  <CardContent className="relative z-10">
+                    <CardDescription className="text-white/70 text-center group-hover:text-white/90 transition-colors duration-300" style={{ fontFamily: 'Lato, sans-serif' }}>
+                      Building seamless connections between user interfaces and backend services for optimal performance.
+                    </CardDescription>
+                  </CardContent>
+                </Card>
+              </div>
 
-              <Card className="bg-white/5 backdrop-blur-sm border-white/10 hover:bg-white/10 transition-all duration-300">
-                <CardHeader>
-                  <div className="w-20 h-20 rounded-full overflow-hidden mb-4 mx-auto border-2 border-purple-400">
-                    <img 
-                      src="/team/samarth-naik.jpg" 
-                      alt="Samarth Naik" 
-                      className="w-full h-full object-cover"
-                      onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
-                        const target = e.target as HTMLImageElement;
-                        target.style.display = 'none';
-                        const fallback = target.nextElementSibling as HTMLElement;
-                        if (fallback) fallback.style.display = 'flex';
-                      }}
-                    />
-                    <div className="w-full h-full bg-gradient-to-r from-purple-400 to-blue-400 flex items-center justify-center" style={{display: 'none'}}>
-                      <span className="text-white font-bold text-2xl">SN</span>
+              {/* Team Member 3 - Samarth Naik */}
+              <div 
+                className="group relative"
+                style={{
+                  animation: "slideInUp 0.6s ease-out 0.3s both"
+                }}
+              >
+                <Card 
+                  className="bg-white/5 backdrop-blur-sm border-white/10 hover:bg-white/15 hover:border-purple-400/50 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/20 relative overflow-hidden"
+                  style={{
+                    clipPath: "polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px))"
+                  }}
+                >
+                  <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-purple-400/20 to-transparent"></div>
+                  <div className="absolute bottom-0 left-0 w-20 h-20 bg-gradient-to-tr from-blue-400/20 to-transparent"></div>
+                  
+                  <CardHeader className="relative z-10">
+                    <div className="w-20 h-20 rounded-full overflow-hidden mb-4 mx-auto border-2 border-purple-400 group-hover:border-purple-300 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-purple-400/50">
+                      <img 
+                        src="/team/samarth-naik.jpg" 
+                        alt="Samarth Naik" 
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                        onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
+                          const target = e.target as HTMLImageElement;
+                          target.style.display = 'none';
+                          const fallback = target.nextElementSibling as HTMLElement;
+                          if (fallback) fallback.style.display = 'flex';
+                        }}
+                      />
+                      <div className="w-full h-full bg-gradient-to-r from-purple-400 to-blue-400 flex items-center justify-center" style={{display: 'none'}}>
+                        <span className="text-white font-bold text-2xl">SN</span>
+                      </div>
                     </div>
-                  </div>
-                  <CardTitle className="text-white text-xl text-center" style={{ fontFamily: 'Lato, sans-serif' }}>
-                    Samarth Naik
-                  </CardTitle>
-                  <p className="text-purple-300 text-sm text-center font-medium" style={{ fontFamily: 'Lato, sans-serif' }}>
-                    Backend
-                  </p>
-                </CardHeader>
-                <CardContent>
-                  <CardDescription className="text-white/70 text-center" style={{ fontFamily: 'Lato, sans-serif' }}>
-                    Developing robust server infrastructure and distributed computing algorithms that power our platform.
-                  </CardDescription>
-                </CardContent>
-              </Card>
+                    <CardTitle className="text-white text-xl text-center group-hover:text-purple-300 transition-colors duration-300" style={{ fontFamily: 'Lato, sans-serif' }}>
+                      Samarth Naik
+                    </CardTitle>
+                    <p className="text-purple-300 text-sm text-center font-medium group-hover:text-purple-200 transition-colors duration-300" style={{ fontFamily: 'Lato, sans-serif' }}>
+                      Backend
+                    </p>
+                  </CardHeader>
+                  <CardContent className="relative z-10">
+                    <CardDescription className="text-white/70 text-center group-hover:text-white/90 transition-colors duration-300" style={{ fontFamily: 'Lato, sans-serif' }}>
+                      Developing robust server infrastructure and distributed computing algorithms that power our platform.
+                    </CardDescription>
+                  </CardContent>
+                </Card>
+              </div>
 
-              <Card className="bg-white/5 backdrop-blur-sm border-white/10 hover:bg-white/10 transition-all duration-300">
-                <CardHeader>
-                  <div className="w-20 h-20 rounded-full overflow-hidden mb-4 mx-auto border-2 border-purple-400">
-                    <img 
-                      src="/team/inesh-ingid.jpg" 
-                      alt="Inesh Ingid" 
-                      className="w-full h-full object-cover"
-                      onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
-                        const target = e.target as HTMLImageElement;
-                        target.style.display = 'none';
-                        const fallback = target.nextElementSibling as HTMLElement;
-                        if (fallback) fallback.style.display = 'flex';
-                      }}
-                    />
-                    <div className="w-full h-full bg-gradient-to-r from-purple-400 to-blue-400 flex items-center justify-center" style={{display: 'none'}}>
-                      <span className="text-white font-bold text-2xl">II</span>
+              {/* Team Member 4 - Inesh Ingid */}
+              <div 
+                className="group relative"
+                style={{
+                  animation: "slideInUp 0.6s ease-out 0.4s both"
+                }}
+              >
+                <Card 
+                  className="bg-white/5 backdrop-blur-sm border-white/10 hover:bg-white/15 hover:border-purple-400/50 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/20 relative overflow-hidden"
+                  style={{
+                    clipPath: "polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px))"
+                  }}
+                >
+                  <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-purple-400/20 to-transparent"></div>
+                  <div className="absolute bottom-0 left-0 w-20 h-20 bg-gradient-to-tr from-blue-400/20 to-transparent"></div>
+                  
+                  <CardHeader className="relative z-10">
+                    <div className="w-20 h-20 rounded-full overflow-hidden mb-4 mx-auto border-2 border-purple-400 group-hover:border-purple-300 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-purple-400/50">
+                      <img 
+                        src="/team/inesh-ingid.jpg" 
+                        alt="Inesh Ingid" 
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                        onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
+                          const target = e.target as HTMLImageElement;
+                          target.style.display = 'none';
+                          const fallback = target.nextElementSibling as HTMLElement;
+                          if (fallback) fallback.style.display = 'flex';
+                        }}
+                      />
+                      <div className="w-full h-full bg-gradient-to-r from-purple-400 to-blue-400 flex items-center justify-center" style={{display: 'none'}}>
+                        <span className="text-white font-bold text-2xl">II</span>
+                      </div>
                     </div>
-                  </div>
-                  <CardTitle className="text-white text-xl text-center" style={{ fontFamily: 'Lato, sans-serif' }}>
-                    Inesh Ingid
-                  </CardTitle>
-                  <p className="text-purple-300 text-sm text-center font-medium" style={{ fontFamily: 'Lato, sans-serif' }}>
-                    Design & Research
-                  </p>
-                </CardHeader>
-                <CardContent>
-                  <CardDescription className="text-white/70 text-center" style={{ fontFamily: 'Lato, sans-serif' }}>
-                    Leading user experience design and conducting research to drive innovation in distributed computing.
-                  </CardDescription>
-                </CardContent>
-              </Card>
+                    <CardTitle className="text-white text-xl text-center group-hover:text-purple-300 transition-colors duration-300" style={{ fontFamily: 'Lato, sans-serif' }}>
+                      Inesh Ingid
+                    </CardTitle>
+                    <p className="text-purple-300 text-sm text-center font-medium group-hover:text-purple-200 transition-colors duration-300" style={{ fontFamily: 'Lato, sans-serif' }}>
+                      Design & Research
+                    </p>
+                  </CardHeader>
+                  <CardContent className="relative z-10">
+                    <CardDescription className="text-white/70 text-center group-hover:text-white/90 transition-colors duration-300" style={{ fontFamily: 'Lato, sans-serif' }}>
+                      Leading user experience design and conducting research to drive innovation in distributed computing.
+                    </CardDescription>
+                  </CardContent>
+                </Card>
+              </div>
             </div>
+
+            {/* Add CSS animations */}
+            <style jsx>{`
+              @keyframes slideInUp {
+                0% {
+                  opacity: 0;
+                  transform: translateY(50px);
+                }
+                100% {
+                  opacity: 1;
+                  transform: translateY(0);
+                }
+              }
+            `}</style>
           </div>
         </div>
       </div>
