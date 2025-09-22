@@ -46,6 +46,15 @@ def get_node():
     
     global received_nodes
     received_nodes = nodes
+
+    number_of_active_nodes = len(received_nodes)
+    DataSplit(input_source="mydata", output_source="temp_input", Objtype=1, chunks=number_of_active_nodes)
+
+    for i in range(len(received_nodes)):
+        CreateZip(f"temp_input/chunk_{i+1}.txt","mycmd", received_nodes[i], allcommands=allc)
+        
+    print("Zip completed")
+
     print(f"Received nodes from frontend:")
     return {"message": "Nodes received", "nodes": received_nodes}, 200
 
@@ -75,13 +84,10 @@ def print_ngrok_url():
         print("[NGROK] Could not get public URL. Is ngrok running?")
 
 """
-number_of_active_nodes = 5
-
-DataSplit(input_source="mydata", output_source="temp_input", Objtype=1, chunks=number_of_active_nodes)
-
-CreateZip("mydata", "mycmd", "n1", allcommands=allc,chunks=number_of_active_nodes)
-
+global received_nodes
+received_nodes = ["n1","n2","n3"]
 """
+
 def main():
     port = 8000
     ngrok_proc = start_ngrok_http(port)
