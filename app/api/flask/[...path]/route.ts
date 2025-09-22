@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
+// Backend now runs on port 5000 (changed from 8000)
 const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:5000";
 
 export async function GET(

@@ -118,6 +118,17 @@ export const adminApi = {
         status: "running" | "queued" | "paused";
       }>
     >("/admin/current-assignments"),
+
+  // Submit active nodes for task distribution
+  submitNodes: (nodes: string[]) =>
+    apiRequest<{
+      message: string;
+      nodes: string[];
+      chunks_created: number;
+    }>("/admin/submit-nodes", {
+      method: "POST",
+      body: JSON.stringify({ nodes }),
+    }),
 };
 
 // User Dashboard API calls

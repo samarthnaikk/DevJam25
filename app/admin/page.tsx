@@ -3,6 +3,8 @@
 import { useAuthContext } from "@/components/auth-provider";
 import { SessionManager } from "@/lib/client/session";
 import { DashboardHeader } from "@/components/dashboard-header";
+import { NodeManagementCard } from "@/components/node-management-card";
+import { NodeSubmissionCard } from "@/components/node-submission-card";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Server, Settings, Activity, RefreshCw } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -455,6 +457,34 @@ export default function AdminDashboard() {
             </div>
           </div>
 
+          {/* Node Submission Section */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <NodeSubmissionCard
+              onNodesSubmitted={(submittedNodes) => {
+                console.log("Nodes submitted:", submittedNodes);
+                // Optionally refresh data after successful submission
+                refetch();
+              }}
+            />
+
+            {/* Placeholder for future components */}
+            <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg p-6">
+              <h3
+                className="text-white text-lg font-semibold mb-4 flex items-center"
+                style={{ fontFamily: "Lato, sans-serif" }}
+              >
+                <div className="w-6 h-6 bg-gray-400/20 rounded-full flex items-center justify-center mr-3">
+                  <Settings className="h-3 w-3 text-gray-400" />
+                </div>
+                System Logs
+              </h3>
+              <div className="text-white/60 text-sm">
+                <p>System logs and monitoring information will appear here.</p>
+                <p className="mt-2 text-xs">Features coming soon...</p>
+              </div>
+            </div>
+          </div>
+
           {/* Current Assignments Section - Below Task Assignment */}
           <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg p-6">
             <h3
@@ -530,6 +560,40 @@ export default function AdminDashboard() {
                     </p>
                   </div>
                 )}
+              </div>
+            )}
+          </div>
+
+          {/* Node Management Section */}
+          <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg p-6">
+            <h3
+              className="text-white text-xl font-semibold mb-6 flex items-center"
+              style={{ fontFamily: "Lato, sans-serif" }}
+            >
+              <div className="w-8 h-8 bg-purple-400/20 rounded-full flex items-center justify-center mr-3">
+                <Server className="h-4 w-4 text-purple-400" />
+              </div>
+              Node Management
+            </h3>
+
+            {/* Show loading state */}
+            {apiLoading && (
+              <div className="flex items-center justify-center py-8">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-400"></div>
+              </div>
+            )}
+
+            {/* Show error state */}
+            {errors.nodes && !apiLoading && (
+              <div className="p-4 bg-red-400/20 border border-red-400/30 rounded-lg text-red-400 text-sm">
+                Failed to load nodes: {errors.nodes}
+              </div>
+            )}
+
+            {/* Show node management component */}
+            {!apiLoading && !errors.nodes && (
+              <div className="text-white">
+                <NodeManagementCard nodes={nodes} />
               </div>
             )}
           </div>
