@@ -1,0 +1,3 @@
+id,email,username,password,googleId,name,role,createdAt
+"40","ishhankheria06@gmail.com","ishhankheria06","","112109812445199509354","Ishhan Kheria","ADMIN","Mon Sep 22 2025 23:35:06 GMT+0530 (India Standard Time)"
+"41","suyash.singh2024@vitstudent.ac.in","Suyash_Singh","$2b$12$lsqyMOFo35SbeyLNHrKSmuoSBSxoPAvl8Wnb1H60j9.HHMzpLi7KC","","Suyash_Singh","USER","Mon Sep 22 2025 23:35:40 GMT+0530 (India Standard Time)"
