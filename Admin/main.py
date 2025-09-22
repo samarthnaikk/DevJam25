@@ -3,6 +3,16 @@ import threading
 import time
 import http.server
 import socketserver
+from userside import *
+
+allc = [
+    {
+        "description": "Train QA model on chunked text",
+        "command": "source venv/bin/activate && python main.py"
+    }
+]
+
+CreateZip("mydata","mycmd","n1",allcommands=allc)
 
 def start_ngrok_http(port=8000):
     ngrok_cmd = ["ngrok", "http", str(port)]

