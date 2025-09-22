@@ -23,6 +23,7 @@ model User {
   name      String? // Optional display name for UI purposes
   role      String  @default("USER") // USER or ADMIN
   createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
   
   // Relations
   passwordResetTokens PasswordResetToken[]
