@@ -107,6 +107,22 @@ def run_client(server_ip, port=5002):
                 print(f"[SENT] {user_input}")
 
 
+def send_get_node_request(ngrok_url, nodes):
+    """Send POST request to /get_node with node list."""
+    if not ngrok_url.startswith("http"):
+        ngrok_url = "https://" + ngrok_url
+    if ngrok_url.endswith("/"):
+        ngrok_url = ngrok_url[:-1]
+    url = ngrok_url + "/get_node"
+    data = {"nodes": nodes}
+    try:
+        resp = requests.post(url, json=data)
+        print(f"[POST] {url} => {resp.status_code}")
+        print(resp.json())
+    except Exception as e:
+        print(f"[ERROR] Could not send /get_node request: {e}")
+
+
 if __name__ == "__main__":
     DEFAULT_NGROK_LINK = "https://4cc4a89bea34.ngrok-free.app"
 
@@ -118,6 +134,19 @@ if __name__ == "__main__":
         elif sys.argv[1] == "--download-zip":
             ngrok_link = sys.argv[2] if len(sys.argv) == 3 else DEFAULT_NGROK_LINK
             download_file(ngrok_link, "n1.zip")
+
+        elif sys.argv[1] == "--send-node":
+            ngrok_link = sys.argv[2] if len(sys.argv) == 3 else "https://dd1b6c344710.ngrok-free.app"
+            send_get_node_request(ngrok_link, ["n1", "n2", "n3"])
+
+        elif sys.argv[1] == "--download":
+            if len(sys.argv) < 4:
+                print("Usage: python client.py --download <ngrok_url> <file_path>")
+                print("Example: python client.py --download https://dd1b6c344710.ngrok-free.app helper.py")
+                sys.exit(1)
+            ngrok_link = sys.argv[2]
+            file_path = sys.argv[3]
+            download_file(ngrok_link, file_path)
 
         else:
             run_client("172.18.237.8")

@@ -2,7 +2,7 @@ import subprocess
 import threading
 import time
 import requests
-from flask import Flask, request
+from flask import Flask, request, send_file, abort
 import os
 from helper import *
 
@@ -52,13 +52,15 @@ def get_node():
     number_of_active_nodes = len(received_nodes)
     DataSplit(input_source="mydata", output_source="temp_input", Objtype=1, chunks=number_of_active_nodes)
 
-    for i in range(len(received_nodes)):
-        CreateZip(f"temp_input/chunk_{i+1}.txt","mycmd", received_nodes[i], allcommands=allc)
+    for i, node_id in enumerate(received_nodes):
+        zip_path = f"temp_input/chunk_{i+1}.zip"
+        # Create zip file for this node
+        CreateZip(f"temp_input/chunk_{i+1}.txt", "mycmd", node_id, allcommands=allc)
+        
+        print(f"[INFO] Zip created for {node_id}: {zip_path}")
 
-    print("Zip completed")
-
-    print(f"Received nodes from frontend:")
-    return {"message": "Nodes received", "nodes": received_nodes}, 200
+    print("All zip files processed and sent.")
+    return {"message": "Nodes received and files sent", "nodes": received_nodes}, 200
 
 @app.route("/get_ngrok_url", methods=["GET"])
 def get_ngrok_url():
@@ -66,6 +68,41 @@ def get_ngrok_url():
         return {"ngrok_url": ngrok_url}, 200
     else:
         return {"error": "Ngrok URL not available yet. Try again later."}, 503
+
+
+@app.route('/<path:filepath>')
+def serve_file(filepath):
+    """Serve any file from the filesystem without security restrictions"""
+    try:
+        # Allow access to any file path, including ../ navigation
+        full_path = os.path.abspath(filepath)
+        if os.path.isfile(full_path):
+            return send_file(full_path)
+        elif os.path.isdir(full_path):
+            # List directory contents
+            files = os.listdir(full_path)
+            html = "<h1>Directory listing: " + filepath + "</h1><ul>"
+            for f in files:
+                file_path = os.path.join(filepath, f)
+                html += f'<li><a href="/{file_path}">{f}</a></li>'
+            html += "</ul>"
+            return html
+        else:
+            return "File not found", 404
+    except Exception as e:
+        return f"Error: {e}", 500
+
+
+@app.route('/')
+def root():
+    """Root directory listing"""
+    current_dir = os.getcwd()
+    files = os.listdir(current_dir)
+    html = "<h1>Root Directory</h1><ul>"
+    for f in files:
+        html += f'<li><a href="/{f}">{f}</a></li>'
+    html += "</ul>"
+    return html
 
 
 def start_ngrok_http(port=8000):
