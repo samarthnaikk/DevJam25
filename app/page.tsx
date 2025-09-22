@@ -189,7 +189,7 @@ export default function HomePage() {
       </div>
 
       {/* Our Vision Section */}
-      <div className="relative min-h-screen z-10 bg-black">
+      <div id="vision" className="relative min-h-screen z-10 bg-black">
         {/* SVG Background Elements - Only 07.svg */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           {/* 07.svg - Left side covering left part */}
@@ -251,7 +251,7 @@ export default function HomePage() {
       </div>
 
       {/* About Us Section */}
-      <div className="relative min-h-screen z-10 bg-black">
+      <div id="about" className="relative min-h-screen z-10 bg-black">
         {/* SVG Background Elements - Only 4.svg */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           {/* 4.svg - Right side */}
@@ -566,22 +566,34 @@ export default function HomePage() {
                 </h3>
                 <ul className="space-y-3">
                   <li>
-                    <a
-                      href="#vision"
-                      className="text-white/60 hover:text-white transition-colors text-lg"
+                    <button
+                      onClick={() => {
+                        const element = document.getElementById('vision');
+                        element?.scrollIntoView({ 
+                          behavior: 'smooth',
+                          block: 'start'
+                        });
+                      }}
+                      className="text-white/60 hover:text-white transition-colors text-lg text-left"
                       style={{ fontFamily: 'Lato, sans-serif', fontWeight: '300' }}
                     >
                       Our Vision
-                    </a>
+                    </button>
                   </li>
                   <li>
-                    <a
-                      href="#about"
-                      className="text-white/60 hover:text-white transition-colors text-lg"
+                    <button
+                      onClick={() => {
+                        const element = document.getElementById('about');
+                        element?.scrollIntoView({ 
+                          behavior: 'smooth',
+                          block: 'start'
+                        });
+                      }}
+                      className="text-white/60 hover:text-white transition-colors text-lg text-left"
                       style={{ fontFamily: 'Lato, sans-serif', fontWeight: '300' }}
                     >
                       About Us
-                    </a>
+                    </button>
                   </li>
                   <li>
                     <button
