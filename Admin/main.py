@@ -52,7 +52,9 @@ def get_node():
 
     for i in range(len(received_nodes)):
         CreateZip(f"temp_input/chunk_{i+1}.txt","mycmd", received_nodes[i], allcommands=allc)
+        
     print("Zip completed")
+
     print(f"Received nodes from frontend:")
     return {"message": "Nodes received", "nodes": received_nodes}, 200
 
