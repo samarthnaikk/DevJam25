@@ -307,20 +307,17 @@ export default function HomePage() {
                 }}
               >
                 <div 
-                  className="bg-white/5 backdrop-blur-sm border border-white/10 hover:border-purple-400/50 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/20 relative overflow-hidden rounded-lg"
+                  className="bg-white/5 backdrop-blur-sm border border-white/10 hover:border-purple-400/50 transition-all duration-300 relative overflow-hidden rounded-lg"
                   style={{
                     clipPath: "polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 15px 100%, 0 calc(100% - 15px))"
                   }}
                 >
-                  <div className="absolute top-0 right-0 w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20 bg-gradient-to-bl from-purple-400/20 to-transparent z-10"></div>
-                  <div className="absolute bottom-0 left-0 w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20 bg-gradient-to-tr from-blue-400/20 to-transparent z-10"></div>
-                  
                   {/* Image Section */}
                   <div className="relative h-48 sm:h-56 md:h-64 overflow-hidden">
                     <img 
                       src="/team/suyash-singh.jpg" 
                       alt="Suyash Singh" 
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      className="w-full h-full object-cover transition-transform duration-300"
                       onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
                         const target = e.target as HTMLImageElement;
                         target.style.display = 'none';
@@ -328,17 +325,17 @@ export default function HomePage() {
                         if (fallback) fallback.style.display = 'flex';
                       }}
                     />
-                    <div className="w-full h-full bg-gradient-to-r from-purple-400 to-blue-400 flex items-center justify-center text-white font-bold text-2xl sm:text-3xl md:text-4xl" style={{display: 'none'}}>
+                    <div className="w-full h-full flex items-center justify-center text-white font-bold text-2xl sm:text-3xl md:text-4xl" style={{display: 'none', backgroundColor: '#772ED1'}}>
                       SS
                     </div>
                     
                     {/* Hover Overlay with Details */}
-                    <div className="absolute inset-0 bg-black/80 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4 sm:p-6">
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4 sm:p-6" style={{ backgroundColor: '#772ED1' }}>
                       <div className="text-center">
-                        <p className="text-purple-300 text-xs sm:text-sm font-medium mb-2 sm:mb-4" style={{ fontFamily: 'Lato, sans-serif' }}>
+                        <p className="text-white text-sm sm:text-base font-semibold mb-2 sm:mb-3" style={{ fontFamily: 'Lato, sans-serif' }}>
                           Frontend UI
                         </p>
-                        <p className="text-white/80 text-xs leading-relaxed" style={{ fontFamily: 'Lato, sans-serif' }}>
+                        <p className="text-white/90 text-xs sm:text-sm leading-relaxed" style={{ fontFamily: 'Lato, sans-serif' }}>
                           Crafting beautiful and intuitive user interfaces that make complex distributed computing accessible to everyone.
                         </p>
                       </div>
@@ -347,7 +344,7 @@ export default function HomePage() {
                   
                   {/* Name and Role Section */}
                   <div className="p-3 sm:p-4 relative z-10">
-                    <h3 className="text-white text-base sm:text-lg font-semibold text-center group-hover:text-purple-300 transition-colors duration-300" style={{ fontFamily: 'Lato, sans-serif' }}>
+                    <h3 className="text-white text-base sm:text-lg font-semibold text-center transition-colors duration-300 tracking-wide whitespace-nowrap" style={{ fontFamily: 'Lato, sans-serif', fontWeight: '375' }}>
                       Suyash Singh
                     </h3>
                   </div>
@@ -362,20 +359,17 @@ export default function HomePage() {
                 }}
               >
                 <div 
-                  className="bg-white/5 backdrop-blur-sm border border-white/10 hover:border-purple-400/50 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/20 relative overflow-hidden rounded-lg"
+                  className="bg-white/5 backdrop-blur-sm border border-white/10 hover:border-purple-400/50 transition-all duration-300 relative overflow-hidden rounded-lg"
                   style={{
                     clipPath: "polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 15px 100%, 0 calc(100% - 15px))"
                   }}
                 >
-                  <div className="absolute top-0 right-0 w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20 bg-gradient-to-bl from-purple-400/20 to-transparent z-10"></div>
-                  <div className="absolute bottom-0 left-0 w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20 bg-gradient-to-tr from-blue-400/20 to-transparent z-10"></div>
-                  
                   {/* Image Section */}
                   <div className="relative h-48 sm:h-56 md:h-64 overflow-hidden">
                     <img 
                       src="/team/ishhan-kheria.jpg" 
                       alt="Ishhan Kheria" 
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      className="w-full h-full object-cover transition-transform duration-300"
                       onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
                         const target = e.target as HTMLImageElement;
                         target.style.display = 'none';
@@ -383,17 +377,17 @@ export default function HomePage() {
                         if (fallback) fallback.style.display = 'flex';
                       }}
                     />
-                    <div className="w-full h-full bg-gradient-to-r from-purple-400 to-blue-400 flex items-center justify-center text-white font-bold text-2xl sm:text-3xl md:text-4xl" style={{display: 'none'}}>
+                    <div className="w-full h-full flex items-center justify-center text-white font-bold text-2xl sm:text-3xl md:text-4xl" style={{display: 'none', backgroundColor: '#772ED1'}}>
                       IK
                     </div>
                     
                     {/* Hover Overlay */}
-                    <div className="absolute inset-0 bg-black/80 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4 sm:p-6">
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4 sm:p-6" style={{ backgroundColor: '#772ED1' }}>
                       <div className="text-center">
-                        <p className="text-purple-300 text-xs sm:text-sm font-medium mb-2 sm:mb-4" style={{ fontFamily: 'Lato, sans-serif' }}>
+                        <p className="text-white text-sm sm:text-base font-semibold mb-2 sm:mb-3" style={{ fontFamily: 'Lato, sans-serif' }}>
                           Frontend API
                         </p>
-                        <p className="text-white/80 text-xs leading-relaxed" style={{ fontFamily: 'Lato, sans-serif' }}>
+                        <p className="text-white/90 text-xs sm:text-sm leading-relaxed" style={{ fontFamily: 'Lato, sans-serif' }}>
                           Building seamless connections between user interfaces and backend services for optimal performance.
                         </p>
                       </div>
@@ -402,7 +396,7 @@ export default function HomePage() {
                   
                   {/* Name and Role Section */}
                   <div className="p-3 sm:p-4 relative z-10">
-                    <h3 className="text-white text-base sm:text-lg font-semibold text-center group-hover:text-purple-300 transition-colors duration-300" style={{ fontFamily: 'Lato, sans-serif' }}>
+                    <h3 className="text-white text-base sm:text-lg text-center transition-colors duration-300" style={{ fontFamily: 'Lato, sans-serif', fontWeight: '375' }}>
                       Ishhan Kheria
                     </h3>
                   </div>
@@ -417,20 +411,17 @@ export default function HomePage() {
                 }}
               >
                 <div 
-                  className="bg-white/5 backdrop-blur-sm border border-white/10 hover:border-purple-400/50 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/20 relative overflow-hidden rounded-lg"
+                  className="bg-white/5 backdrop-blur-sm border border-white/10 hover:border-purple-400/50 transition-all duration-300 relative overflow-hidden rounded-lg"
                   style={{
                     clipPath: "polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 15px 100%, 0 calc(100% - 15px))"
                   }}
                 >
-                  <div className="absolute top-0 right-0 w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20 bg-gradient-to-bl from-purple-400/20 to-transparent z-10"></div>
-                  <div className="absolute bottom-0 left-0 w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20 bg-gradient-to-tr from-blue-400/20 to-transparent z-10"></div>
-                  
                   {/* Image Section */}
                   <div className="relative h-48 sm:h-56 md:h-64 overflow-hidden">
                     <img 
                       src="/team/samarth-naik.jpg" 
                       alt="Samarth Naik" 
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      className="w-full h-full object-cover transition-transform duration-300"
                       onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
                         const target = e.target as HTMLImageElement;
                         target.style.display = 'none';
@@ -438,17 +429,17 @@ export default function HomePage() {
                         if (fallback) fallback.style.display = 'flex';
                       }}
                     />
-                    <div className="w-full h-full bg-gradient-to-r from-purple-400 to-blue-400 flex items-center justify-center text-white font-bold text-2xl sm:text-3xl md:text-4xl" style={{display: 'none'}}>
+                    <div className="w-full h-full flex items-center justify-center text-white font-bold text-2xl sm:text-3xl md:text-4xl" style={{display: 'none', backgroundColor: '#772ED1'}}>
                       SN
                     </div>
                     
                     {/* Hover Overlay */}
-                    <div className="absolute inset-0 bg-black/80 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4 sm:p-6">
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4 sm:p-6" style={{ backgroundColor: '#772ED1' }}>
                       <div className="text-center">
-                        <p className="text-purple-300 text-xs sm:text-sm font-medium mb-2 sm:mb-4" style={{ fontFamily: 'Lato, sans-serif' }}>
+                        <p className="text-white text-sm sm:text-base font-semibold mb-2 sm:mb-3" style={{ fontFamily: 'Lato, sans-serif' }}>
                           Backend
                         </p>
-                        <p className="text-white/80 text-xs leading-relaxed" style={{ fontFamily: 'Lato, sans-serif' }}>
+                        <p className="text-white/90 text-xs sm:text-sm leading-relaxed" style={{ fontFamily: 'Lato, sans-serif' }}>
                           Developing robust server infrastructure and distributed computing algorithms that power our platform.
                         </p>
                       </div>
@@ -457,7 +448,7 @@ export default function HomePage() {
                   
                   {/* Name and Role Section */}
                   <div className="p-3 sm:p-4 relative z-10">
-                    <h3 className="text-white text-base sm:text-lg font-semibold text-center group-hover:text-purple-300 transition-colors duration-300" style={{ fontFamily: 'Lato, sans-serif' }}>
+                    <h3 className="text-white text-base sm:text-lg text-center transition-colors duration-300" style={{ fontFamily: 'Lato, sans-serif', fontWeight: '375' }}>
                       Samarth Naik
                     </h3>
                   </div>
@@ -472,20 +463,17 @@ export default function HomePage() {
                 }}
               >
                 <div 
-                  className="bg-white/5 backdrop-blur-sm border border-white/10 hover:border-purple-400/50 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/20 relative overflow-hidden rounded-lg"
+                  className="bg-white/5 backdrop-blur-sm border border-white/10 hover:border-purple-400/50 transition-all duration-300 relative overflow-hidden rounded-lg"
                   style={{
                     clipPath: "polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 15px 100%, 0 calc(100% - 15px))"
                   }}
                 >
-                  <div className="absolute top-0 right-0 w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20 bg-gradient-to-bl from-purple-400/20 to-transparent z-10"></div>
-                  <div className="absolute bottom-0 left-0 w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20 bg-gradient-to-tr from-blue-400/20 to-transparent z-10"></div>
-                  
                   {/* Image Section */}
                   <div className="relative h-48 sm:h-56 md:h-64 overflow-hidden">
                     <img 
                       src="/team/inesh-ingid.jpg" 
                       alt="Inesh Ingid" 
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      className="w-full h-full object-cover transition-transform duration-300"
                       onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
                         const target = e.target as HTMLImageElement;
                         target.style.display = 'none';
@@ -493,17 +481,17 @@ export default function HomePage() {
                         if (fallback) fallback.style.display = 'flex';
                       }}
                     />
-                    <div className="w-full h-full bg-gradient-to-r from-purple-400 to-blue-400 flex items-center justify-center text-white font-bold text-2xl sm:text-3xl md:text-4xl" style={{display: 'none'}}>
+                    <div className="w-full h-full flex items-center justify-center text-white font-bold text-2xl sm:text-3xl md:text-4xl" style={{display: 'none', backgroundColor: '#772ED1'}}>
                       II
                     </div>
                     
                     {/* Hover Overlay */}
-                    <div className="absolute inset-0 bg-black/80 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4 sm:p-6">
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4 sm:p-6" style={{ backgroundColor: '#772ED1' }}>
                       <div className="text-center">
-                        <p className="text-purple-300 text-xs sm:text-sm font-medium mb-2 sm:mb-4" style={{ fontFamily: 'Lato, sans-serif' }}>
+                        <p className="text-white text-sm sm:text-base font-semibold mb-2 sm:mb-3" style={{ fontFamily: 'Lato, sans-serif' }}>
                           Design & Research
                         </p>
-                        <p className="text-white/80 text-xs leading-relaxed" style={{ fontFamily: 'Lato, sans-serif' }}>
+                        <p className="text-white/90 text-xs sm:text-sm leading-relaxed" style={{ fontFamily: 'Lato, sans-serif' }}>
                           Leading user experience design and conducting research to drive innovation in distributed computing.
                         </p>
                       </div>
@@ -512,7 +500,7 @@ export default function HomePage() {
                   
                   {/* Name and Role Section */}
                   <div className="p-3 sm:p-4 relative z-10">
-                    <h3 className="text-white text-base sm:text-lg font-semibold text-center group-hover:text-purple-300 transition-colors duration-300" style={{ fontFamily: 'Lato, sans-serif' }}>
+                    <h3 className="text-white text-base sm:text-lg text-center transition-colors duration-300" style={{ fontFamily: 'Lato, sans-serif', fontWeight: '375' }}>
                       Inesh Ingid
                     </h3>
                   </div>
