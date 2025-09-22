@@ -336,51 +336,50 @@ export default function SignUpPage() {
       return;
     }
 
+    // Clear previous errors
+    setErrors({
+      username: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      otp: "",
+    });
+
     // Final validation before submission
-    const emailError = validateEmail(form.email);
-    const passwordError = validatePassword(form.password);
+    let hasErrors = false;
+    const newErrors = {
+      username: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      otp: "",
+    };
 
     // Check username validation
     if (!form.username || form.username.trim().length < 3) {
-      setErrors((prev) => ({
-        ...prev,
-        username: "Username must be at least 3 characters long",
-      }));
-      return;
+      newErrors.username = "Username must be at least 3 characters long";
+      hasErrors = true;
     }
 
-    if (usernameStatus.available === false || errors.username) {
-      setErrors((prev) => ({
-        ...prev,
-        username: errors.username || "Please choose a different username",
-      }));
-      return;
-    }
-
-    // If username is still being checked, wait for it
-    if (usernameStatus.checking) {
-      setErrors((prev) => ({
-        ...prev,
-        username: "Please wait while we check username availability",
-      }));
-      return;
-    }
-
+    const emailError = validateEmail(form.email);
     if (emailError) {
-      setErrors((prev) => ({ ...prev, email: emailError }));
-      return;
+      newErrors.email = emailError;
+      hasErrors = true;
     }
 
+    const passwordError = validatePassword(form.password);
     if (passwordError) {
-      setErrors((prev) => ({ ...prev, password: passwordError }));
-      return;
+      newErrors.password = passwordError;
+      hasErrors = true;
     }
 
     if (form.password !== form.confirmPassword) {
-      setErrors((prev) => ({
-        ...prev,
-        confirmPassword: "Passwords do not match",
-      }));
+      newErrors.confirmPassword = "Passwords do not match";
+      hasErrors = true;
+    }
+
+    if (hasErrors) {
+      setErrors(newErrors);
       return;
     }
 
@@ -396,7 +395,12 @@ export default function SignUpPage() {
         className="fixed top-4 left-4 z-20 flex items-center gap-2 text-white/70 hover:text-white transition-colors group"
       >
         <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-        <span className="text-sm font-medium" style={{ fontFamily: 'Lato, sans-serif' }}>Back to Home</span>
+        <span
+          className="text-sm font-medium"
+          style={{ fontFamily: "Lato, sans-serif" }}
+        >
+          Back to Home
+        </span>
       </Link>
 
       {!selectedRole ? (
@@ -661,14 +665,7 @@ export default function SignUpPage() {
               <button
                 type="submit"
                 className="w-full h-12 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 focus:ring-2 focus:ring-blue-500/50 transition-all font-medium text-white border-0 rounded-lg shadow-lg mt-6 disabled:opacity-50 disabled:cursor-not-allowed"
-                disabled={
-                  !!errors.username ||
-                  !!errors.email ||
-                  !!errors.password ||
-                  !!errors.confirmPassword ||
-                  usernameStatus.checking ||
-                  usernameStatus.available === false
-                }
+                disabled={false}
               >
                 Sign up
               </button>

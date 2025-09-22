@@ -5,16 +5,20 @@ import { SessionManager } from "@/lib/client/session";
 import { DashboardHeader } from "@/components/dashboard-header";
 import { NodeManagementCard } from "@/components/node-management-card";
 import { NodeSubmissionCard } from "@/components/node-submission-card";
+import { AssignTaskModal } from "@/components/assign-task-modal";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Server, Settings, Activity, RefreshCw } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { adminApi } from "@/lib/api/backend";
 import { useMultipleApi } from "@/lib/api/hooks";
 
 export default function AdminDashboard() {
   const { user, loading, isAdmin } = useAuthContext();
   const router = useRouter();
+
+  // State for the assign task modal
+  const [showAssignTaskModal, setShowAssignTaskModal] = useState(false);
 
   // Fetch all admin data
   const {
@@ -283,16 +287,11 @@ export default function AdminDashboard() {
                 </h3>
                 <div className="flex gap-3">
                   <button
+                    onClick={() => setShowAssignTaskModal(true)}
                     className="px-4 py-2 bg-purple-400/20 hover:bg-purple-400/30 text-purple-400 rounded-lg border border-purple-400/30 hover:border-purple-400/50 transition-all duration-300 text-sm font-medium"
                     style={{ fontFamily: "Lato, sans-serif" }}
                   >
                     Assign Task
-                  </button>
-                  <button
-                    className="px-4 py-2 bg-blue-400/20 hover:bg-blue-400/30 text-blue-400 rounded-lg border border-blue-400/30 hover:border-blue-400/50 transition-all duration-300 text-sm font-medium"
-                    style={{ fontFamily: "Lato, sans-serif" }}
-                  >
-                    New Task
                   </button>
                 </div>
               </div>
@@ -599,6 +598,20 @@ export default function AdminDashboard() {
           </div>
         </div>
       </main>
+
+      {/* Assign Task Modal */}
+      <AssignTaskModal
+        isOpen={showAssignTaskModal}
+        onClose={() => setShowAssignTaskModal(false)}
+        onAssignTask={(userIds) => {
+          console.log("Task assigned to user IDs:", userIds);
+          // Here we'll implement the actual task assignment logic later
+          // For now, just close the modal
+          setShowAssignTaskModal(false);
+          // Optionally refresh the data
+          refetch();
+        }}
+      />
     </div>
   );
 }
