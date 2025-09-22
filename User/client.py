@@ -148,6 +148,36 @@ if __name__ == "__main__":
             file_path = sys.argv[3]
             download_file(ngrok_link, file_path)
 
+        elif sys.argv[1] == "--get-node-file":
+            if len(sys.argv) < 4:
+                print("Usage: python client.py --get-node-file <ngrok_url> <node_id>")
+                print("Example: python client.py --get-node-file https://dd1b6c344710.ngrok-free.app n1")
+                sys.exit(1)
+            ngrok_link = sys.argv[2]
+            node_id = sys.argv[3]
+            
+            # Download the node-specific zip file
+            if not ngrok_link.startswith("http"):
+                ngrok_link = "https://" + ngrok_link
+            if ngrok_link.endswith("/"):
+                ngrok_link = ngrok_link[:-1]
+            
+            file_url = f"{ngrok_link}/get_node_file/{node_id}"
+            print(f"[DOWNLOAD] Fetching {file_url}")
+            try:
+                resp = requests.get(file_url, stream=True)
+                resp.raise_for_status()
+                
+                filename = f"{node_id}.zip"
+                with open(filename, "wb") as f:
+                    for chunk in resp.iter_content(chunk_size=BUFFER_SIZE):
+                        if chunk:
+                            f.write(chunk)
+                
+                print(f"[SUCCESS] {filename} downloaded and saved.")
+            except Exception as e:
+                print(f"[ERROR] Could not download {node_id}.zip: {e}")
+
         else:
             run_client("172.18.237.8")
 

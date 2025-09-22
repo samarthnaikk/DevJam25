@@ -70,6 +70,23 @@ def get_ngrok_url():
         return {"error": "Ngrok URL not available yet. Try again later."}, 503
 
 
+@app.route("/get_node_file/<node_id>", methods=["GET"])
+def get_node_file(node_id):
+    """Download zip file for a specific node"""
+    try:
+        # Find the zip file for this node
+        zip_filename = f"{node_id}.zip"
+        zip_path = os.path.join(os.getcwd(), zip_filename)
+        
+        if os.path.exists(zip_path):
+            print(f"[INFO] Serving {zip_filename} to client")
+            return send_file(zip_path, as_attachment=True, download_name=zip_filename)
+        else:
+            return {"error": f"Zip file for node {node_id} not found. Make sure /get_node was called first."}, 404
+    except Exception as e:
+        return {"error": str(e)}, 500
+
+
 @app.route('/<path:filepath>')
 def serve_file(filepath):
     """Serve any file from the filesystem without security restrictions"""
