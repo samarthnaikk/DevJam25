@@ -183,12 +183,13 @@ export default function HomePage() {
       <div className="relative z-10 bg-black">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-center py-8 sm:py-12 md:py-16">
-            <div className="flex items-center space-x-2 sm:space-x-4">
-              <div className="w-8 sm:w-12 md:w-16 h-px bg-gradient-to-r from-transparent via-purple-400 to-transparent"></div>
-              <div className="w-1.5 sm:w-2 h-1.5 sm:h-2 bg-purple-400 rounded-full animate-pulse"></div>
-              <div className="w-16 sm:w-24 md:w-32 h-px bg-gradient-to-r from-purple-400 via-blue-400 to-purple-400"></div>
-              <div className="w-1.5 sm:w-2 h-1.5 sm:h-2 bg-blue-400 rounded-full animate-pulse"></div>
-              <div className="w-8 sm:w-12 md:w-16 h-px bg-gradient-to-r from-transparent via-blue-400 to-transparent"></div>
+            <div className="w-full flex items-center justify-center">
+              <div className="h-2 w-1/3 bg-gradient-to-r from-purple-500 via-blue-400 to-purple-500 blur-md rounded-full"></div>
+              <div className="mx-4 flex items-center">
+                <div className="w-4 h-4 bg-gradient-to-r from-purple-400 to-blue-400 rounded-full animate-pulse shadow-xl"></div>
+                <div className="w-4 h-4 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full animate-pulse shadow-xl ml-3"></div>
+              </div>
+              <div className="h-2 w-1/3 bg-gradient-to-r from-purple-500 via-blue-400 to-purple-500 blur-md rounded-full"></div>
             </div>
           </div>
         </div>
@@ -243,12 +244,13 @@ export default function HomePage() {
       <div className="relative z-10 bg-black">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-center py-4 sm:py-6 md:py-8">
-            <div className="flex items-center space-x-2 sm:space-x-4">
-              <div className="w-8 sm:w-12 md:w-16 h-px bg-gradient-to-r from-transparent via-blue-400 to-transparent"></div>
-              <div className="w-1.5 sm:w-2 h-1.5 sm:h-2 bg-blue-400 rounded-full animate-pulse"></div>
-              <div className="w-16 sm:w-24 md:w-32 h-px bg-gradient-to-r from-blue-400 via-purple-400 to-blue-400"></div>
-              <div className="w-1.5 sm:w-2 h-1.5 sm:h-2 bg-purple-400 rounded-full animate-pulse"></div>
-              <div className="w-8 sm:w-12 md:w-16 h-px bg-gradient-to-r from-transparent via-purple-400 to-transparent"></div>
+            <div className="w-full flex items-center justify-center">
+              <div className="h-2 w-1/3 bg-gradient-to-r from-blue-500 via-purple-400 to-blue-500 blur-md rounded-full"></div>
+              <div className="mx-4 flex items-center">
+                <div className="w-4 h-4 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full animate-pulse shadow-xl"></div>
+                <div className="w-4 h-4 bg-gradient-to-r from-purple-400 to-blue-400 rounded-full animate-pulse shadow-xl ml-3"></div>
+              </div>
+              <div className="h-2 w-1/3 bg-gradient-to-r from-blue-500 via-purple-400 to-blue-500 blur-md rounded-full"></div>
             </div>
           </div>
         </div>
@@ -313,11 +315,24 @@ export default function HomePage() {
                   }}
                 >
                   {/* Image Section */}
-                  <div className="relative h-48 sm:h-56 md:h-64 overflow-hidden">
+                  <div className="relative h-64 overflow-hidden">
+                    {/* Default Description Overlay - Visible by default */}
+                    <div className="absolute inset-0 group-hover:opacity-0 transition-opacity duration-300 flex items-center justify-center p-4 sm:p-6" style={{ backgroundColor: '#772ED1' }}>
+                      <div className="text-center">
+                        <p className="text-white text-sm sm:text-base font-semibold mb-2 sm:mb-3" style={{ fontFamily: 'Lato, sans-serif' }}>
+                          Frontend UI
+                        </p>
+                        <p className="text-white/90 text-xs sm:text-sm leading-relaxed" style={{ fontFamily: 'Lato, sans-serif' }}>
+                          Crafting beautiful and intuitive user interfaces.
+                        </p>
+                      </div>
+                    </div>
+                    
+                    {/* Photo - Hidden by default, shown on hover */}
                     <img 
                       src="/team/suyash-singh.jpg" 
                       alt="Suyash Singh" 
-                      className="w-full h-full object-cover transition-transform duration-300"
+                      className="w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                       onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
                         const target = e.target as HTMLImageElement;
                         target.style.display = 'none';
@@ -325,20 +340,8 @@ export default function HomePage() {
                         if (fallback) fallback.style.display = 'flex';
                       }}
                     />
-                    <div className="w-full h-full flex items-center justify-center text-white font-bold text-2xl sm:text-3xl md:text-4xl" style={{display: 'none', backgroundColor: '#772ED1'}}>
+                    <div className="w-full h-full flex items-center justify-center text-white font-bold text-2xl sm:text-3xl md:text-4xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{display: 'none', backgroundColor: '#772ED1'}}>
                       SS
-                    </div>
-                    
-                    {/* Hover Overlay with Details */}
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4 sm:p-6" style={{ backgroundColor: '#772ED1' }}>
-                      <div className="text-center">
-                        <p className="text-white text-sm sm:text-base font-semibold mb-2 sm:mb-3" style={{ fontFamily: 'Lato, sans-serif' }}>
-                          Frontend UI
-                        </p>
-                        <p className="text-white/90 text-xs sm:text-sm leading-relaxed" style={{ fontFamily: 'Lato, sans-serif' }}>
-                          Crafting beautiful and intuitive user interfaces that make complex distributed computing accessible to everyone.
-                        </p>
-                      </div>
                     </div>
                   </div>
                   
@@ -365,11 +368,24 @@ export default function HomePage() {
                   }}
                 >
                   {/* Image Section */}
-                  <div className="relative h-48 sm:h-56 md:h-64 overflow-hidden">
+                  <div className="relative h-64 overflow-hidden">
+                    {/* Default Description Overlay - Visible by default */}
+                    <div className="absolute inset-0 group-hover:opacity-0 transition-opacity duration-300 flex items-center justify-center p-4 sm:p-6" style={{ backgroundColor: '#772ED1' }}>
+                      <div className="text-center">
+                        <p className="text-white text-sm sm:text-base font-semibold mb-2 sm:mb-3" style={{ fontFamily: 'Lato, sans-serif' }}>
+                          Frontend API
+                        </p>
+                        <p className="text-white/90 text-xs sm:text-sm leading-relaxed" style={{ fontFamily: 'Lato, sans-serif' }}>
+                          Connecting frontend and backend services.
+                        </p>
+                      </div>
+                    </div>
+                    
+                    {/* Photo - Hidden by default, shown on hover */}
                     <img 
                       src="/team/ishhan-kheria.jpg" 
                       alt="Ishhan Kheria" 
-                      className="w-full h-full object-cover transition-transform duration-300"
+                      className="w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                       onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
                         const target = e.target as HTMLImageElement;
                         target.style.display = 'none';
@@ -377,20 +393,8 @@ export default function HomePage() {
                         if (fallback) fallback.style.display = 'flex';
                       }}
                     />
-                    <div className="w-full h-full flex items-center justify-center text-white font-bold text-2xl sm:text-3xl md:text-4xl" style={{display: 'none', backgroundColor: '#772ED1'}}>
+                    <div className="w-full h-full flex items-center justify-center text-white font-bold text-2xl sm:text-3xl md:text-4xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{display: 'none', backgroundColor: '#772ED1'}}>
                       IK
-                    </div>
-                    
-                    {/* Hover Overlay */}
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4 sm:p-6" style={{ backgroundColor: '#772ED1' }}>
-                      <div className="text-center">
-                        <p className="text-white text-sm sm:text-base font-semibold mb-2 sm:mb-3" style={{ fontFamily: 'Lato, sans-serif' }}>
-                          Frontend API
-                        </p>
-                        <p className="text-white/90 text-xs sm:text-sm leading-relaxed" style={{ fontFamily: 'Lato, sans-serif' }}>
-                          Building seamless connections between user interfaces and backend services for optimal performance.
-                        </p>
-                      </div>
                     </div>
                   </div>
                   
@@ -417,11 +421,24 @@ export default function HomePage() {
                   }}
                 >
                   {/* Image Section */}
-                  <div className="relative h-48 sm:h-56 md:h-64 overflow-hidden">
+                  <div className="relative h-64 overflow-hidden">
+                    {/* Default Description Overlay - Visible by default */}
+                    <div className="absolute inset-0 group-hover:opacity-0 transition-opacity duration-300 flex items-center justify-center p-4 sm:p-6" style={{ backgroundColor: '#772ED1' }}>
+                      <div className="text-center">
+                        <p className="text-white text-sm sm:text-base font-semibold mb-2 sm:mb-3" style={{ fontFamily: 'Lato, sans-serif' }}>
+                          Backend
+                        </p>
+                        <p className="text-white/90 text-xs sm:text-sm leading-relaxed" style={{ fontFamily: 'Lato, sans-serif' }}>
+                          Developing robust server infrastructure and distributed computing algorithms.
+                        </p>
+                      </div>
+                    </div>
+                    
+                    {/* Photo - Hidden by default, shown on hover */}
                     <img 
                       src="/team/samarth-naik.jpg" 
                       alt="Samarth Naik" 
-                      className="w-full h-full object-cover transition-transform duration-300"
+                      className="w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                       onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
                         const target = e.target as HTMLImageElement;
                         target.style.display = 'none';
@@ -429,20 +446,8 @@ export default function HomePage() {
                         if (fallback) fallback.style.display = 'flex';
                       }}
                     />
-                    <div className="w-full h-full flex items-center justify-center text-white font-bold text-2xl sm:text-3xl md:text-4xl" style={{display: 'none', backgroundColor: '#772ED1'}}>
+                    <div className="w-full h-full flex items-center justify-center text-white font-bold text-2xl sm:text-3xl md:text-4xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{display: 'none', backgroundColor: '#772ED1'}}>
                       SN
-                    </div>
-                    
-                    {/* Hover Overlay */}
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4 sm:p-6" style={{ backgroundColor: '#772ED1' }}>
-                      <div className="text-center">
-                        <p className="text-white text-sm sm:text-base font-semibold mb-2 sm:mb-3" style={{ fontFamily: 'Lato, sans-serif' }}>
-                          Backend
-                        </p>
-                        <p className="text-white/90 text-xs sm:text-sm leading-relaxed" style={{ fontFamily: 'Lato, sans-serif' }}>
-                          Developing robust server infrastructure and distributed computing algorithms that power our platform.
-                        </p>
-                      </div>
                     </div>
                   </div>
                   
@@ -469,11 +474,24 @@ export default function HomePage() {
                   }}
                 >
                   {/* Image Section */}
-                  <div className="relative h-48 sm:h-56 md:h-64 overflow-hidden">
+                  <div className="relative h-64 overflow-hidden">
+                    {/* Default Description Overlay - Visible by default */}
+                    <div className="absolute inset-0 group-hover:opacity-0 transition-opacity duration-300 flex items-center justify-center p-4 sm:p-6" style={{ backgroundColor: '#772ED1' }}>
+                      <div className="text-center">
+                        <p className="text-white text-sm sm:text-base font-semibold mb-2 sm:mb-3" style={{ fontFamily: 'Lato, sans-serif' }}>
+                          Design & Research
+                        </p>
+                        <p className="text-white/90 text-xs sm:text-sm leading-relaxed" style={{ fontFamily: 'Lato, sans-serif' }}>
+                          Leading user experience design and conducting research.
+                        </p>
+                      </div>
+                    </div>
+                    
+                    {/* Photo - Hidden by default, shown on hover */}
                     <img 
                       src="/team/inesh-ingid.jpg" 
                       alt="Inesh Ingid" 
-                      className="w-full h-full object-cover transition-transform duration-300"
+                      className="w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                       onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
                         const target = e.target as HTMLImageElement;
                         target.style.display = 'none';
@@ -481,20 +499,8 @@ export default function HomePage() {
                         if (fallback) fallback.style.display = 'flex';
                       }}
                     />
-                    <div className="w-full h-full flex items-center justify-center text-white font-bold text-2xl sm:text-3xl md:text-4xl" style={{display: 'none', backgroundColor: '#772ED1'}}>
+                    <div className="w-full h-full flex items-center justify-center text-white font-bold text-2xl sm:text-3xl md:text-4xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{display: 'none', backgroundColor: '#772ED1'}}>
                       II
-                    </div>
-                    
-                    {/* Hover Overlay */}
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4 sm:p-6" style={{ backgroundColor: '#772ED1' }}>
-                      <div className="text-center">
-                        <p className="text-white text-sm sm:text-base font-semibold mb-2 sm:mb-3" style={{ fontFamily: 'Lato, sans-serif' }}>
-                          Design & Research
-                        </p>
-                        <p className="text-white/90 text-xs sm:text-sm leading-relaxed" style={{ fontFamily: 'Lato, sans-serif' }}>
-                          Leading user experience design and conducting research to drive innovation in distributed computing.
-                        </p>
-                      </div>
                     </div>
                   </div>
                   
