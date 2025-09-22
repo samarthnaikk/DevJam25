@@ -13,18 +13,18 @@ export function GPUStatsCard({ gpuName, utilization, memory }: GPUStatsProps) {
 
   return (
     <Card className="bg-white/5 backdrop-blur-sm border-white/10 hover:border-purple-400/50 transition-all duration-300">
-      <CardHeader className="pb-3">
+      <CardHeader className="pb-3 px-4 sm:px-6 pt-4 sm:pt-6">
         <CardTitle 
-          className="text-lg flex items-center gap-2 text-white"
+          className="text-base sm:text-lg flex items-center gap-2 text-white"
           style={{ fontFamily: 'Lato, sans-serif' }}
         >
-          <Cpu className="h-5 w-5 text-purple-400" />
-          {gpuName}
+          <Cpu className="h-4 w-4 sm:h-5 sm:w-5 text-purple-400 flex-shrink-0" />
+          <span className="truncate">{gpuName}</span>
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-3 sm:space-y-4 px-4 sm:px-6 pb-4 sm:pb-6">
         <div className="space-y-2">
-          <div className="flex justify-between text-sm">
+          <div className="flex justify-between text-xs sm:text-sm">
             <span 
               className="text-white/60"
               style={{ fontFamily: 'Lato, sans-serif', fontWeight: '300' }}
@@ -42,16 +42,16 @@ export function GPUStatsCard({ gpuName, utilization, memory }: GPUStatsProps) {
         </div>
 
         <div className="space-y-2">
-          <div className="flex justify-between text-sm">
+          <div className="flex justify-between text-xs sm:text-sm">
             <span 
               className="text-white/60 flex items-center gap-1"
               style={{ fontFamily: 'Lato, sans-serif', fontWeight: '300' }}
             >
-              <HardDrive className="h-3 w-3" />
+              <HardDrive className="h-3 w-3 flex-shrink-0" />
               Memory
             </span>
             <span 
-              className="font-medium text-white"
+              className="font-medium text-white text-right"
               style={{ fontFamily: 'Lato, sans-serif' }}
             >
               {memory.used}GB / {memory.total}GB

@@ -389,7 +389,7 @@ export default function SignUpPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-start bg-black text-white pt-16">
+    <div className="min-h-screen flex flex-col items-center justify-start bg-black text-white px-4 sm:px-6 lg:px-8 pt-12 sm:pt-16">
       {/* Back Button */}
       <Link
         href="/"
@@ -401,15 +401,15 @@ export default function SignUpPage() {
 
       {!selectedRole ? (
         // Role Selection Screen
-        <div className="w-full max-w-2xl space-y-8">
+        <div className="w-full max-w-2xl space-y-6 sm:space-y-8">
           {/* Logo Section */}
           <div className="text-center">
             <img
               src="/Screenshot 2025-09-21 at 12.36.07 PM.svg"
               alt="Rvidia Logo"
-              className="w-16 h-16 mx-auto mb-4"
+              className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-4"
             />
-            <h1 className="text-2xl font-medium text-gray-300 mb-2">
+            <h1 className="text-xl sm:text-2xl font-medium text-gray-300 mb-2">
               Join Rvidia
             </h1>
             <p className="text-gray-400 text-sm">
@@ -418,16 +418,16 @@ export default function SignUpPage() {
           </div>
 
           {/* Role Selection Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
             {/* Admin Signup Card */}
             <div
               onClick={() => setSelectedRole("admin")}
-              className="group cursor-pointer p-8 bg-gradient-to-br from-purple-900/20 to-blue-900/20 hover:from-purple-800/30 hover:to-blue-800/30 border border-purple-500/30 hover:border-purple-400/50 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl"
+              className="group cursor-pointer p-6 sm:p-8 bg-gradient-to-br from-purple-900/20 to-blue-900/20 hover:from-purple-800/30 hover:to-blue-800/30 border border-purple-500/30 hover:border-purple-400/50 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl"
             >
-              <div className="text-center space-y-4">
-                <div className="w-16 h-16 mx-auto bg-gradient-to-r from-purple-600 to-blue-600 rounded-full flex items-center justify-center group-hover:from-purple-500 group-hover:to-blue-500 transition-all">
+              <div className="text-center space-y-3 sm:space-y-4">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto bg-gradient-to-r from-purple-600 to-blue-600 rounded-full flex items-center justify-center group-hover:from-purple-500 group-hover:to-blue-500 transition-all">
                   <svg
-                    className="w-8 h-8 text-white"
+                    className="w-6 h-6 sm:w-8 sm:h-8 text-white"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -440,7 +440,7 @@ export default function SignUpPage() {
                     />
                   </svg>
                 </div>
-                <h2 className="text-xl font-semibold text-white">
+                <h2 className="text-lg sm:text-xl font-semibold text-white">
                   Sign Up as Admin
                 </h2>
                 <p className="text-gray-400 text-sm leading-relaxed">
@@ -458,12 +458,12 @@ export default function SignUpPage() {
             {/* User Signup Card */}
             <div
               onClick={() => setSelectedRole("user")}
-              className="group cursor-pointer p-8 bg-gradient-to-br from-green-900/20 to-teal-900/20 hover:from-green-800/30 hover:to-teal-800/30 border border-green-500/30 hover:border-green-400/50 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl"
+              className="group cursor-pointer p-6 sm:p-8 bg-gradient-to-br from-green-900/20 to-teal-900/20 hover:from-green-800/30 hover:to-teal-800/30 border border-green-500/30 hover:border-green-400/50 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl"
             >
-              <div className="text-center space-y-4">
-                <div className="w-16 h-16 mx-auto bg-gradient-to-r from-green-600 to-teal-600 rounded-full flex items-center justify-center group-hover:from-green-500 group-hover:to-teal-500 transition-all">
+              <div className="text-center space-y-3 sm:space-y-4">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto bg-gradient-to-r from-green-600 to-teal-600 rounded-full flex items-center justify-center group-hover:from-green-500 group-hover:to-teal-500 transition-all">
                   <svg
-                    className="w-8 h-8 text-white"
+                    className="w-6 h-6 sm:w-8 sm:h-8 text-white"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -476,7 +476,7 @@ export default function SignUpPage() {
                     />
                   </svg>
                 </div>
-                <h2 className="text-xl font-semibold text-white">
+                <h2 className="text-lg sm:text-xl font-semibold text-white">
                   Sign Up as User
                 </h2>
                 <p className="text-gray-400 text-sm leading-relaxed">
@@ -492,7 +492,7 @@ export default function SignUpPage() {
             </div>
           </div>
 
-          <div className="text-center mt-8">
+          <div className="text-center mt-6 sm:mt-8">
             <p className="text-white/60 text-sm">
               Already have an account?{" "}
               <button
@@ -506,15 +506,15 @@ export default function SignUpPage() {
           </div>
         </div>
       ) : !showOtpVerification ? (
-        <div className="w-full max-w-sm space-y-8">
+        <div className="w-full max-w-sm sm:max-w-md space-y-6 sm:space-y-8">
           {/* Logo Section */}
           <div className="text-center">
             <img
               src="/Screenshot 2025-09-21 at 12.36.07 PM.svg"
               alt="Rvidia Logo"
-              className="w-16 h-16 mx-auto mb-4"
+              className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-4"
             />
-            <h1 className="text-xl font-medium text-gray-300 mb-2">
+            <h1 className="text-lg sm:text-xl font-medium text-gray-300 mb-2">
               Sign up as {selectedRole === "admin" ? "Administrator" : "User"}
             </h1>
             <button

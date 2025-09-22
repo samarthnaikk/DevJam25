@@ -186,21 +186,21 @@ export default function AdminDashboard() {
     <div className="min-h-screen bg-black">
       <DashboardHeader />
 
-      <main className="pt-24 p-6">
-        <div className="max-w-7xl mx-auto space-y-6">
+      <main className="pt-20 sm:pt-24 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto space-y-4 sm:space-y-6">
           {/* Welcome Section */}
-          <div className="bg-gradient-to-r from-purple-400/20 to-blue-400/20 backdrop-blur-sm border border-white/10 rounded-lg p-8 text-white relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-purple-400/20 to-transparent"></div>
-            <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr from-blue-400/20 to-transparent"></div>
+          <div className="bg-gradient-to-r from-purple-400/20 to-blue-400/20 backdrop-blur-sm border border-white/10 rounded-lg p-6 sm:p-8 text-white relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-24 h-24 sm:w-32 sm:h-32 bg-gradient-to-bl from-purple-400/20 to-transparent"></div>
+            <div className="absolute bottom-0 left-0 w-24 h-24 sm:w-32 sm:h-32 bg-gradient-to-tr from-blue-400/20 to-transparent"></div>
             <div className="relative z-10">
               <h2 
-                className="text-4xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400"
+                className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400"
                 style={{ fontFamily: 'Lato, sans-serif', fontWeight: '375' }}
               >
                 Admin Control Center
               </h2>
               <p 
-                className="text-white/80 text-lg"
+                className="text-white/80 text-base sm:text-lg"
                 style={{ fontFamily: 'Lato, sans-serif', fontWeight: '300' }}
               >
                 Manage compute nodes, users, and task assignments across your distributed GPU cluster.
@@ -209,7 +209,7 @@ export default function AdminDashboard() {
           </div>
 
           {/* Admin Stats Overview - Remove Active Users */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             <div className="bg-white/5 backdrop-blur-sm border border-white/10 hover:border-purple-400/50 transition-all duration-300 rounded-lg p-6 group">
               <div className="flex items-center justify-between mb-4">
                 <h3 
@@ -300,7 +300,7 @@ export default function AdminDashboard() {
           </div>
 
           {/* Task Assignment Section with New Nodes on the right */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 sm:gap-6">
             {/* Task Assignment - Left side (2/3 width) */}
             <div className="lg:col-span-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg p-6">
               <div className="flex items-center justify-between mb-6">
@@ -324,7 +324,7 @@ export default function AdminDashboard() {
                   </button>
                 </div>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4">
                 {mockTaskAssignments.map((task) => (
                   <div key={task.id} className="p-4 bg-white/5 rounded-lg border border-white/5 hover:border-purple-400/30 transition-all duration-300">
                     <div className="flex items-center justify-between mb-3">
@@ -404,7 +404,7 @@ export default function AdminDashboard() {
               </div>
               Current Assignments
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-4">
               <div className="flex items-center justify-between p-4 bg-white/5 rounded-lg border border-white/5 hover:border-blue-400/30 transition-all duration-300">
                 <div>
                   <p className="text-white font-medium" style={{ fontFamily: 'Lato, sans-serif' }}>ML Training Job</p>

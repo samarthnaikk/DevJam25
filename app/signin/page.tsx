@@ -88,7 +88,7 @@ export default function SignInPage() {
   };
 
   return (
-    <div className="min-h-screen bg-black flex items-start justify-center p-4 pt-16 relative overflow-hidden">
+    <div className="min-h-screen bg-black flex items-start justify-center px-4 sm:px-6 lg:px-8 pt-12 sm:pt-16 relative overflow-hidden">
       {/* Back Button */}
       <Link
         href="/"
@@ -98,19 +98,19 @@ export default function SignInPage() {
         <span className="text-sm font-medium" style={{ fontFamily: 'Lato, sans-serif' }}>Back to Home</span>
       </Link>
 
-      <div className="w-full max-w-sm relative z-10 space-y-6">
+      <div className="w-full max-w-sm sm:max-w-md relative z-10 space-y-6">
         {/* Logo and Brand */}
-        <div className="flex flex-col items-center space-y-4 mb-8">
+        <div className="flex flex-col items-center space-y-4 mb-6 sm:mb-8">
           <div className="flex items-center justify-center">
-            <div className="w-12 h-12 flex items-center justify-center">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center">
               <img
                 src="/Screenshot 2025-09-21 at 12.36.07 PM.svg"
                 alt="Rvidia Logo"
-                className="w-12 h-12 object-contain"
+                className="w-10 h-10 sm:w-12 sm:h-12 object-contain"
               />
             </div>
           </div>
-          <p className="text-white/70 text-lg">Sign in to Rvidia</p>
+          <p className="text-white/70 text-lg sm:text-xl text-center">Sign in to Rvidia</p>
         </div>
 
         {error && (
@@ -119,7 +119,7 @@ export default function SignInPage() {
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
           <input
             id="identifier"
             name="identifier"
@@ -128,7 +128,7 @@ export default function SignInPage() {
             onChange={handleChange}
             required
             disabled={isLoading}
-            className="w-full h-12 px-3 py-3 bg-white/5 backdrop-blur-sm text-white border border-white/10 placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 rounded-lg transition-all"
+            className="w-full h-11 sm:h-12 px-3 py-3 bg-white/5 backdrop-blur-sm text-white border border-white/10 placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 rounded-lg transition-all text-sm sm:text-base"
             placeholder="Email or username"
           />
 
@@ -140,11 +140,11 @@ export default function SignInPage() {
             onChange={handleChange}
             required
             disabled={isLoading}
-            className="w-full h-12 px-3 py-3 bg-white/5 backdrop-blur-sm text-white border border-white/10 placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 rounded-lg transition-all"
+            className="w-full h-11 sm:h-12 px-3 py-3 bg-white/5 backdrop-blur-sm text-white border border-white/10 placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 rounded-lg transition-all text-sm sm:text-base"
             placeholder="Password"
           />
 
-          <div className="flex items-center justify-between w-full">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between w-full gap-2 sm:gap-0">
             <Link
               href="/forgot-password"
               className="text-sm text-blue-400 hover:text-blue-300 transition-colors"
@@ -163,7 +163,7 @@ export default function SignInPage() {
             type="submit"
             size="lg"
             disabled={isLoading}
-            className="w-full h-12 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 focus:ring-2 focus:ring-blue-500/50 transition-all font-medium text-white border-0 rounded-lg shadow-lg"
+            className="w-full h-11 sm:h-12 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 focus:ring-2 focus:ring-blue-500/50 transition-all font-medium text-white border-0 rounded-lg shadow-lg text-sm sm:text-base"
           >
             {isLoading ? (
               <>
