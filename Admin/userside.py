@@ -2,10 +2,10 @@ import os
 import zipfile
 from helper import *
 
-def CreateZip(input_source, source_code, node_id, allcommands):
+def CreateZip(input_source, source_code, node_id, allcommands,chunks=5):
     zip_filename = f"{node_id}.zip"
     os.makedirs("temp_input", exist_ok=True)
-    DataSplit(input_source=input_source, output_source="temp_input", Objtype=1, chunks=5)
+    DataSplit(input_source=input_source, output_source="temp_input", Objtype=1, chunks=chunks)
     input_source = "temp_input"
 
     with zipfile.ZipFile(zip_filename, "w", zipfile.ZIP_DEFLATED) as zipf:

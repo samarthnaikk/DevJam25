@@ -14,7 +14,9 @@ allc = [
     }
 ]
 
-CreateZip("mydata", "mycmd", "n1", allcommands=allc)
+number_of_active_nodes = 5
+
+CreateZip("mydata", "mycmd", "n1", allcommands=allc,chunks=number_of_active_nodes)
 
 app = Flask(__name__)
 
