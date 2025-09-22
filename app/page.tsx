@@ -677,7 +677,7 @@ export default function HomePage() {
                       className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400 text-base font-medium"
                       style={{ fontFamily: 'Lato, sans-serif' }}
                     >
-                      distributed computing
+                      NextJS and tailwind CSS
                     </span>
                   </div>
                 </div>
