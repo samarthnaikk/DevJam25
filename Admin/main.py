@@ -25,9 +25,8 @@ def receive_file():
     file = request.files["file"]
     if file.filename == "":
         return "No selected file", 400
-    save_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../receivedd"))
-    os.makedirs(save_dir, exist_ok=True)
-    save_path = os.path.join(save_dir, file.filename)
+    os.makedirs("receivedd", exist_ok=True)
+    save_path = os.path.join("receivedd", file.filename)
     file.save(save_path)
     return f"File saved to {save_path}", 200
 
