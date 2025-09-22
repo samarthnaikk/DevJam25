@@ -15,6 +15,8 @@ allc = [
     }
 ]
 
+ngrok_url = None
+received_nodes = []
 
 app = Flask(__name__)
 
@@ -52,11 +54,19 @@ def get_node():
 
     for i in range(len(received_nodes)):
         CreateZip(f"temp_input/chunk_{i+1}.txt","mycmd", received_nodes[i], allcommands=allc)
-        
+
     print("Zip completed")
 
     print(f"Received nodes from frontend:")
     return {"message": "Nodes received", "nodes": received_nodes}, 200
+
+@app.route("/get_ngrok_url", methods=["GET"])
+def get_ngrok_url():
+    if ngrok_url:
+        return {"ngrok_url": ngrok_url}, 200
+    else:
+        return {"error": "Ngrok URL not available yet. Try again later."}, 503
+
 
 def start_ngrok_http(port=8000):
     ngrok_cmd = ["ngrok", "http", str(port)]
@@ -78,6 +88,8 @@ def print_ngrok_url():
         except Exception:
             pass
         time.sleep(1)
+    global ngrok_url
+    ngrok_url = url
     if url:
         print(f"[NGROK] Public URL: {url}")
     else:
