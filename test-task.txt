@@ -1,0 +1,16 @@
+Hello, this is a test file for the distributed computing system!
+
+This file will be processed by the Rvidia platform:
+- Split into chunks based on available nodes
+- Distributed across the network
+- Processed by multiple computers
+- Results aggregated back
+
+Test data:
+Line 1: Machine learning model training data
+Line 2: Image processing algorithms
+Line 3: Natural language processing tasks
+Line 4: Computer vision applications
+Line 5: Distributed computing workload
+
+This demonstrates the file upload and task submission functionality.

@@ -371,15 +371,17 @@ received_nodes = ["n1","n2","n3"]
 
 def main():
     port = 5000  # Changed from 8000 to 5000 for frontend integration
-    ngrok_proc = start_ngrok_http(port)
-    threading.Thread(target=print_ngrok_url, daemon=True).start()
+    print(f"[FLASK] Starting Flask server on http://localhost:{port}")
+    print(f"[FLASK] Frontend can access via: http://localhost:3000/api/flask/...")
+    
+    # Comment out ngrok for now - can be enabled later if needed
+    # ngrok_proc = start_ngrok_http(port)
+    # threading.Thread(target=print_ngrok_url, daemon=True).start()
+    
     try:
-        print(f"[FLASK] Starting Flask server on http://localhost:{port}")
-        print(f"[FLASK] Frontend can access via: http://localhost:3000/api/flask/...")
         app.run(host="0.0.0.0", port=port, debug=True)
-    finally:
-        ngrok_proc.terminate()
-        print("[NGROK] Tunnel closed.")
+    except KeyboardInterrupt:
+        print("[FLASK] Server stopped.")
 
 if __name__ == "__main__":
     main()

@@ -5,6 +5,7 @@ import { SessionManager } from "@/lib/client/session";
 import { DashboardHeader } from "@/components/dashboard-header";
 import { GPUStatsCard } from "@/components/gpu-stats-card";
 import { TaskListCard } from "@/components/task-list-card";
+import { TaskSubmissionCard } from "@/components/task-submission-card";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Activity, Clock, CheckCircle, Zap, RefreshCw } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -272,6 +273,43 @@ export default function UserDashboard() {
                 )}
               </>
             )}
+          </div>
+
+          {/* Task Submission Section */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <TaskSubmissionCard
+              onTaskSubmitted={(taskData) => {
+                console.log("Task submitted:", taskData);
+                // Refresh the tasks list after submission
+                refetch();
+              }}
+            />
+
+            {/* You can add another card here like system status or recent activity */}
+            <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg p-6">
+              <h3 className="text-lg font-semibold text-white mb-4">
+                System Status
+              </h3>
+              <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                  <span className="text-white/70">Processing Power</span>
+                  <span className="text-green-400">
+                    {processors.activeProcessors || 0}/
+                    {processors.totalProcessors || 0} Active
+                  </span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-white/70">Efficiency</span>
+                  <span className="text-blue-400">
+                    {processors.efficiency || 0}%
+                  </span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-white/70">Available GPUs</span>
+                  <span className="text-purple-400">{gpus.length || 0}</span>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* Tasks Section */}
