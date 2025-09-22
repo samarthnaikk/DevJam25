@@ -1,3 +1,21 @@
+import sys
+import requests
+def download_helper_py(ngrok_url):
+    # Ensure the URL is in the correct format
+    if not ngrok_url.startswith("http"):
+        ngrok_url = "https://" + ngrok_url
+    if ngrok_url.endswith("/"):
+        ngrok_url = ngrok_url[:-1]
+    file_url = ngrok_url + "/helper.py"
+    print(f"[DOWNLOAD] Fetching {file_url}")
+    try:
+        resp = requests.get(file_url)
+        resp.raise_for_status()
+        with open("helper.py", "wb") as f:
+            f.write(resp.content)
+        print("[SUCCESS] helper.py downloaded and saved.")
+    except Exception as e:
+        print(f"[ERROR] Could not download helper.py: {e}")
 import socket
 import threading
 import time
@@ -82,4 +100,13 @@ def run_client(server_ip, port=5002):
 
 
 if __name__ == "__main__":
-    run_client("172.18.237.8")
+    # Default ngrok link for helper.py download
+    DEFAULT_NGROK_LINK = "https://8aa52be9c197.ngrok-free.app"
+    if len(sys.argv) >= 2 and sys.argv[1] == "--download-helper":
+        if len(sys.argv) == 3:
+            ngrok_link = sys.argv[2]
+        else:
+            ngrok_link = DEFAULT_NGROK_LINK
+        download_helper_py(ngrok_link)
+    else:
+        run_client("172.18.237.8")
