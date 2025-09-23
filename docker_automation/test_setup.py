@@ -18,9 +18,9 @@ def main():
     # Check Docker
     print("1. Checking Docker installation...")
     if validate_docker_installation():
-        print("   ✅ Docker is installed and running")
+        print("    Docker is installed and running")
     else:
-        print("   ❌ Docker is not available")
+        print("    Docker is not available")
         print("   Please install Docker and make sure it's running")
         return False
     
@@ -28,25 +28,25 @@ def main():
     print("\n2. Checking project structure...")
     
     if DATASET_PATH.exists():
-        print(f"   ✅ DataSet folder found: {DATASET_PATH}")
+        print(f"    DataSet folder found: {DATASET_PATH}")
         
         minisets = get_miniset_folders(DATASET_PATH)
         if minisets:
-            print(f"   ✅ Found {len(minisets)} MiniSets: {', '.join(minisets)}")
+            print(f"    Found {len(minisets)} MiniSets: {', '.join(minisets)}")
         else:
-            print("   ⚠️  No MiniSet folders found in DataSet")
+            print("     No MiniSet folders found in DataSet")
     else:
-        print(f"   ❌ DataSet folder not found: {DATASET_PATH}")
+        print(f"    DataSet folder not found: {DATASET_PATH}")
     
     if LOGIC_PATH.exists():
-        print(f"   ✅ Logic folder found: {LOGIC_PATH}")
+        print(f"    Logic folder found: {LOGIC_PATH}")
     else:
-        print(f"   ❌ Logic folder not found: {LOGIC_PATH}")
+        print(f"    Logic folder not found: {LOGIC_PATH}")
     
     if EXPORT_DIR.exists():
-        print(f"   ✅ Export directory ready: {EXPORT_DIR}")
+        print(f"    Export directory ready: {EXPORT_DIR}")
     else:
-        print(f"   ❌ Export directory not found: {EXPORT_DIR}")
+        print(f"    Export directory not found: {EXPORT_DIR}")
     
     # Check automation system
     print("\n3. Checking automation system...")
@@ -58,19 +58,19 @@ def main():
     for file in automation_files:
         file_path = Path(__file__).parent / file
         if file_path.exists():
-            print(f"   ✅ {file}")
+            print(f"    {file}")
         else:
-            print(f"   ❌ {file} missing")
+            print(f"    {file} missing")
             all_files_exist = False
     
     print("\n4. Summary:")
     if all_files_exist:
-        print("   🎉 All automation system files are in place!")
-        print("   📖 See README.md for usage instructions")
-        print("   🚀 You can now run: python main.py --help")
+        print("    All automation system files are in place!")
+        print("    See README.md for usage instructions")
+        print("    You can now run: python main.py --help")
         return True
     else:
-        print("   ❌ Some files are missing. Please check the setup.")
+        print("    Some files are missing. Please check the setup.")
         return False
 
 if __name__ == "__main__":
