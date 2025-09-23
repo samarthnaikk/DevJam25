@@ -64,7 +64,3 @@ logs/
 tmp/
 temp/
 *.tmp
-
-# Dockerfiles (auto-generated)
-DataSet/*/Dockerfile
-Logic/Dockerfile
