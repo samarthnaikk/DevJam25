@@ -1,3 +1,0 @@
-Mon Sep 22 01:36:37 2025 - Error while Splitting data - type 1 - [Errno 21] Is a directory: 'mydata'
-Mon Sep 22 01:37:55 2025 - Error while Splitting data - type 1 - [Errno 2] No such file or directory: 'mydata/sample.txt'
-Mon Sep 22 01:41:55 2025 - Error while Splitting data - type 1 - [Errno 21] Is a directory: 'mydata'
